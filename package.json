@@ -1,0 +1,36 @@
+{
+  "name": "mymicds",
+  "version": "0.0.0",
+  "description": "Client for connecting to the MyMICDS API",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json \"src/**/*.ts\"",
+    "prepublishOnly": "rimraf ./dist && npm run ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts": "tsc",
+    "ts:watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyMICDS/MyMICDS-SDK.git"
+  },
+  "keywords": [
+    "mymicds",
+    "micds"
+  ],
+  "author": "MyMICDS Development Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MyMICDS/MyMICDS-SDK/issues"
+  },
+  "homepage": "https://github.com/MyMICDS/MyMICDS-SDK#readme",
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1"
+  },
+  "dependencies": {
+    "rxjs": "^5.5.2"
+  }
+}
