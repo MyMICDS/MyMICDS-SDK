@@ -6,9 +6,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "tslint --project tsconfig.json \"src/**/*.ts\"",
-    "prepublishOnly": "rimraf ./dist && npm run ts",
+    "clean": "rimraf ./dist",
+    "prepublishOnly": "npm run clean && npm run ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ts": "tsc",
+    "ts": "npm run clean && tsc",
     "ts:watch": "tsc -w"
   },
   "repository": {

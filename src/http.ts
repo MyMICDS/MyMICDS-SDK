@@ -1,3 +1,4 @@
+import { APIResponse } from '@mymicds/api';
 import { MyMICDSOptions } from '@mymicds/index';
 
 import * as request from 'request';
@@ -30,7 +31,7 @@ export class Http {
 	//
 	// }
 
-	private http<T>(method: HTTP_METHOD, url: string, data: any) {
+	private http<T>(method: HTTP_METHOD, url: string, data: object) {
 		const headers: { [key: string]: string } = {};
 		const jwt = this.options.jwtGetter();
 		if (jwt) {
@@ -39,9 +40,9 @@ export class Http {
 
 		// If a GET request, use query parameters instead of JSON body (which doesn't exist on GET)
 		let qs = {};
-		let body = {};
+		let reqBody = {};
 		if ([HTTP_METHOD.PATCH, HTTP_METHOD.POST, HTTP_METHOD.PUT].includes(method)) {
-			body = data;
+			reqBody = data;
 		} else {
 			qs = data;
 		}
@@ -53,9 +54,16 @@ export class Http {
 				method,
 				headers,
 				qs,
-				body,
+				body: reqBody,
 				json: true,
 				gzip: true
+			}, (err, res, body: APIResponse<T>) => {
+				// If client-side error
+				if (err) {
+					observer.error(err);
+					return;
+				}
+
 			});
 		});
 	}
