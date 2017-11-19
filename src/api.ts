@@ -1,7 +1,7 @@
-export interface APIResponse<ResponseData> {
+export interface APIResponse<TResponseData> {
 	error: string | null;
 	action: ACTIONS | null;
-	data: ResponseData | null;
+	data: TResponseData | null;
 }
 
 export type ACTIONS = 'LOGIN_EXPIRED' | 'UNAUTHORIZED' | 'NOT_LOGGED_IN';

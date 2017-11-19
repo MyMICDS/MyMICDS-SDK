@@ -1,26 +1,26 @@
 export interface MyMICDSOptions {
 	baseURL: string;
-	jwtGetter: () => string;
-	jwtSetter: (jwt: string, remember: boolean) => void;
-	jwtClear: () => void;
+	jwtGetter(): string;
+	jwtSetter(jwt: string, remember: boolean): void;
+	jwtClear(): void;
 }
 
 declare const localStorage: any;
 declare const sessionStorage: any;
 
-export const defaultOptions = {
+export const defaultOptions: MyMICDSOptions = {
 	baseURL: 'https://api.mymicds.net',
-	jwtGetter: () => {
+	jwtGetter() {
 		return sessionStorage.getItem('jwt') || localStorage.getItem('jwt');
 	},
-	jwtSetter: (jwt: string, remember: boolean) => {
+	jwtSetter(jwt: string, remember: boolean) {
 		if (remember) {
 			localStorage.setItem('jwt');
 		} else {
 			sessionStorage.setItem('jwt');
 		}
 	},
-	jwtClear: () => {
+	jwtClear() {
 		localStorage.removeItem('jwt');
 		sessionStorage.removeItem('jwt');
 	}

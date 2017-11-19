@@ -5,33 +5,34 @@ import * as request from 'request';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
-export class Http {
+export class HTTP {
 
 	constructor(private options: MyMICDSOptions) {
-		//
+		// TODO
 	}
 
-	// get(url: string) {
-	//
-	// }
-	//
-	// post() {
-	//
-	// }
-	//
-	// put() {
-	//
-	// }
-	//
-	// patch() {
-	//
-	// }
-	//
-	// delete() {
-	//
-	// }
+	// NOTE: I wish this could be done in a DRYer way, but unfortunately, it can't if you want to keep strong types
+	get<T>(endpoint: string, data: object) {
+		return this.http<T>(HTTP_METHOD.GET, endpoint, data);
+	}
 
-	private http<T>(method: HTTP_METHOD, url: string, data: object) {
+	post<T>(endpoint: string, data: object) {
+		return this.http<T>(HTTP_METHOD.POST, endpoint, data);
+	}
+
+	put<T>(endpoint: string, data: object) {
+		return this.http<T>(HTTP_METHOD.PUT, endpoint, data);
+	}
+
+	patch<T>(endpoint: string, data: object) {
+		return this.http<T>(HTTP_METHOD.PATCH, endpoint, data);
+	}
+
+	delete<T>(endpoint: string, data: object) {
+		return this.http<T>(HTTP_METHOD.DELETE, endpoint, data);
+	}
+
+	private http<T>(method: HTTP_METHOD, endpoint: string, data: object): Observable<T> {
 		const headers: { [key: string]: string } = {};
 		const jwt = this.options.jwtGetter();
 		if (jwt) {
@@ -41,15 +42,15 @@ export class Http {
 		// If a GET request, use query parameters instead of JSON body (which doesn't exist on GET)
 		let qs = {};
 		let reqBody = {};
-		if ([HTTP_METHOD.PATCH, HTTP_METHOD.POST, HTTP_METHOD.PUT].includes(method)) {
-			reqBody = data;
-		} else {
+		if (method === HTTP_METHOD.GET) {
 			qs = data;
+		} else {
+			reqBody = data;
 		}
 
 		return Observable.create((observer: Observer<T>) => {
 			request({
-				url,
+				url: endpoint,
 				baseUrl: this.options.baseURL,
 				method,
 				headers,
