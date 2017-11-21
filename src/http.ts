@@ -1,5 +1,5 @@
-import { APIResponse } from '@mymicds/api';
-import { MyMICDSOptions } from '@mymicds/index';
+import { APIResponse, MyMICDSError } from '@mymicds/api';
+import { defaultOptions, MyMICDSOptions } from '@mymicds/index';
 
 import * as request from 'request';
 import { Observable } from 'rxjs/Observable';
@@ -7,8 +7,10 @@ import { Observer } from 'rxjs/Observer';
 
 export class HTTP {
 
-	constructor(private options: MyMICDSOptions) {
-		// TODO
+	private options: MyMICDSOptions;
+
+	constructor(options: Partial<MyMICDSOptions>) {
+		this.options = Object.assign({}, options, defaultOptions);
 	}
 
 	// NOTE: I wish this could be done in a DRYer way, but unfortunately, it can't if you want to keep strong types
@@ -64,7 +66,14 @@ export class HTTP {
 					observer.error(err);
 					return;
 				}
+				// If server-side error
+				if (body.error) {
+					observer.error(new MyMICDSError(body.error, res.statusCode!, body.action));
+					return;
+				}
 
+				observer.next(body.data!);
+				observer.complete();
 			});
 		});
 	}

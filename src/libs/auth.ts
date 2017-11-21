@@ -2,14 +2,16 @@
  * Auth API
  */
 
-import { MyMICDSOptions } from '@mymicds/index';
+import { defaultOptions, MyMICDSOptions } from '@mymicds/index';
 
 import { Observable } from 'rxjs/Observable';
 
 export class AuthAPI {
 
-	constructor(private options: MyMICDSOptions) {
+	private options: MyMICDSOptions;
 
+	constructor(options: Partial<MyMICDSOptions>) {
+		this.options = Object.assign({}, options, defaultOptions);
 	}
 
 	// login(param: LoginParameters): Observable<RxHttpRequestResponse> {

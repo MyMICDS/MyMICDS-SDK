@@ -15,9 +15,9 @@ export const defaultOptions: MyMICDSOptions = {
 	},
 	jwtSetter(jwt: string, remember: boolean) {
 		if (remember) {
-			localStorage.setItem('jwt');
+			localStorage.setItem('jwt', jwt);
 		} else {
-			sessionStorage.setItem('jwt');
+			sessionStorage.setItem('jwt', jwt);
 		}
 	},
 	jwtClear() {
