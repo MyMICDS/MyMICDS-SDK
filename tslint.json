@@ -18,7 +18,8 @@
 		"quotemark": [true, "single", "avoid-escape"],
 		"semicolon": [true, "always"],
 		"trailing-comma": [true, { "multiline": "never", "singleline": "never" }],
-		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+		"no-empty-interface": false
 	},
 	"rulesDirectory": []
 }

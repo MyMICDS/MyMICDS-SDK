@@ -1,12 +1,12 @@
 export interface MyMICDSOptions {
 	baseURL: string;
-	jwtGetter(): string;
+	jwtGetter(): string | null;
 	jwtSetter(jwt: string, remember: boolean): void;
 	jwtClear(): void;
 }
 
-declare const localStorage: any;
-declare const sessionStorage: any;
+declare const localStorage: Storage;
+declare const sessionStorage: Storage;
 
 export const defaultOptions: MyMICDSOptions = {
 	baseURL: 'https://api.mymicds.net',
