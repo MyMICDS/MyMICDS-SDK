@@ -2,17 +2,22 @@
  * Auth API
  */
 
-import { defaultOptions, MyMICDSOptions } from '@mymicds/index';
-
+import { HTTP } from '@mymicds/http';
+import { MyMICDSOptions } from '@mymicds/options';
 import { Observable } from 'rxjs/Observable';
 
 export class AuthAPI {
 
-	constructor(private options: MyMICDSOptions) { }
+	constructor(private http: HTTP, private options: MyMICDSOptions) { }
 
-	// login(param: LoginParameters): Observable<RxHttpRequestResponse> {
-	// 	return RxHR.post(`${this.options.baseURL}/auth/login`);
-	// }
+	login(param: LoginParameters) {
+		return this.http.post<LoginResponse>('/auth/login');
+	}
+
+	logout() {
+		return this.http.post('/auth/logout');
+		// @TODO Clear JWT
+	}
 
 }
 

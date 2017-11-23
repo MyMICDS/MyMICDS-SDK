@@ -3,16 +3,14 @@
  */
 
 import { HTTP } from '@mymicds/http';
-import { defaultOptions, MyMICDSOptions } from '@mymicds/index';
-
 import { Observable } from 'rxjs/Observable';
 
-export class BackgroundsAPI {
+export class BackgroundAPI {
 
-	constructor(private options: MyMICDSOptions) { }
+	constructor(private http: HTTP) { }
 
-	getBackground(): Observable<BackgroundGetResponse> {
-		return this.http.post('/background/get', {});
+	getBackground() {
+		return this.http.post<GetBackgroundResponse>('/background/get');
 	}
 
 }
@@ -21,7 +19,7 @@ export class BackgroundsAPI {
  * API Parameters and Responses
  */
 
-export interface BackgroundGetResponse {
+export interface GetBackgroundResponse {
 	hasDefault: boolean;
 	variants: {
 		normal: string;
@@ -29,10 +27,10 @@ export interface BackgroundGetResponse {
 	};
 }
 
-export interface BackgroundDeleteResponse extends BackgroundGetResponse { }
+export interface DeleteBackgroundResponse extends GetBackgroundResponse { }
 
-export interface BackgroundUploadParameter {
+export interface UploadBackgroundParameters {
 	file: File;
 }
 
-export interface BackgroundUploadResponse extends BackgroundGetResponse { }
+export interface UploadBackgroundResponse extends GetBackgroundResponse { }

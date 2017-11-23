@@ -1,5 +1,6 @@
-import { APIResponse, MyMICDSError } from '@mymicds/api-response';
-import { defaultOptions, MyMICDSOptions } from '@mymicds/index';
+import { APIResponse } from '@mymicds/api-response';
+import { MyMICDSError } from '@mymicds/error';
+import { defaultOptions, MyMICDSOptions } from '@mymicds/options';
 
 import * as request from 'request';
 import { Observable } from 'rxjs/Observable';
