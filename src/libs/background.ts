@@ -9,11 +9,7 @@ import { Observable } from 'rxjs/Observable';
 
 export class BackgroundsAPI {
 
-	private options: MyMICDSOptions;
-
-	constructor(options: Partial<MyMICDSOptions>, private http: HTTP) {
-		this.options = Object.assign({}, options, defaultOptions);
-	}
+	constructor(private options: MyMICDSOptions) { }
 
 	getBackground(): Observable<BackgroundGetResponse> {
 		return this.http.post('/background/get', {});
@@ -25,25 +21,18 @@ export class BackgroundsAPI {
  * API Parameters and Responses
  */
 
-export interface BackgroundGetParameter {
-}
-
 export interface BackgroundGetResponse {
-	error: string;
-	variants?: {
+	hasDefault: boolean;
+	variants: {
 		normal: string;
 		blur: string;
 	};
-	hasDefault?: boolean;
 }
+
+export interface BackgroundDeleteResponse extends BackgroundGetResponse { }
 
 export interface BackgroundUploadParameter {
 	file: File;
 }
 
-export type BackgroundUploadResponse = BackgroundGetResponse;
-
-export interface BackgroundDeleteParameter {
-}
-
-export type BackgroundDelteResponse = BackgroundGetResponse;
+export interface BackgroundUploadResponse extends BackgroundGetResponse { }

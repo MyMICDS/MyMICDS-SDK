@@ -1,4 +1,4 @@
-import { APIResponse, MyMICDSError } from '@mymicds/api';
+import { APIResponse, MyMICDSError } from '@mymicds/api-response';
 import { defaultOptions, MyMICDSOptions } from '@mymicds/index';
 
 import * as request from 'request';
@@ -13,28 +13,27 @@ export class HTTP {
 		this.options = Object.assign({}, options, defaultOptions);
 	}
 
-	// NOTE: I wish this could be done in a DRYer way, but unfortunately, it can't if you want to keep strong types
-	get<T>(endpoint: string, data: object) {
+	get<T>(endpoint: string, data?: object) {
 		return this.http<T>(HTTP_METHOD.GET, endpoint, data);
 	}
 
-	post<T>(endpoint: string, data: object) {
+	post<T>(endpoint: string, data?: object) {
 		return this.http<T>(HTTP_METHOD.POST, endpoint, data);
 	}
 
-	put<T>(endpoint: string, data: object) {
+	put<T>(endpoint: string, data?: object) {
 		return this.http<T>(HTTP_METHOD.PUT, endpoint, data);
 	}
 
-	patch<T>(endpoint: string, data: object) {
+	patch<T>(endpoint: string, data?: object) {
 		return this.http<T>(HTTP_METHOD.PATCH, endpoint, data);
 	}
 
-	delete<T>(endpoint: string, data: object) {
+	delete<T>(endpoint: string, data?: object) {
 		return this.http<T>(HTTP_METHOD.DELETE, endpoint, data);
 	}
 
-	private http<T>(method: HTTP_METHOD, endpoint: string, data: object): Observable<T> {
+	private http<T>(method: HTTP_METHOD, endpoint: string, data: object = {}): Observable<T> {
 		const headers: { [key: string]: string } = {};
 		const jwt = this.options.jwtGetter();
 		if (jwt) {
@@ -61,14 +60,16 @@ export class HTTP {
 				json: true,
 				gzip: true
 			}, (err, res, body: APIResponse<T>) => {
+				// If server-side error
+				// (Check first because 500 could also be API error which we would rather display than generic 500)
+				if (body && body.error) {
+					observer.error(new MyMICDSError(body.error, res.statusCode!, body.action));
+					return;
+				}
+
 				// If client-side error
 				if (err) {
 					observer.error(err);
-					return;
-				}
-				// If server-side error
-				if (body.error) {
-					observer.error(new MyMICDSError(body.error, res.statusCode!, body.action));
 					return;
 				}
 

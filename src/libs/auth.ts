@@ -8,11 +8,7 @@ import { Observable } from 'rxjs/Observable';
 
 export class AuthAPI {
 
-	private options: MyMICDSOptions;
-
-	constructor(options: Partial<MyMICDSOptions>) {
-		this.options = Object.assign({}, options, defaultOptions);
-	}
+	constructor(private options: MyMICDSOptions) { }
 
 	// login(param: LoginParameters): Observable<RxHttpRequestResponse> {
 	// 	return RxHR.post(`${this.options.baseURL}/auth/login`);

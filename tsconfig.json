@@ -55,7 +55,8 @@
 		/* Additional Options */
 		"pretty": true,
 		"paths": {
-			"@mymicds/*": ["src/*"]
+			"@mymicds/*": ["src/*"],
+			"@libs/*": ["src/libs/*"]
 		}
 	}
 }
