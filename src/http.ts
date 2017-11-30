@@ -1,6 +1,6 @@
 import { APIResponse } from '@mymicds/api-response';
 import { MyMICDSError } from '@mymicds/error';
-import { defaultOptions, MyMICDSOptions } from '@mymicds/options';
+import { MyMICDSOptions } from '@mymicds/options';
 
 import * as request from 'request';
 import { Observable } from 'rxjs/Observable';
@@ -8,11 +8,7 @@ import { Observer } from 'rxjs/Observer';
 
 export class HTTP {
 
-	private options: MyMICDSOptions;
-
-	constructor(options: Partial<MyMICDSOptions>) {
-		this.options = Object.assign({}, options, defaultOptions);
-	}
+	constructor(private options: MyMICDSOptions) { }
 
 	get<T>(endpoint: string, data?: object) {
 		return this.http<T>(HTTP_METHOD.GET, endpoint, data);

@@ -4,7 +4,7 @@ declare const sessionStorage: Storage;
 export interface MyMICDSOptions {
 	baseURL: string;
 	jwtGetter(): string | null;
-	jwtSetter(jwt: string, remember: boolean): void;
+	jwtSetter(jwt: string, remember?: boolean): void;
 	jwtClear(): void;
 }
 

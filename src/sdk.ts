@@ -12,7 +12,7 @@ export class MyMICDS {
 	background: BackgroundAPI;
 
 	constructor(options: Partial<MyMICDSOptions>) {
-		this.options = Object.assign({}, options, defaultOptions);
+		this.options = Object.assign({}, defaultOptions, options);
 
 		const http = new HTTP(this.options);
 

@@ -2,6 +2,8 @@
  * Auth API
  */
 
+import 'rxjs/add/operator/do';
+
 import { HTTP } from '@mymicds/http';
 import { MyMICDSOptions } from '@mymicds/options';
 import { Observable } from 'rxjs/Observable';
@@ -11,12 +13,13 @@ export class AuthAPI {
 	constructor(private http: HTTP, private options: MyMICDSOptions) { }
 
 	login(param: LoginParameters) {
-		return this.http.post<LoginResponse>('/auth/login');
+		return this.http.post<LoginResponse>('/auth/login', param)
+						.do(r => this.options.jwtSetter(r.jwt, param.remember));
 	}
 
 	logout() {
-		return this.http.post('/auth/logout');
-		// @TODO Clear JWT
+		return this.http.post('/auth/logout')
+						.do(() => this.options.jwtClear());
 	}
 
 }
@@ -28,13 +31,14 @@ export class AuthAPI {
 export interface LoginParameters {
 	user: string;
 	password: string;
-	remember: boolean;
+	remember?: boolean;
+	comment?: string;
 }
 
 export interface LoginResponse {
 	success: boolean;
 	message: string;
-	jwt: JWT;
+	jwt: string;
 }
 
 export interface RegisterParameters {
@@ -69,12 +73,12 @@ export interface ResetPasswordParameters {
  * Helpers
  */
 
-export interface JWT {
-	user: string;
-	scope: string[];
-	aud: string;
-	exp: number;
-	iat: number;
-	iss: string;
-	sub: string;
-}
+// export interface JWT {
+// 	user: string;
+// 	scope: string[];
+// 	aud: string;
+// 	exp: number;
+// 	iat: number;
+// 	iss: string;
+// 	sub: string;
+// }
