@@ -9,8 +9,20 @@ export class BackgroundAPI {
 
 	constructor(private http: HTTP) { }
 
-	getBackground() {
-		return this.http.post<GetBackgroundResponse>('/background/get');
+	get() {
+		return this.http.get<GetBackgroundResponse>('/background');
+	}
+
+	getAll() {
+		return this.http.get<GetAllBackgroundsResponse>('/background/all');
+	}
+
+	upload(param: UploadBackgroundParameters) {
+		return this.http.put<UploadBackgroundResponse>('/background');
+	}
+
+	delete() {
+		return this.http.delete<DeleteBackgroundResponse>('/background');
 	}
 
 }
@@ -27,10 +39,16 @@ export interface GetBackgroundResponse {
 	};
 }
 
-export interface DeleteBackgroundResponse extends GetBackgroundResponse { }
+export interface GetAllBackgroundsResponse {
+	backgrounds: {
+		[user: string]: GetBackgroundResponse;
+	};
+}
 
 export interface UploadBackgroundParameters {
-	file: File;
+	background: Buffer /* Node */ | File /* Browser */;
 }
 
 export interface UploadBackgroundResponse extends GetBackgroundResponse { }
+
+export interface DeleteBackgroundResponse extends GetBackgroundResponse { }

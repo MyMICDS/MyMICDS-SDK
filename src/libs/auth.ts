@@ -23,6 +23,26 @@ export class AuthAPI {
 		);
 	}
 
+	register(param: RegisterParameters) {
+		return this.http.post('/auth/register', param);
+	}
+
+	confirm(param: ConfirmParameters) {
+		return this.http.post('/auth/confirm', param);
+	}
+
+	changePassword(param: ChangePasswordParameters) {
+		return this.http.post('/auth/change-password', param);
+	}
+
+	forgotPassword(param: ForgotPasswordParameters) {
+		return this.http.post('/auth/forgot-password', param);
+	}
+
+	resetPassword(param: ResetPasswordParameters) {
+		return this.http.post('/auth/reset-password', param);
+	}
+
 }
 
 /**
@@ -48,6 +68,7 @@ export interface RegisterParameters {
 	firstName: string;
 	lastName: string;
 	gradYear: number;
+	teacher?: boolean;
 }
 
 export interface ConfirmParameters {
@@ -55,7 +76,7 @@ export interface ConfirmParameters {
 	hash: string;
 }
 
-export interface ChangePasswordsParameters {
+export interface ChangePasswordParameters {
 	oldPassword: string;
 	newPassword: string;
 }
