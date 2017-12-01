@@ -2,24 +2,25 @@
  * Auth API
  */
 
-import 'rxjs/add/operator/do';
-
 import { HTTP } from '@mymicds/http';
 import { MyMICDSOptions } from '@mymicds/options';
 import { Observable } from 'rxjs/Observable';
+import { tap } from 'rxjs/operators';
 
 export class AuthAPI {
 
 	constructor(private http: HTTP, private options: MyMICDSOptions) { }
 
 	login(param: LoginParameters) {
-		return this.http.post<LoginResponse>('/auth/login', param)
-						.do(r => this.options.jwtSetter(r.jwt, param.remember));
+		return this.http.post<LoginResponse>('/auth/login', param).pipe(
+			tap(r => this.options.jwtSetter(r.jwt, param.remember))
+		);
 	}
 
 	logout() {
-		return this.http.post('/auth/logout')
-						.do(() => this.options.jwtClear());
+		return this.http.post('/auth/logout').pipe(
+			tap(() => this.options.jwtClear())
+		);
 	}
 
 }
