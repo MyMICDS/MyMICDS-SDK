@@ -27,14 +27,14 @@
   },
   "homepage": "https://github.com/MyMICDS/MyMICDS-SDK#readme",
   "devDependencies": {
-    "@types/request": "^2.0.8",
+    "@types/node": "^8.0.53",
     "rimraf": "^2.6.2",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1"
   },
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "module-alias": "^2.0.3",
-    "request": "^2.83.0",
     "rxjs": "^5.5.2"
   },
   "_moduleAliases": {

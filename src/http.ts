@@ -1,8 +1,9 @@
+import 'isomorphic-fetch';
+
 import { APIResponse } from '@mymicds/api-response';
 import { MyMICDSError } from '@mymicds/error';
 import { MyMICDSOptions } from '@mymicds/options';
 
-import * as request from 'request';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
@@ -34,54 +35,32 @@ export class HTTP {
 		const headers: { [key: string]: string } = {};
 		const jwt = this.options.jwtGetter();
 		if (jwt) {
-			headers.Authorization = `Bearer ${this.options.jwtGetter()}`;
+			headers.Authorization = `Bearer ${jwt}`;
 		}
 
 		// If a GET request, use query parameters instead of JSON body (which doesn't exist on GET)
-		let qs = {};
-		let reqBody = {};
+		let params = {};
 		if (method === HTTP_METHOD.GET) {
-			qs = data;
-		} else {
-			reqBody = data;
+			params = data;
+			data = {};
 		}
 
-		return Observable.create((observer: Observer<T>) => {
-			request({
-				url: endpoint,
-				baseUrl: this.options.baseURL,
-				method,
-				headers,
-				qs,
-				body: reqBody,
-				json: true,
-				gzip: true
-			}, (err, res, body: APIResponse<T>) => {
-				// If server-side error
-				// (Check first because 500 could also be API error which we would rather display than generic 500)
-				if (body && body.error) {
-					observer.error(new MyMICDSError(body.error, res.statusCode!, body.action));
-					return;
-				}
-
-				// If client-side error
-				if (err) {
-					observer.error(err);
-					return;
-				}
-
-				observer.next(body.data!);
-				observer.complete();
-			});
+		return Observable.create(async (observer: Observer<T>) => {
+			try {
+				// TODO
+				// const response = await fetch({ /* ... */ }).then(r => r.json());
+			} catch (err) {
+				// TODO
+			}
 		});
 	}
 
 }
 
 enum HTTP_METHOD {
-	GET = 'get',
-	POST = 'post',
-	PUT = 'put',
-	PATCH = 'patch',
-	DELETE = 'delete'
+	GET = 'GET',
+	POST = 'POST',
+	PUT = 'PUT',
+	PATCH = 'PATCH',
+	DELETE = 'DELETE'
 }

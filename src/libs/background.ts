@@ -18,7 +18,7 @@ export class BackgroundAPI {
 	}
 
 	upload(param: UploadBackgroundParameters) {
-		return this.http.put<UploadBackgroundResponse>('/background');
+		return this.http.put<UploadBackgroundResponse>('/background', param);
 	}
 
 	delete() {
