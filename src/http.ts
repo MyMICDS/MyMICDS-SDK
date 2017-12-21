@@ -1,8 +1,8 @@
-import 'isomorphic-fetch';
-
 import { APIResponse } from '@mymicds/api-response';
 import { MyMICDSError } from '@mymicds/error';
 import { MyMICDSOptions } from '@mymicds/options';
+
+import axios, { AxiosResponse } from 'axios';
 
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -47,10 +47,33 @@ export class HTTP {
 
 		return Observable.create(async (observer: Observer<T>) => {
 			try {
-				// TODO
-				// const response = await fetch({ /* ... */ }).then(r => r.json());
+				const response: AxiosResponse<APIResponse<T>> = await axios({
+					url: endpoint,
+					method,
+					baseURL: this.options.baseURL,
+					headers,
+					params,
+					data
+				});
+
+				observer.next(response.data.data!);
+				observer.complete();
 			} catch (err) {
-				// TODO
+				// Server-side error
+				if (err.response) {
+					// TypeScript doesn't allow type assertions in `catch` declarations, so we have to define an alias
+					const resErr: AxiosResponse<APIResponse<T>> = err.response;
+					observer.error(new MyMICDSError(resErr.data.error!, resErr.status, resErr.data.action));
+					return;
+				}
+				// Sent the request fine, but no response
+				if (err.request) {
+					observer.error(new MyMICDSError('No response from MyMICDS. Try again later, it might be down!', null, null));
+					return;
+				}
+
+				// Error sending the request
+				observer.error(new MyMICDSError('Something went wrong with sending the request. Please try again!', null, null));
 			}
 		});
 	}
