@@ -2,7 +2,7 @@
  * Backgrounds API
  */
 
-import { HTTP } from '@mymicds/http';
+import { HTTP, HTTP_METHOD } from '@mymicds/http';
 import { Observable } from 'rxjs/Observable';
 
 export class BackgroundAPI {
@@ -18,7 +18,7 @@ export class BackgroundAPI {
 	}
 
 	upload(param: UploadBackgroundParameters) {
-		return this.http.put<UploadBackgroundResponse>('/background', param);
+		return this.http.uploadFile<UploadBackgroundResponse>(HTTP_METHOD.PUT, '/background', param);
 	}
 
 	delete() {
