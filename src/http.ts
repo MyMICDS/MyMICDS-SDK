@@ -79,8 +79,7 @@ export class HTTP {
 		});
 	}
 
-	// Platform-agnostic file upload
-	// Kill me
+	// _Platform-agnostic_ file upload
 	uploadFile<T>(method: HTTP_METHOD, endpoint: string, data: Data = {}) {
 		const config: AxiosRequestConfig = {
 			url: endpoint,
@@ -96,7 +95,6 @@ export class HTTP {
 
 				// TypeScript isn't letting me move this outside of the if statement
 				// Because the call signature for FormData#append is slightly different to NodeFormData#append
-				// Not as DRY as I wish it was, but whatever
 				Object.keys(data).forEach(k => {
 					form.append(k, data[k]);
 				});
@@ -131,7 +129,7 @@ export class HTTP {
 				observer.next(response.data.data!);
 				observer.complete();
 			} catch (err) {
-				// Copypasterino from HTTP#http because I honestly just can't right now
+				// Copypasterino from HTTP#http
 				// Server-side error
 				if (err.response) {
 					// TypeScript doesn't allow type assertions in `catch` declarations, so we have to define an alias
@@ -153,7 +151,6 @@ export class HTTP {
 
 }
 
-// You know what, sure, why not
 export interface Data {
 	[key: string]: any;
 }
