@@ -46,7 +46,7 @@ export interface GetAllBackgroundsResponse {
 }
 
 export interface UploadBackgroundParameters {
-	background: Buffer /* Node */ | File /* Browser */;
+	background: File /* Browser */ | ReadableStream /* Node */;
 }
 
 export interface UploadBackgroundResponse extends GetBackgroundResponse { }

@@ -28,15 +28,17 @@
   "homepage": "https://github.com/MyMICDS/MyMICDS-SDK#readme",
   "devDependencies": {
     "@types/form-data": "^2.2.1",
-    "@types/node": "^8.0.53",
+    "@types/node": "^8.5.2",
+    "@types/qs": "^6.5.1",
     "rimraf": "^2.6.2",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1"
   },
   "dependencies": {
-    "axios": "^0.17.1",
-    "form-data": "^2.3.1",
+    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-form-data": "^1.0.0",
     "module-alias": "^2.0.3",
+    "qs": "^6.5.1",
     "rxjs": "^5.5.2"
   },
   "_moduleAliases": {
