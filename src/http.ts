@@ -111,7 +111,7 @@ export class HTTP {
 					}
 					observer.error(new MyMICDSError(error, response.status, resData.action));
 				} else {
-					observer.next(resData.data);
+					observer.next(resData.data!);
 				}
 				observer.complete();
 			} catch (err) {
