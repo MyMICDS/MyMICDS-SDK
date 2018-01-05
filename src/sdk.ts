@@ -3,6 +3,7 @@ import { defaultOptions, MyMICDSOptions } from '@mymicds/options';
 
 import { AuthAPI } from '@libs/auth';
 import { BackgroundAPI } from '@libs/background';
+import { CanvasAPI } from '@libs/canvas';
 
 export class MyMICDS {
 
@@ -10,6 +11,7 @@ export class MyMICDS {
 
 	auth: AuthAPI;
 	background: BackgroundAPI;
+	canvas: CanvasAPI;
 
 	constructor(options: Partial<MyMICDSOptions>) {
 		this.options = Object.assign({}, defaultOptions, options);
@@ -18,6 +20,7 @@ export class MyMICDS {
 
 		this.auth = new AuthAPI(http, this.options);
 		this.background = new BackgroundAPI(http);
+		this.canvas = new CanvasAPI(http);
 	}
 
 }
