@@ -4,7 +4,13 @@
 
 import * as moment from 'moment';
 
-import { GetPortalClassesResponse, SetPortalURLResponse } from '@libs/portal';
+import {
+	GetPortalClassesResponse,
+	SetPortalURLParameters,
+	SetPortalURLResponse,
+	TestPortalURLParameters,
+	TestPortalURLResponse
+} from '@libs/portal';
 import { HTTP } from '@mymicds/http';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
@@ -30,12 +36,12 @@ export class CanvasAPI {
 		);
 	}
 
-	setURL() {
-		return this.http.put('/portal/url');
+	setURL(param: SetCanvasURLParameters) {
+		return this.http.put('/portal/url', param);
 	}
 
-	testURL() {
-		return this.http.post('/portal/test');
+	testURL(param: TestCanvasURLParameters) {
+		return this.http.post('/portal/test', param);
 	}
 
 }
@@ -72,6 +78,10 @@ export interface GetCanvasEventsResponse {
 	}>;
 }
 
+export interface SetCanvasURLParameters extends SetPortalURLParameters { }
+
 export interface SetCanvasURLResponse extends SetPortalURLResponse { }
+
+export interface TestCanvasURLParameters extends TestPortalURLParameters { }
 
 export interface TestCanvasURLResponse extends SetCanvasURLResponse { }

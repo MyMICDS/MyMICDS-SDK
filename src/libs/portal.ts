@@ -17,12 +17,12 @@ export class PortalAPI {
 		return this.http.get<GetPortalDayRotationResponse>('/portal/day-rotation');
 	}
 
-	setURL() {
-		return this.http.put<SetPortalURLResponse>('/portal/url');
+	setURL(param: SetPortalURLParameters) {
+		return this.http.put<SetPortalURLResponse>('/portal/url', param);
 	}
 
-	testURL() {
-		return this.http.post<TestPortalURLResponse>('/portal/test');
+	testURL(param: TestPortalURLParameters) {
+		return this.http.post<TestPortalURLResponse>('/portal/test', param);
 	}
 
 }
@@ -46,9 +46,15 @@ export interface GetPortalDayRotationResponse {
 	};
 }
 
-export interface SetPortalURLResponse extends TestPortalURLResponse { }
+export interface SetPortalURLParameters {
+	url: string;
+}
 
-export interface TestPortalURLResponse {
+export interface SetPortalURLResponse {
 	valid: boolean;
 	url: string;
 }
+
+export interface TestPortalURLParameters extends SetPortalURLParameters { }
+
+export interface TestPortalURLResponse extends SetPortalURLResponse { }
