@@ -14,34 +14,34 @@ export class HTTP {
 	constructor(private options: MyMICDSOptions) { }
 
 	get<T>(endpoint: string, data?: Data) {
-		return this.http<T>(HTTP_METHOD.GET, endpoint, data);
+		return this.http<T>(HTTPMethod.GET, endpoint, data);
 	}
 
 	post<T>(endpoint: string, data?: Data) {
-		return this.http<T>(HTTP_METHOD.POST, endpoint, data);
+		return this.http<T>(HTTPMethod.POST, endpoint, data);
 	}
 
 	put<T>(endpoint: string, data?: Data) {
-		return this.http<T>(HTTP_METHOD.PUT, endpoint, data);
+		return this.http<T>(HTTPMethod.PUT, endpoint, data);
 	}
 
 	patch<T>(endpoint: string, data?: Data) {
-		return this.http<T>(HTTP_METHOD.PATCH, endpoint, data);
+		return this.http<T>(HTTPMethod.PATCH, endpoint, data);
 	}
 
 	delete<T>(endpoint: string, data?: Data) {
-		return this.http<T>(HTTP_METHOD.DELETE, endpoint, data);
+		return this.http<T>(HTTPMethod.DELETE, endpoint, data);
 	}
 
 	/**
 	 * Generic wrapper for regular API requests
 	 */
 
-	private http<T>(method: HTTP_METHOD, endpoint: string, data: Data = {}): Observable<T> {
+	private http<T>(method: HTTPMethod, endpoint: string, data: Data = {}): Observable<T> {
 		// If a GET request, use query parameters instead of JSON body
 		let body = JSON.stringify(data);
 		let query = '';
-		if (method === HTTP_METHOD.GET) {
+		if (method === HTTPMethod.GET) {
 			query = `?${qs.stringify(data)}`;
 			body = '';
 		}
@@ -65,9 +65,9 @@ export class HTTP {
 	 * Platform-agnostic file upload
 	 */
 
-	uploadFile<T>(method: HTTP_METHOD, endpoint: string, data: Data = {}): Observable<T> {
+	uploadFile<T>(method: HTTPMethod, endpoint: string, data: Data = {}): Observable<T> {
 		// No GET requests for file upload
-		if (method === HTTP_METHOD.GET) {
+		if (method === HTTPMethod.GET) {
 			return Observable.throw(
 				new MyMICDSError('Trying to upload a file using a GET request! Your code is broke!', null, null)
 			);
@@ -97,7 +97,7 @@ export class HTTP {
 	 * Unpacks API data or returns MyMICDSError object
 	 */
 
-	private fetchApi<T>(url: string, options: { [key: string]: any }): Observable<T> {
+	private fetchApi<T>(url: string, options: Data): Observable<T> {
 		return Observable.create(async (observer: Observer<T>) => {
 			try {
 				const response = await fetch(url, options);
@@ -133,7 +133,7 @@ export interface Data {
 	[key: string]: any;
 }
 
-export enum HTTP_METHOD {
+export enum HTTPMethod {
 	GET = 'GET',
 	POST = 'POST',
 	PUT = 'PUT',

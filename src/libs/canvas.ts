@@ -4,6 +4,7 @@
 
 import * as moment from 'moment';
 
+import { Block, ClassType } from '@libs/classes';
 import {
 	GetPortalClassesResponse,
 	SetPortalURLParameters,
@@ -37,11 +38,11 @@ export class CanvasAPI {
 	}
 
 	setURL(param: SetCanvasURLParameters) {
-		return this.http.put('/portal/url', param);
+		return this.http.put<SetCanvasURLResponse>('/portal/url', param);
 	}
 
 	testURL(param: TestCanvasURLParameters) {
-		return this.http.post('/portal/test', param);
+		return this.http.post<TestCanvasURLResponse>('/portal/test', param);
 	}
 
 }
@@ -63,8 +64,8 @@ export interface GetCanvasEventsResponse {
 			user: string;
 			name: string;
 			teacher: Record<'_id' | 'prefix' | 'firstName' | 'lastName', string>;
-			type: string;
-			block: string;
+			type: ClassType;
+			block: Block;
 			color: string;
 			textDark: boolean;
 		};
@@ -84,4 +85,4 @@ export interface SetCanvasURLResponse extends SetPortalURLResponse { }
 
 export interface TestCanvasURLParameters extends TestPortalURLParameters { }
 
-export interface TestCanvasURLResponse extends SetCanvasURLResponse { }
+export interface TestCanvasURLResponse extends TestPortalURLResponse { }
