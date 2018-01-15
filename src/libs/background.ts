@@ -3,7 +3,7 @@
  */
 
 import { HTTP, HTTPMethod } from '@mymicds/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class BackgroundAPI {
 

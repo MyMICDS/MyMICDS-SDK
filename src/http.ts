@@ -100,8 +100,8 @@ export class HTTP {
 	private fetchApi<T>(url: string, options: Data): Observable<T> {
 		return Observable.create(async (observer: Observer<T>) => {
 			try {
-				const response = await fetch(url, options);
-				const resData = await response.json();
+				const response = await fetch(url, /* Currently cannot be used because of Microsoft/TypeScript#9944 */ options);
+				const resData: APIResponse<T> = await response.json();
 
 				if (!response.ok) {
 					// Generic error message if for some reason there's no supplied error in body

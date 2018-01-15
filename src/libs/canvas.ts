@@ -4,7 +4,7 @@
 
 import * as moment from 'moment';
 
-import { Block, ClassType } from '@libs/classes';
+import { ScheduleClass } from '@libs/classes';
 import {
 	GetPortalClassesResponse,
 	SetPortalURLParameters,
@@ -13,7 +13,7 @@ import {
 	TestPortalURLResponse
 } from '@libs/portal';
 import { HTTP } from '@mymicds/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { map } from 'rxjs/operators';
 
 export class CanvasAPI {
@@ -59,16 +59,7 @@ export interface GetCanvasEventsResponse {
 		_id: string;
 		canvas: boolean;
 		user: string;
-		class: {
-			_id: string;
-			user: string;
-			name: string;
-			teacher: Record<'_id' | 'prefix' | 'firstName' | 'lastName', string>;
-			type: ClassType;
-			block: Block;
-			color: string;
-			textDark: boolean;
-		};
+		class: ScheduleClass;
 		title: string;
 		start: moment.Moment;
 		end: moment.Moment;

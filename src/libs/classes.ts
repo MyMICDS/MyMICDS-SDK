@@ -2,8 +2,9 @@
  * Classes API
  */
 
+import { Teacher } from '@libs/teachers';
 import { HTTP } from '@mymicds/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class ClassesAPI {
 
@@ -28,16 +29,7 @@ export class ClassesAPI {
  */
 
 export interface GetClassesResponse {
-	classes: Array<{
-		_id: string;
-		user: string;
-		name: string;
-		teacher: Record<'_id' | 'prefix' | 'firstName' | 'lastName', string>;
-		type: ClassType;
-		block: Block;
-		color: string;
-		textDark: boolean;
-	}>;
+	classes: ScheduleClass[];
 }
 
 export interface AddClassParameters {
@@ -87,4 +79,15 @@ export enum ClassType {
 	GERMAN = 'german',
 	FRENCH = 'french',
 	OTHER = 'other'
+}
+
+export interface ScheduleClass {
+	_id: string;
+	user: string;
+	name: string;
+	teacher: Teacher;
+	type: ClassType;
+	block: Block;
+	color: string;
+	textDark: boolean;
 }

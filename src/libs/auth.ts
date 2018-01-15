@@ -4,7 +4,7 @@
 
 import { HTTP } from '@mymicds/http';
 import { MyMICDSOptions } from '@mymicds/options';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { tap } from 'rxjs/operators';
 
 export class AuthAPI {
