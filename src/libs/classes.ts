@@ -33,11 +33,11 @@ export interface GetClassesResponse {
 }
 
 export interface AddClassParameters {
-	id: string;
+	id?: string;
 	name: string;
-	color: string;
-	block: Block;
-	type: ClassType;
+	color?: string;
+	block?: Block;
+	type?: ClassType;
 	teacherPrefix: string;
 	teacherFirstName: string;
 	teacherLastName: string;
