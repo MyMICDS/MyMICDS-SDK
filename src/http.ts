@@ -100,7 +100,7 @@ export class HTTP {
 	private fetchApi<T>(url: string, options: Data): Observable<T> {
 		return Observable.create(async (observer: Observer<T>) => {
 			try {
-				const response = await fetch(url, /* Currently cannot be used because of Microsoft/TypeScript#9944 */ options);
+				const response = await fetch(url, options);
 				const resData: APIResponse<T> = await response.json();
 
 				if (!response.ok) {
