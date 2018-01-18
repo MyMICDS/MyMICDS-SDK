@@ -1,16 +1,24 @@
+/**
+ * Classes API
+ */
+
 import { HTTP } from '@mymicds/http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class DailyBulletinAPI {
-    constructor(private http: HTTP) { }
+	constructor(private http: HTTP) { }
 
-    getList() {
-        return this.http.get<getListResponse>('/daily-bulletin');
-    }
+	getList() {
+		return this.http.get<GetListResponse>('/daily-bulletin');
+	}
 
 }
 
-export interface getListResponse {
-    baseURL: string;
-    bulletins: string[];
+/**
+ * API Parameters and Responses
+ */
+
+export interface GetListResponse {
+	baseURL: string;
+	bulletins: string[];
 }
