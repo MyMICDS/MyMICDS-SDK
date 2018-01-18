@@ -27,4 +27,9 @@ export interface GetTeachersResponse {
  * Helpers
  */
 
-export type Teacher = Record<'_id' | 'prefix' | 'firstName' | 'lastName', string>;
+export interface Teacher {
+	_id?: string;
+	prefix: string;
+	firstName: string;
+	lastName: string;
+}

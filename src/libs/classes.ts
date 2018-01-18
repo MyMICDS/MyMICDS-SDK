@@ -29,7 +29,7 @@ export class ClassesAPI {
  */
 
 export interface GetClassesResponse {
-	classes: ScheduleClass[];
+	classes: MyMICDSClass[];
 }
 
 export interface AddClassParameters {
@@ -82,12 +82,15 @@ export enum ClassType {
 }
 
 export interface ScheduleClass {
-	_id: string;
-	user: string;
 	name: string;
 	teacher: Teacher;
 	type: ClassType;
 	block: Block;
 	color: string;
 	textDark: boolean;
+}
+
+export interface MyMICDSClass extends ScheduleClass {
+	_id: string;
+	user: string;
 }

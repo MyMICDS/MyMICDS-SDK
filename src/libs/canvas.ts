@@ -4,7 +4,7 @@
 
 import * as moment from 'moment';
 
-import { ScheduleClass } from '@libs/classes';
+import { MyMICDSClass } from '@libs/classes';
 import {
 	GetPortalClassesResponse,
 	SetPortalURLParameters,
@@ -59,7 +59,7 @@ export interface GetCanvasEventsResponse {
 		_id: string;
 		canvas: boolean;
 		user: string;
-		class: ScheduleClass;
+		class: MyMICDSClass;
 		title: string;
 		start: moment.Moment;
 		end: moment.Moment;
