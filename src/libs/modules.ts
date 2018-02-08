@@ -2,7 +2,6 @@
  * Modules API
  */
 
-import { School } from '@libs/user';
 import { HTTP } from '@mymicds/http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
@@ -36,12 +35,12 @@ export interface UpdateModulesParameters {
  * Helpers
  */
 
- export interface MyMICDSModule {
+export interface MyMICDSModule {
 	type: string;
 	row: number;
 	width: number;
 	height: number;
 	options?: {
 		[item: string]: any;
-	}
- }
+	};
+}

@@ -22,7 +22,7 @@ const options = {
 };
 
 const api = new MyMICDS(options);
-api.canvas.getEvents().subscribe(
+api.alias.list().subscribe(
 	data => {
 		console.log('data', data);
 	},

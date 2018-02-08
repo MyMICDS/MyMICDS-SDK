@@ -13,23 +13,23 @@ export class HTTP {
 
 	constructor(private options: MyMICDSOptions) { }
 
-	get<T>(endpoint: string, data?: Data) {
+	get<T>(endpoint: string, data?: StringDict) {
 		return this.http<T>(HTTPMethod.GET, endpoint, data);
 	}
 
-	post<T>(endpoint: string, data?: Data) {
+	post<T>(endpoint: string, data?: StringDict) {
 		return this.http<T>(HTTPMethod.POST, endpoint, data);
 	}
 
-	put<T>(endpoint: string, data?: Data) {
+	put<T>(endpoint: string, data?: StringDict) {
 		return this.http<T>(HTTPMethod.PUT, endpoint, data);
 	}
 
-	patch<T>(endpoint: string, data?: Data) {
+	patch<T>(endpoint: string, data?: StringDict) {
 		return this.http<T>(HTTPMethod.PATCH, endpoint, data);
 	}
 
-	delete<T>(endpoint: string, data?: Data) {
+	delete<T>(endpoint: string, data?: StringDict) {
 		return this.http<T>(HTTPMethod.DELETE, endpoint, data);
 	}
 
@@ -37,7 +37,7 @@ export class HTTP {
 	 * Generic wrapper for regular API requests
 	 */
 
-	private http<T>(method: HTTPMethod, endpoint: string, data: Data = {}): Observable<T> {
+	private http<T>(method: HTTPMethod, endpoint: string, data: StringDict = {}): Observable<T> {
 		// If a GET request, use query parameters instead of JSON body
 		let body = JSON.stringify(data);
 		let query = '';
@@ -65,7 +65,7 @@ export class HTTP {
 	 * Platform-agnostic file upload
 	 */
 
-	uploadFile<T>(method: HTTPMethod, endpoint: string, data: Data = {}): Observable<T> {
+	uploadFile<T>(method: HTTPMethod, endpoint: string, data: StringDict = {}): Observable<T> {
 		// No GET requests for file upload
 		if (method === HTTPMethod.GET) {
 			return Observable.throw(
@@ -97,7 +97,7 @@ export class HTTP {
 	 * Unpacks API data or returns MyMICDSError object
 	 */
 
-	private fetchApi<T>(url: string, options: Data): Observable<T> {
+	private fetchApi<T>(url: string, options: StringDict): Observable<T> {
 		return Observable.create(async (observer: Observer<T>) => {
 			try {
 				const response = await fetch(url, options);
@@ -129,7 +129,7 @@ export class HTTP {
 	}
 }
 
-export interface Data {
+export interface StringDict {
 	[key: string]: any;
 }
 

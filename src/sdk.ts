@@ -1,13 +1,14 @@
 import { HTTP } from '@mymicds/http';
 import { defaultOptions, MyMICDSOptions } from '@mymicds/options';
 
+import { AliasAPI } from '@libs/alias';
 import { AuthAPI } from '@libs/auth';
 import { BackgroundAPI } from '@libs/background';
 import { CanvasAPI } from '@libs/canvas';
 import { ClassesAPI } from '@libs/classes';
 import { DailyBulletinAPI } from '@libs/dailybulletin';
-import { ModulesAPI } from '@libs/modules';
 import { LunchAPI } from '@libs/lunch';
+import { ModulesAPI } from '@libs/modules';
 import { PortalAPI } from '@libs/portal';
 import { ScheduleAPI } from '@libs/schedule';
 import { TeachersAPI } from '@libs/teachers';
@@ -17,6 +18,7 @@ export class MyMICDS {
 
 	options: MyMICDSOptions;
 
+	alias: AliasAPI;
 	auth: AuthAPI;
 	background: BackgroundAPI;
 	canvas: CanvasAPI;
@@ -34,6 +36,7 @@ export class MyMICDS {
 
 		const http = new HTTP(this.options);
 
+		this.alias = new AliasAPI(http);
 		this.auth = new AuthAPI(http, this.options);
 		this.background = new BackgroundAPI(http);
 		this.canvas = new CanvasAPI(http);

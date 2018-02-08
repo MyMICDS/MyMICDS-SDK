@@ -57,7 +57,7 @@ export interface GetCanvasEventsResponse {
 	hasURL: boolean;
 	events: Array<{
 		_id: string;
-		canvas: boolean;
+		canvas: true;
 		user: string;
 		class: MyMICDSClass;
 		title: string;
