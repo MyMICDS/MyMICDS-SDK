@@ -12,7 +12,7 @@ import {
 	TestPortalURLParameters,
 	TestPortalURLResponse
 } from '@libs/portal';
-import { HTTP } from '@mymicds/http';
+import { HTTP } from '@sdk/http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { map } from 'rxjs/operators';
 

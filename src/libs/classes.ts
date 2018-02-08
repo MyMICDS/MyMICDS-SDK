@@ -3,7 +3,7 @@
  */
 
 import { Teacher } from '@libs/teachers';
-import { HTTP } from '@mymicds/http';
+import { HTTP } from '@sdk/http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class ClassesAPI {

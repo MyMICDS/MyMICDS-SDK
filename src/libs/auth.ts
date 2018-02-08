@@ -2,8 +2,8 @@
  * Auth API
  */
 
-import { HTTP } from '@mymicds/http';
-import { MyMICDSOptions } from '@mymicds/options';
+import { HTTP } from '@sdk/http';
+import { MyMICDSOptions } from '@sdk/options';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { tap } from 'rxjs/operators';
 

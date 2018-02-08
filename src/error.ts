@@ -1,4 +1,4 @@
-import { ACTIONS } from '@mymicds/api-response';
+import { ACTIONS } from '@sdk/api-response';
 
 export class MyMICDSError extends Error {
 

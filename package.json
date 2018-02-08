@@ -36,6 +36,7 @@
     "rxjs": "^5.5.2"
   },
   "devDependencies": {
+    "@mymicds/configs": "^1.0.0",
     "@types/form-data": "^2.2.1",
     "@types/node": "^8.5.2",
     "@types/qs": "^6.5.1",
@@ -45,7 +46,7 @@
     "typescript": "^2.6.1"
   },
   "_moduleAliases": {
-    "@mymicds": "dist",
+    "@sdk": "dist",
     "@libs": "dist/libs"
   }
 }

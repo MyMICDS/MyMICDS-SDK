@@ -1,5 +1,5 @@
-import { HTTP } from '@mymicds/http';
-import { defaultOptions, MyMICDSOptions } from '@mymicds/options';
+import { HTTP } from '@sdk/http';
+import { defaultOptions, MyMICDSOptions } from '@sdk/options';
 
 import { AliasAPI } from '@libs/alias';
 import { AuthAPI } from '@libs/auth';

@@ -1,6 +1,6 @@
-import { APIResponse } from '@mymicds/api-response';
-import { MyMICDSError } from '@mymicds/error';
-import { MyMICDSOptions } from '@mymicds/options';
+import { APIResponse } from '@sdk/api-response';
+import { MyMICDSError } from '@sdk/error';
+import { MyMICDSOptions } from '@sdk/options';
 
 import 'isomorphic-fetch';
 import 'isomorphic-form-data';

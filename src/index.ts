@@ -1,8 +1,8 @@
-// For @mymicds path configuration
+// For @sdk path configuration
 import 'module-alias/register';
 
-import { MyMICDSError } from '@mymicds/error';
-import { MyMICDS } from '@mymicds/sdk';
+import { MyMICDSError } from '@sdk/error';
+import { MyMICDS } from '@sdk/sdk';
 
 export {
 	MyMICDS,
