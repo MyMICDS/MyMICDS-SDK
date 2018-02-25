@@ -2,7 +2,7 @@
  * Modules API
  */
 
-import { HTTP } from '@sdk/http';
+import { HTTP, StringDict } from '@sdk/http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class ModulesAPI {
@@ -40,7 +40,5 @@ export interface MyMICDSModule {
 	row: number;
 	width: number;
 	height: number;
-	options?: {
-		[item: string]: any;
-	};
+	options?: StringDict;
 }

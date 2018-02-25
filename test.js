@@ -22,7 +22,7 @@ const options = {
 };
 
 const api = new MyMICDS(options);
-api.alias.list().subscribe(
+api.dates.getBreaks().subscribe(
 	data => {
 		console.log('data', data);
 	},

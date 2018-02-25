@@ -5,6 +5,7 @@
 import * as moment from 'moment';
 
 import { MyMICDSClass } from '@libs/classes';
+import { PlannerEvent } from '@libs/planner';
 import {
 	GetPortalClassesResponse,
 	SetPortalURLParameters,
@@ -55,19 +56,7 @@ export interface GetCanvasClassesResponse extends GetPortalClassesResponse { }
 
 export interface GetCanvasEventsResponse {
 	hasURL: boolean;
-	events: Array<{
-		_id: string;
-		canvas: true;
-		user: string;
-		class: MyMICDSClass;
-		title: string;
-		start: moment.Moment;
-		end: moment.Moment;
-		link: string;
-		checked: boolean;
-		desc: string;
-		descPlaintext: string;
-	}>;
+	events: CanvasEvent[];
 }
 
 export interface SetCanvasURLParameters extends SetPortalURLParameters { }
@@ -77,3 +66,11 @@ export interface SetCanvasURLResponse extends SetPortalURLResponse { }
 export interface TestCanvasURLParameters extends TestPortalURLParameters { }
 
 export interface TestCanvasURLResponse extends TestPortalURLResponse { }
+
+/**
+ * Helpers
+ */
+
+export interface CanvasEvent extends PlannerEvent {
+	class: MyMICDSClass;
+}
