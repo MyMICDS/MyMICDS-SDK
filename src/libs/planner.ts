@@ -52,12 +52,12 @@ export interface GetPlannerEventsResponse {
 }
 
 export interface AddPlannerEventParameters {
-	id: string;
+	id?: string;
 	title: string;
-	desc: string;
-	classId: string;
-	start: moment.Moment;
-	end: moment.Moment;
+	desc?: string;
+	classId?: string | null;
+	start?: moment.Moment;
+	end?: moment.Moment;
 }
 
 export interface AddPlannerEventResponse extends GetPlannerEventsResponse { }
