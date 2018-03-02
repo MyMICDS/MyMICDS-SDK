@@ -22,7 +22,7 @@ const options = {
 };
 
 const api = new MyMICDS(options);
-api.dates.getBreaks().subscribe(
+api.snowday.get().subscribe(
 	data => {
 		console.log('data', data);
 	},

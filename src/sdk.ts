@@ -14,6 +14,7 @@ import { ModulesAPI } from '@libs/modules';
 import { PlannerAPI } from '@libs/planner';
 import { PortalAPI } from '@libs/portal';
 import { ScheduleAPI } from '@libs/schedule';
+import { SnowdayAPI } from '@libs/snowday';
 import { TeachersAPI } from '@libs/teachers';
 import { UserAPI } from '@libs/user';
 
@@ -34,6 +35,7 @@ export class MyMICDS {
 	planner: PlannerAPI;
 	portal: PortalAPI;
 	schedule: ScheduleAPI;
+	snowday: SnowdayAPI;
 	teachers: TeachersAPI;
 	user: UserAPI;
 
@@ -55,6 +57,7 @@ export class MyMICDS {
 		this.planner = new PlannerAPI(http);
 		this.portal = new PortalAPI(http);
 		this.schedule = new ScheduleAPI(http);
+		this.snowday = new SnowdayAPI(http);
 		this.teachers = new TeachersAPI(http);
 		this.user = new UserAPI(http);
 	}
