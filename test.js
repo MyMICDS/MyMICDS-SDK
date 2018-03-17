@@ -22,9 +22,7 @@ const options = {
 };
 
 const api = new MyMICDS(options);
-api.weather.update().pipe(
-	mergeMap(() => api.weather.get())
-).subscribe(
+api.suggestion.submit({ submission: 'holy shy SDK is done' }).subscribe(
 	data => {
 		console.log('data', data);
 	},
