@@ -22,7 +22,9 @@ const options = {
 };
 
 const api = new MyMICDS(options);
-api.snowday.get().subscribe(
+api.weather.update().pipe(
+	mergeMap(() => api.weather.get())
+).subscribe(
 	data => {
 		console.log('data', data);
 	},

@@ -17,6 +17,7 @@ import { ScheduleAPI } from '@libs/schedule';
 import { SnowdayAPI } from '@libs/snowday';
 import { TeachersAPI } from '@libs/teachers';
 import { UserAPI } from '@libs/user';
+import { WeatherAPI } from '@libs/weather';
 
 export class MyMICDS {
 
@@ -38,6 +39,7 @@ export class MyMICDS {
 	snowday: SnowdayAPI;
 	teachers: TeachersAPI;
 	user: UserAPI;
+	weather: WeatherAPI;
 
 	constructor(options: Partial<MyMICDSOptions>) {
 		this.options = Object.assign({}, defaultOptions, options);
@@ -60,6 +62,7 @@ export class MyMICDS {
 		this.snowday = new SnowdayAPI(http);
 		this.teachers = new TeachersAPI(http);
 		this.user = new UserAPI(http);
+		this.weather = new WeatherAPI(http);
 	}
 
 }
