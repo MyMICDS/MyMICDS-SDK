@@ -16,10 +16,10 @@ import { PortalAPI } from '@libs/portal';
 import { QuotesAPI } from '@libs/quotes';
 import { ScheduleAPI } from '@libs/schedule';
 import { SnowdayAPI } from '@libs/snowday';
+import { SportsAPI } from '@libs/sports';
 import { TeachersAPI } from '@libs/teachers';
 import { UserAPI } from '@libs/user';
 import { WeatherAPI } from '@libs/weather';
-import { SportsAPI } from '@libs/sports';
 
 export class MyMICDS {
 
