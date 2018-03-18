@@ -1,2 +1,60 @@
 # MyMICDS-SDK
-Client for connecting to the MyMICDS API
+This is a TypeScript client made for connecting to the MyMICDS API.
+
+## Installation
+Just run `npm install @mymicds/sdk` in your JavaScript/TypeScript project's root folder.
+
+## Usage
+```typescript
+import { MyMICDS, MyMICDSOptions } from '@mymicds/sdk';
+
+const jwtStore = {
+	jwt: ''
+};
+// When instantiating an instance of the `MyMICDS` object, you must pass in an options object
+const options: MyMICDSOptions = {
+	baseURL: 'https://api.mymicds.net/v2',
+	jwtGetter() {
+		return jwtStore.jwt;
+	},
+	jwtSetter(jwt, remember) {
+		jwtStore.jwt = jwt;
+		jwtStore.remember = remember;
+	},
+	jwtClear() {
+		delete jwtStore.jwt;
+		delete jwtStore.remember;
+	}
+};
+
+// By default, it will assume a browser environment and use these options:
+const defaultOptions: MyMICDSOptions = {
+	baseURL: 'https://api.mymicds.net/v2',
+	jwtGetter() {
+		return sessionStorage.getItem('jwt') || localStorage.getItem('jwt');
+	},
+	jwtSetter(jwt: string, remember: boolean) {
+		if (remember) {
+			localStorage.setItem('jwt', jwt);
+		} else {
+			sessionStorage.setItem('jwt', jwt);
+		}
+	},
+	jwtClear() {
+		localStorage.removeItem('jwt');
+		sessionStorage.removeItem('jwt');
+	}
+};
+
+const api = new MyMICDS(options);
+
+// All API routes return Observables
+api.auth.login({ user: 'foo', password: 'hunter2' }).subscribe(
+	data => {
+		console.log('data', data);
+	},
+	err => {
+		console.log('err', err);
+	}
+)
+```

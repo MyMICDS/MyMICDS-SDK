@@ -9,7 +9,7 @@ export interface MyMICDSOptions {
 }
 
 export const defaultOptions: MyMICDSOptions = {
-	baseURL: 'https://api.mymicds.net',
+	baseURL: 'https://api.mymicds.net/v2',
 	jwtGetter() {
 		return sessionStorage.getItem('jwt') || localStorage.getItem('jwt');
 	},
