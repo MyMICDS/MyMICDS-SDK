@@ -45,13 +45,13 @@ export class MyMICDS {
 	snowday: SnowdayAPI;
 	sports: SportsAPI;
 	stats: StatsAPI;
-	stickynotes: StickyNotesAPI;
+	stickyNotes: StickyNotesAPI;
 	suggestion: SuggestionAPI;
 	teachers: TeachersAPI;
 	user: UserAPI;
 	weather: WeatherAPI;
 
-	constructor(options: Partial<MyMICDSOptions>) {
+	constructor(options?: Partial<MyMICDSOptions>) {
 		this.options = Object.assign({}, defaultOptions, options);
 
 		const http = new HTTP(this.options);
@@ -73,7 +73,7 @@ export class MyMICDS {
 		this.snowday = new SnowdayAPI(http);
 		this.sports = new SportsAPI(http);
 		this.stats = new StatsAPI(http);
-		this.stickynotes = new StickyNotesAPI(http);
+		this.stickyNotes = new StickyNotesAPI(http);
 		this.suggestion = new SuggestionAPI(http);
 		this.teachers = new TeachersAPI(http);
 		this.user = new UserAPI(http);

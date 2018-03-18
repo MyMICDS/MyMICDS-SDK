@@ -13,6 +13,7 @@ const jwtStore = {
 	jwt: ''
 };
 // When instantiating an instance of the `MyMICDS` object, you must pass in an options object
+// Any of these keys can be omitted and the defaults will be used in their place.
 const options: MyMICDSOptions = {
 	baseURL: 'https://api.mymicds.net/v2',
 	jwtGetter() {
@@ -47,12 +48,12 @@ const defaultOptions: MyMICDSOptions = {
 	}
 };
 
-const api = new MyMICDS(options);
+const mymicds = new MyMICDS(options);
 
 // All API routes return Observables
-api.auth.login({ user: 'foo', password: 'hunter2' }).pipe(
+mymicds.auth.login({ user: 'foo', password: 'hunter2' }).pipe(
 	// Use `mergeMap` to chain Observables!
-	mergeMap(() => api.schedule.get())
+	mergeMap(() => mymicds.schedule.get())
 ).subscribe(
 	data => {
 		console.log('data', data);
