@@ -7,6 +7,7 @@ Just run `npm install @mymicds/sdk` in your JavaScript/TypeScript project's root
 ## Usage
 ```typescript
 import { MyMICDS, MyMICDSOptions } from '@mymicds/sdk';
+import { mergeMap } from 'rxjs/operators';
 
 const jwtStore = {
 	jwt: ''
@@ -49,7 +50,10 @@ const defaultOptions: MyMICDSOptions = {
 const api = new MyMICDS(options);
 
 // All API routes return Observables
-api.auth.login({ user: 'foo', password: 'hunter2' }).subscribe(
+api.auth.login({ user: 'foo', password: 'hunter2' }).pipe(
+	// Use `mergeMap` to chain Observables!
+	mergeMap(() => api.schedule.get())
+).subscribe(
 	data => {
 		console.log('data', data);
 	},
