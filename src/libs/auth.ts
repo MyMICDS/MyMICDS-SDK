@@ -17,7 +17,10 @@ export class AuthAPI {
 	authSnapshot: AuthSnapshot;
 
 	constructor(private http: HTTP, private options: MyMICDSOptions) {
-		this.authSnapshot = { jwt: undefined };
+		const rawJwt = this.options.jwtGetter();
+		let parsed = rawJwt ? decode(rawJwt) : undefined;
+		if (parsed && typeof parsed !== 'string') { parsed = undefined; }
+		this.authSnapshot = { jwt: parsed as JWT | undefined };
 		this.auth$ = new BehaviorSubject(this.authSnapshot);
 	}
 

@@ -4,6 +4,7 @@
 
 import * as moment from 'moment';
 
+import { HTTP } from '../http';
 import { MyMICDSClass } from './classes';
 import { PlannerEvent } from './planner';
 import {
@@ -13,7 +14,7 @@ import {
 	TestPortalURLParameters,
 	TestPortalURLResponse
 } from './portal';
-import { HTTP } from '../http';
+
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { map } from 'rxjs/operators';
 
