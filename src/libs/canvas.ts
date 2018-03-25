@@ -4,15 +4,15 @@
 
 import * as moment from 'moment';
 
-import { MyMICDSClass } from '@libs/classes';
-import { PlannerEvent } from '@libs/planner';
+import { MyMICDSClass } from './classes';
+import { PlannerEvent } from './planner';
 import {
 	GetPortalClassesResponse,
 	SetPortalURLParameters,
 	SetPortalURLResponse,
 	TestPortalURLParameters,
 	TestPortalURLResponse
-} from '@libs/portal';
+} from './portal';
 import { HTTP } from '../http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { map } from 'rxjs/operators';
