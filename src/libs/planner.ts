@@ -2,8 +2,8 @@
  * Planner API
  */
 
-import { MyMICDSClass } from './classes';
 import { HTTP } from '../http';
+import { MyMICDSClass } from './classes';
 
 import * as moment from 'moment';
 import { map } from 'rxjs/operators';
