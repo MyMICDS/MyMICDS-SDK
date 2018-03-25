@@ -2,7 +2,7 @@
  * Classes API
  */
 
-import { Teacher } from '@libs/teachers';
+import { Teacher } from './teachers';
 import { HTTP } from '../http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 

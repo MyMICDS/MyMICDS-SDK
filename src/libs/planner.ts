@@ -2,7 +2,7 @@
  * Planner API
  */
 
-import { MyMICDSClass } from '@libs/classes';
+import { MyMICDSClass } from './classes';
 import { HTTP } from '../http';
 
 import * as moment from 'moment';
