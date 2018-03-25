@@ -22,11 +22,22 @@ const options = {
 };
 
 const api = new MyMICDS(options);
-api.suggestion.submit({ submission: 'holy shy SDK is done' }).subscribe(
+api.auth.login({ user: 'foo', password: 'bar' }).subscribe(
 	data => {
-		console.log('data', data);
+		// console.log(data);
 	},
-	err => {
-		console.log('error!', err);
+	error => {
+		console.log(error);
 	}
 );
+api.auth.auth$.subscribe(
+	s => console.log(s)
+)
+// api.suggestion.submit({ submission: 'holy shy SDK is done' }).subscribe(
+// 	data => {
+// 		console.log('data', data);
+// 	},
+// 	err => {
+// 		console.log('error!', err);
+// 	}
+// );

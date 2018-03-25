@@ -4,22 +4,43 @@
 
 import { HTTP } from '../http';
 import { MyMICDSOptions } from '../options';
-import { Observable } from 'rxjs/Observable'; // tslint:disable-line
+
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
+
+import { decode } from 'jsonwebtoken';
 
 export class AuthAPI {
 
-	constructor(private http: HTTP, private options: MyMICDSOptions) { }
+	auth$: BehaviorSubject<AuthSnapshot>;
+	authSnapshot: AuthSnapshot;
+
+	constructor(private http: HTTP, private options: MyMICDSOptions) {
+		this.authSnapshot = { jwt: undefined };
+		this.auth$ = new BehaviorSubject(this.authSnapshot);
+	}
 
 	login(param: LoginParameters) {
 		return this.http.post<LoginResponse>('/auth/login', param).pipe(
-			tap(r => this.options.jwtSetter(r.jwt, param.remember))
+			tap(r => {
+				this.options.jwtSetter(r.jwt, param.remember);
+				const parsed = decode(r.jwt);
+				if (parsed && typeof parsed !== 'string') {
+					this.authSnapshot = {jwt: parsed as JWT};
+					this.auth$.next(this.authSnapshot);
+				}
+			})
 		);
 	}
 
 	logout() {
 		return this.http.post('/auth/logout').pipe(
-			tap(() => this.options.jwtClear())
+			tap(() => {
+				this.options.jwtClear();
+				this.authSnapshot = { jwt: undefined };
+				this.auth$.next(this.authSnapshot);
+			})
 		);
 	}
 
@@ -91,16 +112,20 @@ export interface ResetPasswordParameters {
 	hash: string;
 }
 
+export interface AuthSnapshot {
+	jwt: JWT | undefined;
+}
+
 /**
  * Helpers
  */
 
-// export interface JWT {
-// 	user: string;
-// 	scope: string[];
-// 	aud: string;
-// 	exp: number;
-// 	iat: number;
-// 	iss: string;
-// 	sub: string;
-// }
+export interface JWT {
+	user: string;
+	scope: string[];
+	aud: string;
+	exp: number;
+	iat: number;
+	iss: string;
+	sub: string;
+}
