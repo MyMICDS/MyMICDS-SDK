@@ -1,6 +1,6 @@
 {
   "name": "@mymicds/sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Client for connecting to the MyMICDS API",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
