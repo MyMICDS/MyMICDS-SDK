@@ -31,7 +31,6 @@
   },
   "homepage": "https://github.com/MyMICDS/MyMICDS-SDK#readme",
   "dependencies": {
-    "@types/jsonwebtoken": "^7.2.6",
     "isomorphic-fetch": "^2.2.1",
     "isomorphic-form-data": "^1.0.0",
     "jsonwebtoken": "^8.2.0",
@@ -40,6 +39,7 @@
     "rxjs": "^5.5.2"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^7.2.6",
     "@mymicds/configs": "^1.0.0",
     "@types/form-data": "^2.2.1",
     "@types/node": "^8.5.2",
