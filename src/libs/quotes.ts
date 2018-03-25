@@ -2,7 +2,7 @@
  * Quotes API
  */
 
-import { HTTP } from '@sdk/http';
+import { HTTP } from '../http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class QuotesAPI {

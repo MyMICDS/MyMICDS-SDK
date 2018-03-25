@@ -2,7 +2,8 @@
  * Weather API
  */
 
-import { HTTP } from '@sdk/http';
+import { HTTP } from '../http';
+
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { tap } from 'rxjs/operators';

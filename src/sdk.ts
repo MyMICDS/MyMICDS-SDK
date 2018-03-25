@@ -1,28 +1,28 @@
-import { HTTP } from '@sdk/http';
-import { defaultOptions, MyMICDSOptions } from '@sdk/options';
+import { HTTP } from './http';
+import { defaultOptions, MyMICDSOptions } from './options';
 
-import { AliasAPI } from '@libs/alias';
-import { AuthAPI } from '@libs/auth';
-import { BackgroundAPI } from '@libs/background';
-import { CanvasAPI } from '@libs/canvas';
-import { ClassesAPI } from '@libs/classes';
-import { DailyBulletinAPI } from '@libs/dailybulletin';
-import { DatesAPI } from '@libs/dates';
-import { FeedsAPI } from '@libs/feeds';
-import { LunchAPI } from '@libs/lunch';
-import { ModulesAPI } from '@libs/modules';
-import { PlannerAPI } from '@libs/planner';
-import { PortalAPI } from '@libs/portal';
-import { QuotesAPI } from '@libs/quotes';
-import { ScheduleAPI } from '@libs/schedule';
-import { SnowdayAPI } from '@libs/snowday';
-import { SportsAPI } from '@libs/sports';
-import { StatsAPI } from '@libs/stats';
-import { StickyNotesAPI } from '@libs/stickynotes';
-import { SuggestionAPI } from '@libs/suggestion';
-import { TeachersAPI } from '@libs/teachers';
-import { UserAPI } from '@libs/user';
-import { WeatherAPI } from '@libs/weather';
+import { AliasAPI } from './libs/alias';
+import { AuthAPI } from './libs/auth';
+import { BackgroundAPI } from './libs/background';
+import { CanvasAPI } from './libs/canvas';
+import { ClassesAPI } from './libs/classes';
+import { DailyBulletinAPI } from './libs/dailybulletin';
+import { DatesAPI } from './libs/dates';
+import { FeedsAPI } from './libs/feeds';
+import { LunchAPI } from './libs/lunch';
+import { ModulesAPI } from './libs/modules';
+import { PlannerAPI } from './libs/planner';
+import { PortalAPI } from './libs/portal';
+import { QuotesAPI } from './libs/quotes';
+import { ScheduleAPI } from './libs/schedule';
+import { SnowdayAPI } from './libs/snowday';
+import { SportsAPI } from './libs/sports';
+import { StatsAPI } from './libs/stats';
+import { StickyNotesAPI } from './libs/stickynotes';
+import { SuggestionAPI } from './libs/suggestion';
+import { TeachersAPI } from './libs/teachers';
+import { UserAPI } from './libs/user';
+import { WeatherAPI } from './libs/weather';
 
 export class MyMICDS {
 

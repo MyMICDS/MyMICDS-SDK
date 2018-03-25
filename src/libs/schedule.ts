@@ -5,7 +5,7 @@
 import * as moment from 'moment';
 
 import { ScheduleClass } from '@libs/classes';
-import { HTTP } from '@sdk/http';
+import { HTTP } from '../http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 import { map } from 'rxjs/operators';
 

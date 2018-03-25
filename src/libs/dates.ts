@@ -1,8 +1,8 @@
 /**
  * Dates API
  */
+import { HTTP } from '../http';
 
-import { HTTP } from '@sdk/http';
 import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line

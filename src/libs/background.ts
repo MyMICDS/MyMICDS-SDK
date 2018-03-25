@@ -2,7 +2,7 @@
  * Backgrounds API
  */
 
-import { HTTP, HTTPMethod } from '@sdk/http';
+import { HTTP, HTTPMethod } from '../http';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class BackgroundAPI {

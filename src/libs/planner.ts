@@ -3,7 +3,8 @@
  */
 
 import { MyMICDSClass } from '@libs/classes';
-import { HTTP } from '@sdk/http';
+import { HTTP } from '../http';
+
 import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable'; // tslint:disable-line
