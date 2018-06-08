@@ -4,12 +4,16 @@
 import { HTTP } from '../http';
 
 import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class DatesAPI {
 
 	constructor(private http: HTTP) { }
+
+	schoolStarts() {
+		return this.http.get<SchoolStartsResponse>('/dates/school-ends');
+	}
 
 	schoolEnds() {
 		return this.http.get<SchoolEndsResponse>('/dates/school-ends');
@@ -35,6 +39,10 @@ export class DatesAPI {
 /**
  * API Parameters and Responses
  */
+
+export interface SchoolStartsResponse {
+	date: moment.Moment;
+}
 
 export interface SchoolEndsResponse {
 	date: moment.Moment;

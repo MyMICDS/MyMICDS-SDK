@@ -6,15 +6,15 @@ import { HTTP } from '../http';
 import { MyMICDSClass } from './classes';
 
 import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class PlannerAPI {
 
 	constructor(private http: HTTP) { }
 
 	getEvents() {
-		return this.http.get<GetPlannerEventsResponse>('/canvas/events').pipe(
+		return this.http.get<GetPlannerEventsResponse>('/planner').pipe(
 			map(r => {
 				for (const event of r.events) {
 					event.start = moment(event.start);

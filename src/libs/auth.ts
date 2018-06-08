@@ -67,6 +67,10 @@ export class AuthAPI {
 		return this.http.post('/auth/reset-password', param);
 	}
 
+	verify() {
+		return this.http.get('/auth/verify');
+	}
+
 }
 
 /**

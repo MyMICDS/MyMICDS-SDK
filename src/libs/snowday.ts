@@ -2,8 +2,8 @@
  * Snowday API
  */
 
+import { Observable } from 'rxjs/Observable';
 import { HTTP } from '../http';
-import { Observable } from 'rxjs/Observable'; // tslint:disable-line
 
 export class SnowdayAPI {
 

@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { HTTP } from '../http';
 import { ScheduleClass } from './classes';
 
-import { Observable } from 'rxjs/Observable'; // tslint:disable-line
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
 export class ScheduleAPI {

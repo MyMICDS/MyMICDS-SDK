@@ -11,6 +11,7 @@ import { DatesAPI } from './libs/dates';
 import { FeedsAPI } from './libs/feeds';
 import { LunchAPI } from './libs/lunch';
 import { ModulesAPI } from './libs/modules';
+import { NotificationsAPI } from './libs/notifications';
 import { PlannerAPI } from './libs/planner';
 import { PortalAPI } from './libs/portal';
 import { QuotesAPI } from './libs/quotes';
@@ -38,6 +39,7 @@ export class MyMICDS {
 	feeds: FeedsAPI;
 	lunch: LunchAPI;
 	modules: ModulesAPI;
+	notifications: NotificationsAPI;
 	planner: PlannerAPI;
 	portal: PortalAPI;
 	quotes: QuotesAPI;
@@ -66,6 +68,7 @@ export class MyMICDS {
 		this.feeds = new FeedsAPI(http);
 		this.lunch = new LunchAPI(http);
 		this.modules = new ModulesAPI(http);
+		this.notifications = new NotificationsAPI(http);
 		this.planner = new PlannerAPI(http);
 		this.portal = new PortalAPI(http);
 		this.quotes = new QuotesAPI(http);

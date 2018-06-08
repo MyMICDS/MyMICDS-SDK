@@ -2,8 +2,6 @@
  * Canvas API
  */
 
-import * as moment from 'moment';
-
 import { HTTP } from '../http';
 import { MyMICDSClass } from './classes';
 import { PlannerEvent } from './planner';
@@ -15,7 +13,8 @@ import {
 	TestPortalURLResponse
 } from './portal';
 
-import { Observable } from 'rxjs/Observable'; // tslint:disable-line
+import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
 export class CanvasAPI {

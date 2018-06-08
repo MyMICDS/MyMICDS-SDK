@@ -6,7 +6,7 @@ import { HTTP } from '../http';
 
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
-import { tap } from 'rxjs/operators'; // tslint:disable-line
+import { tap } from 'rxjs/operators';
 
 export class SportsAPI {
 
