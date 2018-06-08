@@ -10,7 +10,7 @@ export class StatsAPI {
 	constructor(private http: HTTP) { }
 
 	get() {
-		return this.http.get('/stats');
+		return this.http.get<GetStatsResponse>('/stats');
 	}
 
 }
