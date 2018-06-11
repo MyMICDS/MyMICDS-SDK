@@ -1,9 +1,14 @@
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/Observable/of';
+import { switchMap } from 'rxjs/operators';
+
 import { HTTP } from './http';
 import { defaultOptions, MyMICDSOptions } from './options';
 
 import { AliasAPI } from './libs/alias';
-import { AuthAPI } from './libs/auth';
-import { BackgroundAPI } from './libs/background';
+import { AuthAPI, JWT } from './libs/auth';
+import { BackgroundAPI, GetBackgroundResponse } from './libs/background';
 import { CanvasAPI } from './libs/canvas';
 import { ClassesAPI } from './libs/classes';
 import { DailyBulletinAPI } from './libs/dailybulletin';
@@ -22,12 +27,18 @@ import { StatsAPI } from './libs/stats';
 import { StickyNotesAPI } from './libs/stickynotes';
 import { SuggestionAPI } from './libs/suggestion';
 import { TeachersAPI } from './libs/teachers';
-import { UserAPI } from './libs/user';
+import { GetUserInfoResponse, UserAPI } from './libs/user';
 import { WeatherAPI } from './libs/weather';
 
 export class MyMICDS {
 
 	options: MyMICDSOptions;
+
+	auth$: BehaviorSubject<JWT | null | undefined>;
+	user$: Observable<GetUserInfoResponse | null | undefined>;
+	background$: Observable<GetBackgroundResponse>;
+
+	DEFAULT_BACKGROUND: GetBackgroundResponse;
 
 	alias: AliasAPI;
 	auth: AuthAPI;
@@ -81,6 +92,35 @@ export class MyMICDS {
 		this.teachers = new TeachersAPI(http);
 		this.user = new UserAPI(http);
 		this.weather = new WeatherAPI(http);
+
+		this.DEFAULT_BACKGROUND = {
+			hasDefault: true,
+			variants: {
+				normal: `${this.options.baseURL}/user-backgrounds/default/normal.jpg`,
+				blur: `${this.options.baseURL}/user-backgrounds/default/blur.jpg`
+			}
+		};
+
+		// JWT if logged in, null if logged out, and undefined if still loading
+		this.auth$ = new BehaviorSubject<JWT | null | undefined>(undefined);
+		this.user$ = this.auth$.pipe(
+			switchMap(jwt => {
+				if (jwt) {
+					return this.user.getInfo();
+				} else {
+					return of(jwt);
+				}
+			})
+		);
+		this.background$ = this.auth$.pipe(
+			switchMap(jwt => {
+				if (jwt) {
+					return this.background.get();
+				} else {
+					return of(this.DEFAULT_BACKGROUND);
+				}
+			})
+		);
 	}
 
 }
