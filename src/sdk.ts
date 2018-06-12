@@ -34,12 +34,6 @@ export class MyMICDS {
 
 	options: MyMICDSOptions;
 
-	auth$: BehaviorSubject<JWT | null | undefined>;
-	user$: Observable<GetUserInfoResponse | null | undefined>;
-	background$: Observable<GetBackgroundResponse>;
-
-	DEFAULT_BACKGROUND: GetBackgroundResponse;
-
 	alias: AliasAPI;
 	auth: AuthAPI;
 	background: BackgroundAPI;
@@ -70,7 +64,7 @@ export class MyMICDS {
 		const http = new HTTP(this.options);
 
 		this.alias = new AliasAPI(http);
-		this.auth = new AuthAPI(http, this.options);
+		this.auth = new AuthAPI(http, this);
 		this.background = new BackgroundAPI(http);
 		this.canvas = new CanvasAPI(http);
 		this.classes = new ClassesAPI(http);
@@ -92,35 +86,6 @@ export class MyMICDS {
 		this.teachers = new TeachersAPI(http);
 		this.user = new UserAPI(http);
 		this.weather = new WeatherAPI(http);
-
-		this.DEFAULT_BACKGROUND = {
-			hasDefault: true,
-			variants: {
-				normal: `${this.options.baseURL}/user-backgrounds/default/normal.jpg`,
-				blur: `${this.options.baseURL}/user-backgrounds/default/blur.jpg`
-			}
-		};
-
-		// JWT if logged in, null if logged out, and undefined if still loading
-		this.auth$ = new BehaviorSubject<JWT | null | undefined>(undefined);
-		this.user$ = this.auth$.pipe(
-			switchMap(jwt => {
-				if (jwt) {
-					return this.user.getInfo();
-				} else {
-					return of(jwt);
-				}
-			})
-		);
-		this.background$ = this.auth$.pipe(
-			switchMap(jwt => {
-				if (jwt) {
-					return this.background.get();
-				} else {
-					return of(this.DEFAULT_BACKGROUND);
-				}
-			})
-		);
 	}
 
 }

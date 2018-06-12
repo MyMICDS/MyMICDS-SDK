@@ -4,6 +4,7 @@
 
 import { HTTP } from '../http';
 import { MyMICDSOptions } from '../options';
+import { MyMICDS } from '../sdk';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -11,27 +12,36 @@ import { tap } from 'rxjs/operators';
 
 import { decode } from 'jsonwebtoken';
 
-export class AuthAPI {
+export class AuthAPI extends BehaviorSubject<JWT | null | undefined> {
 
-	auth$: BehaviorSubject<AuthSnapshot>;
-	authSnapshot: AuthSnapshot;
+	snapshot: JWT | null | undefined = undefined;
 
-	constructor(private http: HTTP, private options: MyMICDSOptions) {
-		const rawJwt = this.options.jwtGetter();
-		let parsed = rawJwt ? decode(rawJwt) : undefined;
-		if (parsed && typeof parsed !== 'string') { parsed = undefined; }
-		this.authSnapshot = { jwt: parsed as JWT | undefined };
-		this.auth$ = new BehaviorSubject(this.authSnapshot);
+	constructor(private http: HTTP, private mymicds: MyMICDS) {
+		super(undefined);
+
+		const rawJWT = this.mymicds.options.jwtGetter();
+		if (typeof rawJWT === 'string') {
+			const parsed: JWT = decode(rawJWT) as JWT;
+			if (parsed) {
+				this.snapshot = parsed;
+				this.next(this.snapshot);
+			}
+		}
+
+		if (!rawJWT) {
+			this.snapshot = null;
+			this.next(this.snapshot);
+		}
 	}
 
 	login(param: LoginParameters) {
 		return this.http.post<LoginResponse>('/auth/login', param).pipe(
 			tap(r => {
-				this.options.jwtSetter(r.jwt, param.remember);
+				this.mymicds.options.jwtSetter(r.jwt, param.remember);
 				const parsed = decode(r.jwt);
 				if (parsed && typeof parsed !== 'string') {
-					this.authSnapshot = {jwt: parsed as JWT};
-					this.auth$.next(this.authSnapshot);
+					this.snapshot = parsed as JWT;
+					this.next(this.snapshot);
 				}
 			})
 		);
@@ -40,9 +50,9 @@ export class AuthAPI {
 	logout() {
 		return this.http.post('/auth/logout').pipe(
 			tap(() => {
-				this.options.jwtClear();
-				this.authSnapshot = { jwt: undefined };
-				this.auth$.next(this.authSnapshot);
+				this.mymicds.options.jwtClear();
+				this.snapshot = null;
+				this.next(this.snapshot);
 			})
 		);
 	}
@@ -119,17 +129,13 @@ export interface ResetPasswordParameters {
 	hash: string;
 }
 
-export interface AuthSnapshot {
-	jwt: JWT | undefined;
-}
-
 /**
  * Helpers
  */
 
 export interface JWT {
 	user: string;
-	scope: string[];
+	scopes: { [scope: string]: true };
 	aud: string;
 	exp: number;
 	iat: number;
