@@ -6,6 +6,8 @@ export interface MyMICDSOptions {
 	jwtGetter(): string | null;
 	jwtSetter(jwt: string, remember?: boolean): void;
 	jwtClear(): void;
+	updateBackground: boolean;
+	updateUserInfo: boolean;
 }
 
 export const defaultOptions: MyMICDSOptions = {
@@ -23,5 +25,7 @@ export const defaultOptions: MyMICDSOptions = {
 	jwtClear() {
 		localStorage.removeItem('jwt');
 		sessionStorage.removeItem('jwt');
-	}
+	},
+	updateBackground: true,
+	updateUserInfo: true
 };

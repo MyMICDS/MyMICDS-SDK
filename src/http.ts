@@ -39,11 +39,13 @@ export class HTTP {
 
 	private http<T>(method: HTTPMethod, endpoint: string, data: StringDict = {}): Observable<T> {
 		// If a GET request, use query parameters instead of JSON body
-		let body = JSON.stringify(data);
+		let body: string | null = JSON.stringify(data);
 		let query = '';
 		if (method === HTTPMethod.GET) {
-			query = `?${qs.stringify(data)}`;
-			body = '';
+			if (Object.keys(data).length > 0) {
+				query = `?${qs.stringify(data)}`;
+			}
+			body = null;
 		}
 
 		const headers = new Headers();
@@ -118,9 +120,8 @@ export class HTTP {
 				// There was a network error
 				observer.error(
 					new MyMICDSError(
-						'Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net!',
-						null,
-						null
+						// tslint:disable:max-line-length
+						`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${url} with error "${err.message}")`
 					)
 				);
 				observer.complete();

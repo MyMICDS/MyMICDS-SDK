@@ -2,12 +2,39 @@
  * User API
  */
 
+import { MyMICDSError } from '../error';
+import { HTTP, HTTPMethod } from '../http';
+import { MyMICDS } from '../sdk';
+
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { HTTP } from '../http';
+import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
+import { switchMap } from 'rxjs/operators';
 
 export class UserAPI {
 
-	constructor(private http: HTTP) { }
+	private userSubject = new BehaviorSubject<GetUserInfoResponse | null | undefined>(undefined);
+	$: Observable<GetUserInfoResponse | null | undefined>;
+	snapshot: GetUserInfoResponse | null | undefined;
+
+	constructor(private http: HTTP, private mymicds: MyMICDS) {
+		if (mymicds.options.updateUserInfo) {
+			this.$ = this.userSubject.asObservable();
+			this.mymicds.auth.$.pipe(
+				switchMap(() => this.getInfo())
+			).subscribe(
+				userInfo => {
+					this.snapshot = userInfo;
+					this.userSubject.next(this.snapshot);
+				},
+				err => this.userSubject.error(err)
+			);
+		} else {
+			this.$ = new ErrorObservable(
+				new MyMICDSError('SDK is not configured to set up the user info update! Set this in the initialization options.')
+			);
+		}
+	}
 
 	gradYearToGrade(param: GradYearToGradeParameters) {
 		return this.http.get<GradYearToGradeResponse>('/user/grad-year-to-grade', param);

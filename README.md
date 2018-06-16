@@ -37,7 +37,10 @@ const options: MyMICDSOptions = {
 	jwtClear() {
 		jwtStore.jwt = null;
 		jwtStore.remember = null;
-	}
+	},
+	// Whether or not to activate observables for their respective modules (makes another API request on auth change)
+	updateBackground: true, // Exposes MyMICDS.background.$ observable
+	updateUserInfo: true    // Exposes MyMICDS.user.$ observable
 };
 
 // These are the default configuration options if some/all of properties are omitted.

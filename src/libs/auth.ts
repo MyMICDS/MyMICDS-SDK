@@ -3,7 +3,6 @@
  */
 
 import { HTTP } from '../http';
-import { MyMICDSOptions } from '../options';
 import { MyMICDS } from '../sdk';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -12,36 +11,36 @@ import { tap } from 'rxjs/operators';
 
 import { decode } from 'jsonwebtoken';
 
-export class AuthAPI extends BehaviorSubject<JWT | null | undefined> {
+export class AuthAPI {
 
+	private authSubject = new BehaviorSubject<JWT | null | undefined>(undefined);
+	$: Observable<JWT | null | undefined> = this.authSubject.asObservable();
 	snapshot: JWT | null | undefined = undefined;
 
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
-		super(undefined);
-
 		const rawJWT = this.mymicds.options.jwtGetter();
 		if (typeof rawJWT === 'string') {
-			const parsed: JWT = decode(rawJWT) as JWT;
+			const parsed = decode(rawJWT);
 			if (parsed) {
-				this.snapshot = parsed;
-				this.next(this.snapshot);
+				this.snapshot = parsed as JWT;
+				this.authSubject.next(this.snapshot);
 			}
 		}
 
 		if (!rawJWT) {
 			this.snapshot = null;
-			this.next(this.snapshot);
+			this.authSubject.next(this.snapshot);
 		}
 	}
 
 	login(param: LoginParameters) {
 		return this.http.post<LoginResponse>('/auth/login', param).pipe(
-			tap(r => {
-				this.mymicds.options.jwtSetter(r.jwt, param.remember);
-				const parsed = decode(r.jwt);
+			tap(res => {
+				this.mymicds.options.jwtSetter(res.jwt, param.remember);
+				const parsed = decode(res.jwt);
 				if (parsed && typeof parsed !== 'string') {
 					this.snapshot = parsed as JWT;
-					this.next(this.snapshot);
+					this.authSubject.next(this.snapshot);
 				}
 			})
 		);
@@ -52,7 +51,7 @@ export class AuthAPI extends BehaviorSubject<JWT | null | undefined> {
 			tap(() => {
 				this.mymicds.options.jwtClear();
 				this.snapshot = null;
-				this.next(this.snapshot);
+				this.authSubject.next(this.snapshot);
 			})
 		);
 	}

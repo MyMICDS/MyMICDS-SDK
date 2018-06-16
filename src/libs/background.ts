@@ -2,12 +2,47 @@
  * Backgrounds API
  */
 
-import { Observable } from 'rxjs/Observable';
+import { MyMICDSError } from '../error';
 import { HTTP, HTTPMethod } from '../http';
+import { MyMICDS } from '../sdk';
+
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
+import { switchMap } from 'rxjs/operators';
 
 export class BackgroundAPI {
 
-	constructor(private http: HTTP) { }
+	DEFAULT_BACKGROUND: GetBackgroundResponse = {
+		hasDefault: true,
+		variants: {
+			normal: `${this.mymicds.options.baseURL}/user-backgrounds/default/normal.jpg`,
+			blur: `${this.mymicds.options.baseURL}/user-backgrounds/default/blur.jpg`
+		}
+	};
+
+	private backgroundSubject = new BehaviorSubject<GetBackgroundResponse>(this.DEFAULT_BACKGROUND);
+	$: Observable<GetBackgroundResponse>;
+	snapshot: GetBackgroundResponse;
+
+	constructor(private http: HTTP, private mymicds: MyMICDS) {
+		if (mymicds.options.updateBackground) {
+			this.$ = this.backgroundSubject.asObservable();
+			this.mymicds.auth.$.pipe(
+				switchMap(() => this.get())
+			).subscribe(
+				background => {
+					this.snapshot = background;
+					this.backgroundSubject.next(this.snapshot);
+				},
+				err => this.backgroundSubject.error(err)
+			);
+		} else {
+			this.$ = new ErrorObservable(
+				new MyMICDSError('SDK is not configured to set up the background update! Set this in the initialization options.')
+			);
+		}
+	}
 
 	get() {
 		return this.http.get<GetBackgroundResponse>('/background');

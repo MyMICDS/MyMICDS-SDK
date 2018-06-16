@@ -65,7 +65,7 @@ export class MyMICDS {
 
 		this.alias = new AliasAPI(http);
 		this.auth = new AuthAPI(http, this);
-		this.background = new BackgroundAPI(http);
+		this.background = new BackgroundAPI(http, this);
 		this.canvas = new CanvasAPI(http);
 		this.classes = new ClassesAPI(http);
 		this.dailyBulletin = new DailyBulletinAPI(http);
@@ -84,7 +84,7 @@ export class MyMICDS {
 		this.stickyNotes = new StickyNotesAPI(http);
 		this.suggestion = new SuggestionAPI(http);
 		this.teachers = new TeachersAPI(http);
-		this.user = new UserAPI(http);
+		this.user = new UserAPI(http, this);
 		this.weather = new WeatherAPI(http);
 	}
 
