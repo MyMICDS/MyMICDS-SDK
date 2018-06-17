@@ -17,6 +17,10 @@ export class AuthAPI {
 	$: Observable<JWT | null | undefined> = this.authSubject.asObservable();
 	snapshot: JWT | null | undefined = undefined;
 
+	get isLoggedIn() {
+		return !!this.snapshot;
+	}
+
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
 		const rawJWT = this.mymicds.options.jwtGetter();
 		if (typeof rawJWT === 'string') {

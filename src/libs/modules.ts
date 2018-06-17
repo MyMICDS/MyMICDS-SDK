@@ -38,6 +38,7 @@ export interface UpdateModulesParameters {
 export interface MyMICDSModule {
 	type: string;
 	row: number;
+	column: number;
 	width: number;
 	height: number;
 	options?: StringDict;
