@@ -5,7 +5,7 @@
 import { HTTP } from '../http';
 import { Teacher } from './teachers';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs'; // tslint:disable-line
 
 export class ClassesAPI {
 

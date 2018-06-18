@@ -2,7 +2,7 @@
  * Classes API
  */
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs'; // tslint:disable-line
 import { HTTP } from '../http';
 
 export class DailyBulletinAPI {

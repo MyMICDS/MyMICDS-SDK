@@ -11,7 +11,7 @@
     "docs": "typedoc --out ./docs --mode file ./src",
     "lint": "tslint --project tsconfig.json \"src/**/*.ts\"",
     "clean": "rimraf ./dist",
-    "prepublishOnly": "npm run clean && npm run ts",
+    "prepublishOnly": "npm run lint && npm run clean && npm run ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts": "npm run clean && tsc",
     "ts:watch": "tsc -w"
@@ -36,7 +36,10 @@
     "jsonwebtoken": "^8.2.0",
     "moment": "^2.20.1",
     "qs": "^6.5.1",
-    "rxjs": "^5.5.2"
+    "rxjs": "^6.2.1"
+  },
+  "peerDependencies": {
+    "rxjs": "^6.2.1"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^7.2.6",

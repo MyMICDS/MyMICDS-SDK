@@ -3,12 +3,10 @@
  */
 
 import { MyMICDSError } from '../error';
-import { HTTP, HTTPMethod } from '../http';
+import { HTTP } from '../http';
 import { MyMICDS } from '../sdk';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/Observable/ErrorObservable';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 export class UserAPI {
@@ -30,7 +28,7 @@ export class UserAPI {
 				err => this.userSubject.error(err)
 			);
 		} else {
-			this.$ = new ErrorObservable(
+			this.$ = throwError(
 				new MyMICDSError('SDK is not configured to set up the user info update! Set this in the initialization options.')
 			);
 		}

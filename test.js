@@ -1,6 +1,6 @@
 const { MyMICDS } = require('./dist');
 const fs = require('fs');
-const { Observable } = require('rxjs/Observable');
+const { Observable } = require('rxjs');
 const { tap, mergeMap } = require('rxjs/operators');
 
 const jwtStore = {
@@ -30,7 +30,7 @@ api.auth.login({ user: 'foo', password: 'bar' }).subscribe(
 		console.log(error);
 	}
 );
-api.auth.auth$.subscribe(
+api.auth.$.subscribe(
 	s => console.log(s)
 )
 // api.suggestion.submit({ submission: 'holy shy SDK is done' }).subscribe(

@@ -5,8 +5,7 @@
 import { HTTP } from '../http';
 import { MyMICDS } from '../sdk';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { decode } from 'jsonwebtoken';

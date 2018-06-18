@@ -6,8 +6,7 @@ import 'isomorphic-fetch';
 import 'isomorphic-form-data';
 import * as qs from 'qs';
 
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, Observer } from 'rxjs';
 
 export class HTTP {
 

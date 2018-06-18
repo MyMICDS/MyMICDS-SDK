@@ -2,7 +2,7 @@
  * Modules API
  */
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs'; // tslint:disable-line
 import { HTTP, StringDict } from '../http';
 
 export class ModulesAPI {

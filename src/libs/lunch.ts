@@ -5,7 +5,7 @@
 import { HTTP } from '../http';
 import { School } from './user';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs'; // tslint:disable-line
 
 export class LunchAPI {
 

@@ -1,14 +1,9 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/Observable/of';
-import { switchMap } from 'rxjs/operators';
-
 import { HTTP } from './http';
 import { defaultOptions, MyMICDSOptions } from './options';
 
 import { AliasAPI } from './libs/alias';
-import { AuthAPI, JWT } from './libs/auth';
-import { BackgroundAPI, GetBackgroundResponse } from './libs/background';
+import { AuthAPI} from './libs/auth';
+import { BackgroundAPI } from './libs/background';
 import { CanvasAPI } from './libs/canvas';
 import { ClassesAPI } from './libs/classes';
 import { DailyBulletinAPI } from './libs/dailybulletin';
@@ -27,7 +22,7 @@ import { StatsAPI } from './libs/stats';
 import { StickyNotesAPI } from './libs/stickynotes';
 import { SuggestionAPI } from './libs/suggestion';
 import { TeachersAPI } from './libs/teachers';
-import { GetUserInfoResponse, UserAPI } from './libs/user';
+import { UserAPI } from './libs/user';
 import { WeatherAPI } from './libs/weather';
 
 export class MyMICDS {
