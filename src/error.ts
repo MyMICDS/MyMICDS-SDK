@@ -1,8 +1,8 @@
-import { ACTIONS } from './api-response';
+import { Action } from './api-response';
 
 export class MyMICDSError extends Error {
 
-	constructor(message: string, readonly statusCode: number | null = null, readonly action: ACTIONS | null = null) {
+	constructor(message: string, readonly statusCode: number | null = null, readonly action: Action | null = null) {
 		super(message);
 	}
 

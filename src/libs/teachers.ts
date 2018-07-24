@@ -28,7 +28,7 @@ export interface GetTeachersResponse {
  */
 
 export interface Teacher {
-	_id?: string;
+	_id?: string | null;
 	prefix: string;
 	firstName: string;
 	lastName: string;

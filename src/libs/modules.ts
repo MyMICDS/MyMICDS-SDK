@@ -35,8 +35,21 @@ export interface UpdateModulesParameters {
  * Helpers
  */
 
+export enum MyMICDSModuleType {
+	BOOKMARKS = 'bookmarks',
+	COUNTDOWN = 'countdown',
+	PROGRESS = 'progress',
+	SCHEDULE = 'schedule',
+	SIMPLIFIED_LUNCH = 'simplifiedLunch',
+	SIMPLIFIED_SCHEDULE = 'simplifiedSchedule',
+	SNOWDAY = 'snowday',
+	STICKY_NOTES = 'stickynotes',
+	TWITTER = 'twitter',
+	WEATHER = 'weather'
+}
+
 export interface MyMICDSModule {
-	type: string;
+	type: MyMICDSModuleType;
 	row: number;
 	column: number;
 	width: number;

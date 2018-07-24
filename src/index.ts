@@ -2,6 +2,8 @@ export { MyMICDSError } from './error';
 export { MyMICDSOptions } from './options';
 export { MyMICDS } from './sdk';
 
+export * from './api-response';
+
 export * from './libs/alias';
 export * from './libs/auth';
 export * from './libs/background';

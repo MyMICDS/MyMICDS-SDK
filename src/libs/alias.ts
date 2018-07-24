@@ -38,7 +38,7 @@ export interface AddAliasResponse {
 }
 
 export interface ListAliasesResponse {
-	aliases: Record<AliasType, Alias>;
+	aliases: Record<AliasType, Alias[]>;
 }
 
 export interface DeleteAliasParameters {

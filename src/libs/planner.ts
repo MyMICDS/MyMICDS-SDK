@@ -3,7 +3,7 @@
  */
 
 import { HTTP } from '../http';
-import { MyMICDSClass } from './classes';
+import { ScheduleClass } from './classes';
 
 import * as moment from 'moment';
 import { Observable } from 'rxjs'; // tslint:disable-line
@@ -77,9 +77,8 @@ export interface UncheckPlannerEventParameters extends CheckPlannerEventParamete
 
 export interface PlannerEvent {
 	_id: string;
-	canvas: true;
 	user: string;
-	class: MyMICDSClass | null;
+	class: ScheduleClass | null;
 	title: string;
 	start: moment.Moment;
 	end: moment.Moment;

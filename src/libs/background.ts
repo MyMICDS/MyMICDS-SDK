@@ -8,6 +8,7 @@ import { MyMICDS } from '../sdk';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import * as stream from 'stream'; // For Node only
 
 export class BackgroundAPI {
 
@@ -79,7 +80,7 @@ export interface GetAllBackgroundsResponse {
 }
 
 export interface UploadBackgroundParameters {
-	background: File /* Browser */ | ReadableStream /* Node */;
+	background: File /* Browser */ | stream.Readable /* Node */;
 }
 
 export interface UploadBackgroundResponse extends GetBackgroundResponse { }

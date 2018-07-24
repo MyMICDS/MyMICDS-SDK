@@ -1,7 +1,11 @@
 export interface APIResponse<T> {
 	error: string | null;
-	action: ACTIONS | null;
+	action: Action | null;
 	data: T | null;
 }
 
-export type ACTIONS = 'LOGIN_EXPIRED' | 'UNAUTHORIZED' | 'NOT_LOGGED_IN';
+export enum Action {
+	LOGIN_EXPIRED = 'LOGIN_EXPIRED',
+	UNAUTHORIZED = 'UNAUTHORIZED',
+	NOT_LOGGED_IN = 'NOT_LOGGED_IN'
+}

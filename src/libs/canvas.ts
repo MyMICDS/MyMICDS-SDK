@@ -3,7 +3,7 @@
  */
 
 import { HTTP } from '../http';
-import { MyMICDSClass } from './classes';
+import { Block, ClassType, MyMICDSClass, ScheduleClass } from './classes';
 import { PlannerEvent } from './planner';
 import {
 	GetPortalClassesResponse,
@@ -72,5 +72,23 @@ export interface TestCanvasURLResponse extends TestPortalURLResponse { }
  */
 
 export interface CanvasEvent extends PlannerEvent {
-	class: MyMICDSClass;
+	canvas: true;
+	class: MyMICDSClass | DefaultCanvasClass;
+}
+
+export interface DefaultCanvasClass extends ScheduleClass {
+	_id: null;
+	canvas: true;
+	user: string;
+	name: string;
+	teacher: {
+		_id: null,
+		prefix: '',
+		firstName: string,
+		lastName: string
+	};
+	type: ClassType.OTHER;
+	block: Block.OTHER;
+	color: '#34444F';
+	textDark: false;
 }

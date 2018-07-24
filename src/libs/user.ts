@@ -85,8 +85,8 @@ export interface GetUserInfoResponse {
 	password: string;
 	firstName: string;
 	lastName: string;
-	gradYear: number;
-	grade: number;
+	gradYear: number | null;
+	grade: number | null;
 	school: School;
 	canvasURL: string | null;
 	portalURL: string | null;
@@ -95,7 +95,7 @@ export interface GetUserInfoResponse {
 export interface ChangeUserInfoParameters {
 	firstName?: string;
 	lastName?: string;
-	gradYear?: number;
+	gradYear?: number | null;
 	teacher?: boolean;
 }
 
