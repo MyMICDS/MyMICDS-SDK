@@ -90,6 +90,8 @@ export interface GetUserInfoResponse {
 	school: School;
 	canvasURL: string | null;
 	portalURL: string | null;
+	portalURLClasses: string | null;
+	portalURLCalendar: string | null;
 }
 
 export interface ChangeUserInfoParameters {

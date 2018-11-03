@@ -59,7 +59,7 @@ export interface SetPortalURLParameters {
 }
 
 export interface SetPortalURLResponse {
-	valid: boolean;
+	valid: true | string;
 	url: string;
 }
 
