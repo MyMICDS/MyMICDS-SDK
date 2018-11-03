@@ -92,6 +92,7 @@ export interface GetUserInfoResponse {
 	portalURL: string | null;
 	portalURLClasses: string | null;
 	portalURLCalendar: string | null;
+	migrateToVeracross: boolean;
 }
 
 export interface ChangeUserInfoParameters {
