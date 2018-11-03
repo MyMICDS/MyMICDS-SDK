@@ -39,11 +39,11 @@ export class CanvasAPI {
 	}
 
 	setURL(param: SetCanvasURLParameters) {
-		return this.http.put<SetCanvasURLResponse>('/portal/url', param);
+		return this.http.put<SetCanvasURLResponse>('/canvas/url', param);
 	}
 
 	testURL(param: TestCanvasURLParameters) {
-		return this.http.post<TestCanvasURLResponse>('/portal/test', param);
+		return this.http.post<TestCanvasURLResponse>('/canvas/test', param);
 	}
 
 }

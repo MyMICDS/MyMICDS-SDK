@@ -28,10 +28,8 @@ export interface GetStickyNoteParameters {
 }
 
 export interface GetStickyNoteResponse {
-	stickynote: {
-		text: string;
-		moduleId: string;
-	};
+	text: string;
+	moduleId: string;
 }
 
 export interface AddStickyNoteParameters extends GetStickyNoteParameters {

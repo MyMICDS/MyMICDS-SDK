@@ -17,12 +17,20 @@ export class PortalAPI {
 		return this.http.get<GetPortalDayRotationResponse>('/portal/day-rotation');
 	}
 
-	setURL(param: SetPortalURLParameters) {
-		return this.http.put<SetPortalURLResponse>('/portal/url', param);
+	setClassesURL(param: SetPortalURLParameters) {
+		return this.http.put<SetPortalURLResponse>('/portal/url/classes', param);
 	}
 
-	testURL(param: TestPortalURLParameters) {
-		return this.http.post<TestPortalURLResponse>('/portal/test', param);
+	testClassesURL(param: TestPortalURLParameters) {
+		return this.http.post<TestPortalURLResponse>('/portal/url/test-classes', param);
+	}
+
+	setCalendarURL(param: SetPortalURLParameters) {
+		return this.http.put<SetPortalURLResponse>('/portal/url/calendar', param);
+	}
+
+	testCalendarURL(param: TestPortalURLParameters) {
+		return this.http.post<TestPortalURLResponse>('/portal/url/test-calendar', param);
 	}
 
 }
