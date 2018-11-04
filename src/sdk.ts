@@ -1,3 +1,7 @@
+// tslint:disable-next-line
+import { Observable, Subject } from 'rxjs';
+import { Action } from './api-response';
+import { MyMICDSError } from './error';
 import { HTTP } from './http';
 import { defaultOptions, MyMICDSOptions } from './options';
 
@@ -29,6 +33,9 @@ export class MyMICDS {
 
 	options: MyMICDSOptions;
 
+	private errorsSubject = new Subject<MyMICDSError>();
+	errors = this.errorsSubject.asObservable();
+
 	alias: AliasAPI;
 	auth: AuthAPI;
 	background: BackgroundAPI;
@@ -57,6 +64,13 @@ export class MyMICDS {
 		this.options = Object.assign({}, defaultOptions, options);
 
 		const http = new HTTP(this.options);
+		http.errors.subscribe(error => {
+			// Clear JWT if invalid
+			if (error.action && [Action.LOGIN_EXPIRED, Action.NOT_LOGGED_IN, Action.UNAUTHORIZED].includes(error.action)) {
+				this.auth.clearJwt();
+			}
+			this.errorsSubject.next(error);
+		});
 
 		this.alias = new AliasAPI(http);
 		this.auth = new AuthAPI(http, this);

@@ -8,7 +8,7 @@ import { MyMICDS } from '../sdk';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { decode } from 'jsonwebtoken';
+import * as decode from 'jwt-decode';
 
 export class AuthAPI {
 
@@ -52,11 +52,15 @@ export class AuthAPI {
 	logout() {
 		return this.http.post('/auth/logout').pipe(
 			tap(() => {
-				this.mymicds.options.jwtClear();
-				this.snapshot = null;
+				this.clearJwt();
 				this.authSubject.next(this.snapshot);
 			})
 		);
+	}
+
+	clearJwt() {
+		this.mymicds.options.jwtClear();
+		this.snapshot = null;
 	}
 
 	register(param: RegisterParameters) {

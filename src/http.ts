@@ -5,10 +5,12 @@ import { MyMICDSOptions } from './options';
 import 'isomorphic-fetch';
 import 'isomorphic-form-data';
 import * as qs from 'qs';
-
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 
 export class HTTP {
+
+	private errorsSubject = new Subject<MyMICDSError>();
+	errors = this.errorsSubject.asObservable();
 
 	constructor(private options: MyMICDSOptions) { }
 
@@ -106,23 +108,25 @@ export class HTTP {
 
 				if (!response.ok) {
 					// Generic error message if for some reason there's no supplied error in body
-					let error = 'Something went wrong handling that request. Please try again or contact support@mymicds.net!';
+					let errorMessage = 'Something went wrong handling that request. Please try again or contact support@mymicds.net!';
 					if (resData.error) {
-						error = resData.error;
+						errorMessage = resData.error;
 					}
-					observer.error(new MyMICDSError(error, response.status, resData.action));
+					const error = new MyMICDSError(errorMessage, response.status, resData.action);
+					observer.error(error);
+					this.errorsSubject.next(error);
 				} else {
 					observer.next(resData.data!);
 				}
 				observer.complete();
 			} catch (err) {
 				// There was a network error
-				observer.error(
-					new MyMICDSError(
-						// tslint:disable:max-line-length
-						`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${url} with error "${err.message}")`
-					)
+				const error = new MyMICDSError(
+					// tslint:disable:max-line-length
+					`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${url} with error "${err.message}")`
 				);
+				observer.error(error);
+				this.errorsSubject.next(error);
 				observer.complete();
 			}
 		});

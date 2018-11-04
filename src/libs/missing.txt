@@ -1,19 +1,2 @@
 Auth:
 - Verify
-
-Background:
-- Extra - Background get all
-	- For back-end though
-
-Bulletin:
-- Query
-- Query all
-
-Dates:
-- School starts
-
-Notifications:
-- Unsubscribe
-
-Planner:
-- Get events broken
