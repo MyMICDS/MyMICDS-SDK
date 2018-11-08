@@ -44,12 +44,14 @@ export interface GetScheduleResponse {
 	schedule: {
 		day: number;
 		special: boolean;
-		classes: Array<{
-			class: ScheduleClass;
-			start: moment.Moment;
-			end: moment.Moment;
-		}>;
+		classes: ScheduleBlock[];
 	};
+}
+
+export interface ScheduleBlock {
+	start: moment.Moment;
+	end: moment.Moment;
+	class: ScheduleClass;
 }
 
 /**
