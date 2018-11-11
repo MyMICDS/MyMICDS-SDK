@@ -72,7 +72,7 @@ export class HTTP {
 		// No GET requests for file upload
 		if (method === HTTPMethod.GET) {
 			return Observable.throw(
-				new MyMICDSError('Trying to upload a file using a GET request! Your code is broke!', null, null)
+				new MyMICDSError('Trying to upload a file using a GET request! Your code is broke!', null, null, endpoint)
 			);
 		}
 
@@ -112,7 +112,7 @@ export class HTTP {
 					if (resData.error) {
 						errorMessage = resData.error;
 					}
-					const error = new MyMICDSError(errorMessage, response.status, resData.action);
+					const error = new MyMICDSError(errorMessage, response.status, resData.action, url);
 					observer.error(error);
 					this.errorsSubject.next(error);
 				} else {
@@ -123,7 +123,10 @@ export class HTTP {
 				// There was a network error
 				const error = new MyMICDSError(
 					// tslint:disable:max-line-length
-					`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${url} with error "${err.message}")`
+					`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${err.message})`,
+					null,
+					null,
+					url
 				);
 				observer.error(error);
 				this.errorsSubject.next(error);

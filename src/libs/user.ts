@@ -6,7 +6,7 @@ import { MyMICDSError } from '../error';
 import { HTTP } from '../http';
 import { MyMICDS } from '../sdk';
 
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 export class UserAPI {
@@ -19,7 +19,12 @@ export class UserAPI {
 		if (mymicds.options.updateUserInfo) {
 			this.$ = this.userSubject.asObservable();
 			this.mymicds.auth.$.pipe(
-				switchMap(() => this.getInfo())
+				switchMap(auth => {
+					if (auth === undefined || auth === null) {
+						return of(auth);
+					}
+					return this.getInfo();
+				})
 			).subscribe(
 				userInfo => {
 					this.snapshot = userInfo;
