@@ -28,11 +28,12 @@ export class CanvasAPI {
 	getEvents() {
 		return this.http.get<GetCanvasEventsResponse>('/canvas/events').pipe(
 			map(r => {
-				for (const event of r.events) {
-					event.start = moment(event.start);
-					event.end = moment(event.end);
+				if (r && r.events instanceof Array) {
+					for (const event of r.events) {
+						event.start = moment(event.start);
+						event.end = moment(event.end);
+					}
 				}
-
 				return r;
 			})
 		);

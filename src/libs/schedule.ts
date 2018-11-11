@@ -17,11 +17,12 @@ export class ScheduleAPI {
 	get(param?: GetScheduleParameters) {
 		return this.http.get<GetScheduleResponse>('/schedule', param).pipe(
 			map(r => {
-				for (const scheduleClass of r.schedule.classes) {
-					scheduleClass.start = moment(scheduleClass.start);
-					scheduleClass.end = moment(scheduleClass.end);
+				if (r && r.schedule && r.schedule.classes instanceof Array) {
+					for (const scheduleClass of r.schedule.classes) {
+						scheduleClass.start = moment(scheduleClass.start);
+						scheduleClass.end = moment(scheduleClass.end);
+					}
 				}
-
 				return r;
 			})
 		);

@@ -15,17 +15,23 @@ export class SportsAPI {
 	getScores() {
 		return this.http.get<GetScoresResponse>('/sports').pipe(
 			tap(r => {
-				for (const score of r.scores.scores) {
-					score.eid = parseInt(score.eid as any, 10);
-					score.nid = parseInt(score.nid as any, 10);
-					score.us_score = parseInt(score.us_score as any, 10);
-					score.opp_score = parseInt(score.opp_score as any, 10);
-					score.update_date = moment(score.update_date);
-				}
+				if (r && r.scores) {
+					if (r.scores.scores instanceof Array) {
+						for (const score of r.scores.scores) {
+							score.eid = parseInt(score.eid as any, 10);
+							score.nid = parseInt(score.nid as any, 10);
+							score.us_score = parseInt(score.us_score as any, 10);
+							score.opp_score = parseInt(score.opp_score as any, 10);
+							score.update_date = moment(score.update_date);
+						}
+					}
 
-				for (const event of r.scores.events) {
-					event.eid = parseInt(event.eid as any, 10);
-					event.starttime = moment(event.starttime);
+					if (r.scores.events instanceof Array) {
+						for (const event of r.scores.events) {
+							event.eid = parseInt(event.eid as any, 10);
+							event.starttime = moment(event.starttime);
+						}
+					}
 				}
 			})
 		);

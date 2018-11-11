@@ -22,13 +22,16 @@ export class DatesAPI {
 	getBreaks() {
 		return this.http.get<GetBreaksResponse>('/dates/breaks').pipe(
 			map(r => {
-				for (const group of Object.values(r.breaks)) {
-					for (const range of group) {
-						range.start = moment(range.start);
-						range.end = moment(range.end);
+				if (r && r.breaks instanceof Array) {
+					for (const group of Object.values(r.breaks)) {
+						if (group instanceof Array) {
+							for (const range of group) {
+								range.start = moment(range.start);
+								range.end = moment(range.end);
+							}
+						}
 					}
 				}
-
 				return r;
 			})
 		);

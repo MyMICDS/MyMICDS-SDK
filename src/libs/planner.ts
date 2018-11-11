@@ -16,11 +16,12 @@ export class PlannerAPI {
 	getEvents() {
 		return this.http.get<GetPlannerEventsResponse>('/planner').pipe(
 			map(r => {
-				for (const event of r.events) {
-					event.start = moment(event.start);
-					event.end = moment(event.end);
+				if (r && r.events instanceof Array) {
+					for (const event of r.events) {
+						event.start = moment(event.start);
+						event.end = moment(event.end);
+					}
 				}
-
 				return r;
 			})
 		);
