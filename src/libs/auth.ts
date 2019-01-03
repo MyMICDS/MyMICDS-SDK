@@ -80,7 +80,7 @@ export class AuthAPI {
 	}
 
 	resetPassword(param: ResetPasswordParameters) {
-		return this.http.post('/auth/reset-password', param);
+		return this.http.put('/auth/reset-password', param);
 	}
 
 	verify() {
