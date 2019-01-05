@@ -5,7 +5,7 @@
 import { HTTP } from '../http';
 import { MyMICDS } from '../sdk';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import * as decode from 'jwt-decode';
@@ -50,7 +50,14 @@ export class AuthAPI {
 	}
 
 	logout() {
-		return this.http.post('/auth/logout').pipe(
+		let logoutAction: Observable<{}>;
+		if (typeof this.mymicds.options.jwtGetter() === 'string') {
+			logoutAction = this.http.post('/auth/logout');
+		} else {
+			// Already logged out. No need to logout with backend, just make sure there is not JWT.
+			logoutAction = of({});
+		}
+		return logoutAction.pipe(
 			tap(() => {
 				this.clearJwt();
 				this.authSubject.next(this.snapshot);
