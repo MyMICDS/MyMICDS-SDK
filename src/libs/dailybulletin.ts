@@ -9,7 +9,7 @@ export class DailyBulletinAPI {
 	constructor(private http: HTTP) { }
 
 	getList() {
-		return this.http.get<GetListResponse>('/daily-bulletin');
+		return this.http.get<GetBulletinsResponse>('/daily-bulletin');
 	}
 
 	query() {
@@ -26,7 +26,7 @@ export class DailyBulletinAPI {
  * API Parameters and Responses
  */
 
-export interface GetListResponse {
+export interface GetBulletinsResponse {
 	baseURL: string;
 	bulletins: string[];
 }

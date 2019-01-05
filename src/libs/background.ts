@@ -7,7 +7,7 @@ import { HTTP, HTTPMethod } from '../http';
 import { MyMICDS } from '../sdk';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import * as stream from 'stream'; // For Node only
 
 export class BackgroundAPI {
@@ -30,10 +30,7 @@ export class BackgroundAPI {
 			this.mymicds.auth.$.pipe(
 				switchMap(() => this.get())
 			).subscribe(
-				background => {
-					this.snapshot = background;
-					this.backgroundSubject.next(this.snapshot);
-				},
+				background => this.propagateBackground(background),
 				err => this.backgroundSubject.error(err)
 			);
 		} else {
@@ -52,11 +49,18 @@ export class BackgroundAPI {
 	}
 
 	upload(param: UploadBackgroundParameters) {
-		return this.http.uploadFile<UploadBackgroundResponse>(HTTPMethod.PUT, '/background', param);
+		return this.http.uploadFile<UploadBackgroundResponse>(HTTPMethod.PUT, '/background', param)
+			.pipe(tap(background => this.propagateBackground(background)));
 	}
 
 	delete() {
-		return this.http.delete<DeleteBackgroundResponse>('/background');
+		return this.http.delete<DeleteBackgroundResponse>('/background')
+			.pipe(tap(background => this.propagateBackground(background)));
+	}
+
+	private propagateBackground(background: GetBackgroundResponse) {
+		this.snapshot = background;
+		this.backgroundSubject.next(this.snapshot);
 	}
 
 }
