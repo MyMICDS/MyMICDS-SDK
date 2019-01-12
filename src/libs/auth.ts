@@ -21,29 +21,16 @@ export class AuthAPI {
 	}
 
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
-		const rawJWT = this.mymicds.options.jwtGetter();
-		if (typeof rawJWT === 'string') {
-			const parsed = decode(rawJWT);
-			if (parsed) {
-				this.snapshot = parsed as JWT;
-				this.authSubject.next(this.snapshot);
-			}
-		}
-
-		if (!rawJWT) {
-			this.snapshot = null;
-			this.authSubject.next(this.snapshot);
-		}
+		const parsed = this.retrieveAndParseJWT();
+		this.emitJWTStatus(parsed ? parsed.payload : null);
 	}
 
 	login(param: LoginParameters) {
 		return this.http.post<LoginResponse>('/auth/login', param).pipe(
 			tap(res => {
-				this.mymicds.options.jwtSetter(res.jwt, param.remember);
-				const parsed = decode(res.jwt);
-				if (parsed && typeof parsed !== 'string') {
-					this.snapshot = parsed as JWT;
-					this.authSubject.next(this.snapshot);
+				const parsed = this.parseJWT(res.jwt);
+				if (parsed) {
+					this.storeJWTAndEmitStatus(res.jwt, parsed.payload, param.remember);
 				}
 			})
 		);
@@ -60,7 +47,6 @@ export class AuthAPI {
 		return logoutAction.pipe(
 			tap(() => {
 				this.clearJwt();
-				this.authSubject.next(this.snapshot);
 			})
 		);
 	}
@@ -68,6 +54,7 @@ export class AuthAPI {
 	clearJwt() {
 		this.mymicds.options.jwtClear();
 		this.snapshot = null;
+		this.emitJWTStatus(null);
 	}
 
 	register(param: RegisterParameters) {
@@ -92,6 +79,46 @@ export class AuthAPI {
 
 	verify() {
 		return this.http.get('/auth/verify');
+	}
+
+	private retrieveAndParseJWT() {
+		const rawJWT = this.mymicds.options.jwtGetter();
+		if (!rawJWT) {
+			return null;
+		}
+		const parsed = this.parseJWT(rawJWT);
+		// Check if JWT is invalid
+		if (!parsed) {
+			this.mymicds.options.jwtClear();
+			return null;
+		}
+		return parsed;
+	}
+
+	private parseJWT(rawJWT: string): ParsedJWT | null {
+		if (typeof rawJWT !== 'string') {
+			return null;
+		}
+
+		try {
+			const parsed = decode(rawJWT);
+			if (parsed && typeof parsed === 'object') {
+				return { rawJWT, payload: parsed as JWT };
+			}
+			return null;
+		} catch (err) {
+			return null;
+		}
+	}
+
+	private storeJWTAndEmitStatus(jwt: string, payload: JWT, remember?: boolean) {
+		this.mymicds.options.jwtSetter(jwt, remember);
+		this.emitJWTStatus(payload);
+	}
+
+	private emitJWTStatus(payload: JWT | null) {
+		this.snapshot = payload;
+		this.authSubject.next(this.snapshot);
 	}
 
 }
@@ -145,6 +172,11 @@ export interface ResetPasswordParameters {
 /**
  * Helpers
  */
+
+export interface ParsedJWT {
+	rawJWT: string;
+	payload: JWT;
+}
 
 export interface JWT {
 	user: string;
