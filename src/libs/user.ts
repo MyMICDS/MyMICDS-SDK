@@ -5,31 +5,28 @@
 import { MyMICDSError } from '../error';
 import { HTTP } from '../http';
 import { MyMICDS } from '../sdk';
+import { JWT } from './auth';
 
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 export class UserAPI {
 
 	private userSubject = new BehaviorSubject<GetUserInfoResponse | null | undefined>(undefined);
-	$: Observable<GetUserInfoResponse | null | undefined>;
-	snapshot: GetUserInfoResponse | null | undefined;
+	$: Observable<GetUserInfoResponse | null | undefined> = this.userSubject.asObservable();
+	snapshot: GetUserInfoResponse | null | undefined = undefined;
 
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
 		if (mymicds.options.updateUserInfo) {
-			this.$ = this.userSubject.asObservable();
-			this.mymicds.auth.$.pipe(
-				switchMap(auth => {
+			this.mymicds.auth.$.pipe<GetUserInfoResponse | null | undefined>(
+				switchMap((auth: JWT | null | undefined): Observable<GetUserInfoResponse | null | undefined> => {
 					if (auth === undefined || auth === null) {
 						return of(auth);
 					}
 					return this.getInfo();
 				})
 			).subscribe(
-				userInfo => {
-					this.snapshot = userInfo;
-					this.userSubject.next(this.snapshot);
-				},
+				userInfo => this.propagateUserInfo(userInfo),
 				err => this.userSubject.error(err)
 			);
 		} else {
@@ -52,11 +49,17 @@ export class UserAPI {
 	}
 
 	getInfo() {
-		return this.http.get<GetUserInfoResponse>('/user/info');
+		return this.http.get<GetUserInfoResponse>('/user/info')
+			.pipe(tap(userInfo => this.propagateUserInfo(userInfo)));
 	}
 
 	changeInfo(param: ChangeUserInfoParameters) {
-		return this.http.patch('/user/info', param);
+		return this.http.patch<ChangeUserInfoResponse>('/user/info', param);
+	}
+
+	private propagateUserInfo(userInfo: GetUserInfoResponse | null | undefined) {
+		this.snapshot = userInfo;
+		this.userSubject.next(this.snapshot);
 	}
 
 }
@@ -106,6 +109,8 @@ export interface ChangeUserInfoParameters {
 	gradYear?: number | null;
 	teacher?: boolean;
 }
+
+export interface ChangeUserInfoResponse extends GetUserInfoResponse { }
 
 /**
  * Helpers

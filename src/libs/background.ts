@@ -22,12 +22,12 @@ export class BackgroundAPI {
 
 	private backgroundSubject = new BehaviorSubject<GetBackgroundResponse>(this.DEFAULT_BACKGROUND);
 	$: Observable<GetBackgroundResponse>;
-	snapshot: GetBackgroundResponse;
+	snapshot: GetBackgroundResponse | undefined = undefined;
 
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
 		if (mymicds.options.updateBackground) {
 			this.$ = this.backgroundSubject.asObservable();
-			this.mymicds.auth.$.pipe(
+			this.mymicds.auth.$.pipe<GetBackgroundResponse>(
 				switchMap(() => this.get())
 			).subscribe(
 				background => this.propagateBackground(background),

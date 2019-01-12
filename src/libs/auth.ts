@@ -101,9 +101,9 @@ export class AuthAPI {
 		}
 
 		try {
-			const parsed = decode(rawJWT);
+			const parsed = decode(rawJWT) as JWT;
 			if (parsed && typeof parsed === 'object') {
-				return { rawJWT, payload: parsed as JWT };
+				return { rawJWT, payload: parsed };
 			}
 			return null;
 		} catch (err) {
