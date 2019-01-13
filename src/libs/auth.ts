@@ -12,9 +12,9 @@ import * as decode from 'jwt-decode';
 
 export class AuthAPI {
 
-	private authSubject = new BehaviorSubject<JWT | null | undefined>(undefined);
-	$: Observable<JWT | null | undefined> = this.authSubject.asObservable();
-	snapshot: JWT | null | undefined = undefined;
+	private authSubject = new BehaviorSubject<PossiblyJWT>(undefined);
+	$: Observable<PossiblyJWT> = this.authSubject.asObservable();
+	snapshot: PossiblyJWT = undefined;
 
 	get isLoggedIn() {
 		return !!this.snapshot;
@@ -172,6 +172,8 @@ export interface ResetPasswordParameters {
 /**
  * Helpers
  */
+
+type PossiblyJWT = JWT | null | undefined;
 
 export interface ParsedJWT {
 	rawJWT: string;

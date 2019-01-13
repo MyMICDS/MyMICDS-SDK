@@ -27,7 +27,7 @@ export class BackgroundAPI {
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
 		if (mymicds.options.updateBackground) {
 			this.$ = this.backgroundSubject.asObservable();
-			this.mymicds.auth.$.pipe<GetBackgroundResponse>(
+			this.mymicds.auth.$.pipe(
 				switchMap(() => this.get())
 			).subscribe(
 				background => this.propagateBackground(background),
