@@ -12,14 +12,14 @@ import { switchMap, tap } from 'rxjs/operators';
 
 export class UserAPI {
 
-	private userSubject = new BehaviorSubject<GetUserInfoResponse | null | undefined>(undefined);
-	$: Observable<GetUserInfoResponse | null | undefined> = this.userSubject.asObservable();
-	snapshot: GetUserInfoResponse | null | undefined = undefined;
+	private userSubject = new BehaviorSubject<PossiblyUserInfo>(undefined);
+	$: Observable<PossiblyUserInfo> = this.userSubject.asObservable();
+	snapshot: PossiblyUserInfo = undefined;
 
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
 		if (mymicds.options.updateUserInfo) {
-			this.mymicds.auth.$.pipe<GetUserInfoResponse | null | undefined>(
-				switchMap((auth: JWT | null | undefined): Observable<GetUserInfoResponse | null | undefined> => {
+			this.mymicds.auth.$.pipe(
+				switchMap((auth): Observable<PossiblyUserInfo> => {
 					if (auth === undefined || auth === null) {
 						return of(auth);
 					}
@@ -115,5 +115,7 @@ export interface ChangeUserInfoResponse extends GetUserInfoResponse { }
 /**
  * Helpers
  */
+
+type PossiblyUserInfo = GetUserInfoResponse | null | undefined;
 
 export type School = 'lowerschool' | 'middleschool' | 'upperschool';

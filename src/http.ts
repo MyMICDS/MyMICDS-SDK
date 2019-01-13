@@ -5,7 +5,7 @@ import { MyMICDSOptions } from './options';
 import 'isomorphic-fetch';
 import 'isomorphic-form-data';
 import * as qs from 'qs';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Observable, Observer, Subject, throwError } from 'rxjs';
 
 export class HTTP {
 
@@ -71,7 +71,7 @@ export class HTTP {
 	uploadFile<T>(method: HTTPMethod, endpoint: string, data: StringDict = {}): Observable<T> {
 		// No GET requests for file upload
 		if (method === HTTPMethod.GET) {
-			return Observable.throw(
+			return throwError(
 				new MyMICDSError('Trying to upload a file using a GET request! Your code is broke!', null, null, endpoint)
 			);
 		}

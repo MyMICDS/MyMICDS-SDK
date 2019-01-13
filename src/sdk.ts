@@ -6,7 +6,7 @@ import { HTTP } from './http';
 import { defaultOptions, MyMICDSOptions } from './options';
 
 import { AliasAPI } from './libs/alias';
-import { AuthAPI} from './libs/auth';
+import { AuthAPI } from './libs/auth';
 import { BackgroundAPI } from './libs/background';
 import { CanvasAPI } from './libs/canvas';
 import { ClassesAPI } from './libs/classes';

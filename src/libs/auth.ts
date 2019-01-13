@@ -28,7 +28,7 @@ export class AuthAPI {
 	login(param: LoginParameters) {
 		return this.http.post<LoginResponse>('/auth/login', param).pipe(
 			tap(res => {
-				const parsed = this.parseJWT(res.jwt);
+				const parsed = AuthAPI.parseJWT(res.jwt);
 				if (parsed) {
 					this.storeJWTAndEmitStatus(res.jwt, parsed.payload, param.remember);
 				}
@@ -86,7 +86,7 @@ export class AuthAPI {
 		if (!rawJWT) {
 			return null;
 		}
-		const parsed = this.parseJWT(rawJWT);
+		const parsed = AuthAPI.parseJWT(rawJWT);
 		// Check if JWT is invalid
 		if (!parsed) {
 			this.mymicds.options.jwtClear();
@@ -95,7 +95,7 @@ export class AuthAPI {
 		return parsed;
 	}
 
-	private parseJWT(rawJWT: string): ParsedJWT | null {
+	private static parseJWT(rawJWT: string): ParsedJWT | null {
 		if (typeof rawJWT !== 'string') {
 			return null;
 		}
