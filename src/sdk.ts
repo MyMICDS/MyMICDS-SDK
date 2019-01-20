@@ -1,5 +1,4 @@
-// tslint:disable-next-line
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Action } from './api-response';
 import { MyMICDSError } from './error';
 import { HTTP } from './http';

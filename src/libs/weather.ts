@@ -5,7 +5,6 @@
 import { HTTP } from '../http';
 
 import * as moment from 'moment';
-import { Observable } from 'rxjs'; // tslint:disable-line
 import { tap } from 'rxjs/operators';
 
 export class WeatherAPI {

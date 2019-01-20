@@ -6,7 +6,6 @@ import { HTTP } from '../http';
 import { ScheduleClass } from './classes';
 
 import * as moment from 'moment';
-import { Observable } from 'rxjs'; // tslint:disable-line
 import { map } from 'rxjs/operators';
 
 export class PlannerAPI {
