@@ -31,7 +31,7 @@ export class AuthAPI {
 			switchMap(res => {
 				const parsed = AuthAPI.parseJWT(res.jwt);
 				// If login successful, store JWT
-				let loginAction: Observable<void> = of();
+				let loginAction: Observable<any> = of({});
 				if (parsed) {
 					loginAction = this.storeJWTAndEmitStatus(res.jwt, parsed.payload, param.remember);
 				}
