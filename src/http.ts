@@ -1,19 +1,19 @@
-import { MyMICDS } from './sdk';
 import { APIResponse } from './api-response';
 import { MyMICDSError } from './error';
-import { MyMICDSOptions } from './options';
+import { MyMICDS } from './sdk';
 
 import 'isomorphic-fetch';
 import 'isomorphic-form-data';
 import * as qs from 'qs';
-import { Observable, Observer, Subject, throwError } from 'rxjs';
+import { from, Observable, Subject, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 export class HTTP {
 
 	private errorsSubject = new Subject<MyMICDSError>();
 	errors = this.errorsSubject.asObservable();
 
-	constructor(private sdk: MyMICDS) { }
+	constructor(private mymicds: MyMICDS) { }
 
 	get<T>(endpoint: string, data?: StringDict) {
 		return this.http<T>(HTTPMethod.GET, endpoint, data);
@@ -52,13 +52,8 @@ export class HTTP {
 
 		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
-		headers.append('Accept', 'application/json');
-		const jwt = this.sdk.options.jwtGetter();
-		if (jwt) {
-			headers.append('Authorization', `Bearer ${jwt}`);
-		}
 
-		return this.fetchApi<T>(`${this.sdk.options.baseURL}${endpoint}${query}`, {
+		return this.fetchApi<T>(`${this.mymicds.options.baseURL}${endpoint}${query}`, {
 			method,
 			body,
 			headers
@@ -77,22 +72,14 @@ export class HTTP {
 			);
 		}
 
-		const headers = new Headers();
-		headers.append('Accept', 'application/json');
-		const jwt = this.sdk.getJwt();
-		if (jwt) {
-			headers.append('Authorization', `Bearer ${jwt}`);
-		}
-
 		const form = new FormData();
 		Object.keys(data).forEach(k => {
 			form.append(k, data[k]);
 		});
 
-		return this.fetchApi<T>(`${this.sdk.options.baseURL}${endpoint}`, {
+		return this.fetchApi<T>(`${this.mymicds.options.baseURL}${endpoint}`, {
 			method,
-			body: form,
-			headers
+			body: form
 		});
 	}
 
@@ -102,38 +89,48 @@ export class HTTP {
 	 */
 
 	private fetchApi<T>(url: string, options: StringDict): Observable<T> {
-		return Observable.create(async (observer: Observer<T>) => {
-			try {
-				const response = await fetch(url, options);
-				const resData: APIResponse<T> = await response.json();
+		return this.mymicds.getJwt().pipe(
+			switchMap(jwt => {
 
+				if (!options.headers) {
+					options.headers = new Headers();
+				}
+				options.headers.append('Accept', 'application/json');
+				if (jwt) {
+					options.headers.append('Authorization', `Bearer ${jwt}`);
+				}
+
+				return from(fetch(url, options));
+			}),
+			switchMap(response => {
+				return from(response.json()).pipe(
+					// Pass on both response data and the response object itself
+					map((resData: APIResponse<T>) => {
+						return { response, resData };
+					})
+				);
+			}),
+			map(({ response, resData }) => {
 				if (!response.ok) {
 					// Generic error message if for some reason there's no supplied error in body
 					let errorMessage = 'Something went wrong handling that request. Please try again or contact support@mymicds.net!';
 					if (resData.error) {
 						errorMessage = resData.error;
 					}
-					const error = new MyMICDSError(errorMessage, response.status, resData.action, url);
-					observer.error(error);
-					this.errorsSubject.next(error);
-				} else {
-					observer.next(resData.data!);
+					throw new MyMICDSError(errorMessage, response.status, resData.action, url);
 				}
-				observer.complete();
-			} catch (err) {
-				// There was a network error
-				const error = new MyMICDSError(
-					// tslint:disable:max-line-length
-					`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${err.message})`,
+
+				return resData.data!;
+			}),
+			catchError(error => {
+				throw new MyMICDSError(
+					`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${error.message})`,
 					null,
 					null,
 					url
 				);
-				observer.error(error);
-				this.errorsSubject.next(error);
-				observer.complete();
-			}
-		});
+			})
+		);
 	}
 }
 
