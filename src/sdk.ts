@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { from, Subject } from 'rxjs';
 import { Action } from './api-response';
 import { MyMICDSError } from './error';
 import { HTTP } from './http';
@@ -62,7 +62,7 @@ export class MyMICDS {
 	constructor(options?: Partial<MyMICDSOptions>) {
 		this.options = Object.assign({}, defaultOptions, options);
 
-		const http = new HTTP(this.options);
+		const http = new HTTP(this);
 		http.errors.subscribe(error => {
 			// Clear JWT if invalid
 			if (error.action && [Action.LOGIN_EXPIRED, Action.NOT_LOGGED_IN].includes(error.action)) {
@@ -94,6 +94,18 @@ export class MyMICDS {
 		this.teachers = new TeachersAPI(http);
 		this.user = new UserAPI(http, this);
 		this.weather = new WeatherAPI(http);
+	}
+
+	getJwt() {
+		return from(Promise.resolve(this.options.jwtGetter()));
+	}
+
+	setJwt(jwt: string, remember?: boolean) {
+		return from(Promise.resolve(this.options.jwtSetter(jwt, remember)));
+	}
+
+	clearJwt() {
+		return from(Promise.resolve(this.options.jwtClear()));
 	}
 
 }

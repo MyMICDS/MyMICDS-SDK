@@ -6,7 +6,7 @@ import { HTTP } from '../http';
 import { MyMICDS } from '../sdk';
 
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import * as decode from 'jwt-decode';
 
@@ -21,40 +21,46 @@ export class AuthAPI {
 	}
 
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
-		const parsed = this.retrieveAndParseJWT();
-		this.emitJWTStatus(parsed ? parsed.payload : null);
+		this.retrieveAndParseJWT().subscribe(parsed => {
+			this.emitJWTStatus(parsed ? parsed.payload : null);
+		});
 	}
 
 	login(param: LoginParameters) {
 		return this.http.post<LoginResponse>('/auth/login', param).pipe(
-			tap(res => {
+			switchMap(res => {
 				const parsed = AuthAPI.parseJWT(res.jwt);
+				// If login successful, store JWT
+				let loginAction: Observable<any> = of({});
 				if (parsed) {
-					this.storeJWTAndEmitStatus(res.jwt, parsed.payload, param.remember);
+					loginAction = this.storeJWTAndEmitStatus(res.jwt, parsed.payload, param.remember);
 				}
+				return loginAction.pipe(map(() => res));
 			})
 		);
 	}
 
 	logout() {
-		let logoutAction: Observable<{}>;
-		if (typeof this.mymicds.options.jwtGetter() === 'string') {
-			logoutAction = this.http.post('/auth/logout');
-		} else {
-			// Already logged out. No need to logout with backend, just make sure there is not JWT.
-			logoutAction = of({});
-		}
-		return logoutAction.pipe(
-			tap(() => {
-				this.clearJwt();
-			})
+		return this.mymicds.getJwt().pipe(
+			switchMap(jwt => {
+				if (jwt) {
+					return this.http.post('/auth/logout');
+				} else {
+					// Already logged out. No need to logout with backend, just make sure there is not JWT.
+					return of({});
+				}
+			}),
+			switchMap(() => this.clearJwt())
 		);
 	}
 
 	clearJwt() {
-		this.mymicds.options.jwtClear();
-		this.snapshot = null;
-		this.emitJWTStatus(null);
+		return this.mymicds.clearJwt().pipe(
+			tap(() => {
+				this.snapshot = null;
+				this.emitJWTStatus(null);
+			})
+		);
 	}
 
 	register(param: RegisterParameters) {
@@ -82,17 +88,19 @@ export class AuthAPI {
 	}
 
 	private retrieveAndParseJWT() {
-		const rawJWT = this.mymicds.options.jwtGetter();
-		if (!rawJWT) {
-			return null;
-		}
-		const parsed = AuthAPI.parseJWT(rawJWT);
-		// Check if JWT is invalid
-		if (!parsed) {
-			this.mymicds.options.jwtClear();
-			return null;
-		}
-		return parsed;
+		return this.mymicds.getJwt().pipe(
+			switchMap(rawJWT => {
+				if (!rawJWT) {
+					return of(null);
+				}
+				const parsed = AuthAPI.parseJWT(rawJWT);
+				// Check if JWT is invalid
+				if (!parsed) {
+					return this.mymicds.clearJwt().pipe(map(() => null));
+				}
+				return of(parsed);
+			})
+		);
 	}
 
 	private static parseJWT(rawJWT: string): ParsedJWT | null {
@@ -112,8 +120,9 @@ export class AuthAPI {
 	}
 
 	private storeJWTAndEmitStatus(jwt: string, payload: JWT, remember?: boolean) {
-		this.mymicds.options.jwtSetter(jwt, remember);
-		this.emitJWTStatus(payload);
+		return this.mymicds.setJwt(jwt, remember).pipe(
+			tap(() => this.emitJWTStatus(payload))
+		);
 	}
 
 	private emitJWTStatus(payload: JWT | null) {
