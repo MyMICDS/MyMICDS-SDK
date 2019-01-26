@@ -2,7 +2,9 @@ import { APIResponse } from './api-response';
 import { MyMICDSError } from './error';
 import { MyMICDS } from './sdk';
 
-import 'isomorphic-fetch';
+import * as promise from 'es6-promise';
+promise.polyfill();
+import 'fetch-everywhere';
 import 'isomorphic-form-data';
 import * as qs from 'qs';
 import { from, Observable, Subject, throwError } from 'rxjs';
