@@ -96,4 +96,20 @@ export class MyMICDS {
 		this.weather = new WeatherAPI(http);
 	}
 
+	async getJwt() {
+		try {
+			return await Promise.resolve(this.options.jwtGetter());
+		} catch {
+			return null;
+		}
+	}
+
+	async setJwt(jwt: string, remember: boolean) {
+		return await Promise.resolve(this.options.jwtSetter(jwt, remember));
+	}
+
+	async clearJwt() {
+		return await Promise.resolve(this.options.jwtClear());
+	}
+
 }

@@ -1,3 +1,4 @@
+import { MyMICDS } from './sdk';
 import { APIResponse } from './api-response';
 import { MyMICDSError } from './error';
 import { MyMICDSOptions } from './options';
@@ -12,7 +13,7 @@ export class HTTP {
 	private errorsSubject = new Subject<MyMICDSError>();
 	errors = this.errorsSubject.asObservable();
 
-	constructor(private options: MyMICDSOptions) { }
+	constructor(private sdk: MyMICDS) { }
 
 	get<T>(endpoint: string, data?: StringDict) {
 		return this.http<T>(HTTPMethod.GET, endpoint, data);
@@ -52,12 +53,12 @@ export class HTTP {
 		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 		headers.append('Accept', 'application/json');
-		const jwt = this.options.jwtGetter();
+		const jwt = this.sdk.options.jwtGetter();
 		if (jwt) {
 			headers.append('Authorization', `Bearer ${jwt}`);
 		}
 
-		return this.fetchApi<T>(`${this.options.baseURL}${endpoint}${query}`, {
+		return this.fetchApi<T>(`${this.sdk.options.baseURL}${endpoint}${query}`, {
 			method,
 			body,
 			headers
@@ -78,7 +79,7 @@ export class HTTP {
 
 		const headers = new Headers();
 		headers.append('Accept', 'application/json');
-		const jwt = this.options.jwtGetter();
+		const jwt = this.sdk.getJwt();
 		if (jwt) {
 			headers.append('Authorization', `Bearer ${jwt}`);
 		}
@@ -88,7 +89,7 @@ export class HTTP {
 			form.append(k, data[k]);
 		});
 
-		return this.fetchApi<T>(`${this.options.baseURL}${endpoint}`, {
+		return this.fetchApi<T>(`${this.sdk.options.baseURL}${endpoint}`, {
 			method,
 			body: form,
 			headers
