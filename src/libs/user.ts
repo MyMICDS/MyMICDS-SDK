@@ -5,7 +5,6 @@
 import { MyMICDSError } from '../error';
 import { HTTP } from '../http';
 import { MyMICDS } from '../sdk';
-import { JWT } from './auth';
 
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
