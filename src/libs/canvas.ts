@@ -46,6 +46,22 @@ export class CanvasAPI {
 		return this.http.post<TestCanvasURLResponse>('/canvas/test', param);
 	}
 
+	getUniqueEvents() {
+		return this.http.get<GetUniqueEventsResponse>('/canvas/unique-events').pipe(
+			map(r => {
+				if (r && r.events) {
+					for (const className of Object.keys(r.events)) {
+						for (let i = 0; i < r.events[className].length; i++) {
+							r.events[className][i].start = moment(r.events[className][i].start);
+							r.events[className][i].end = moment(r.events[className][i].end);
+						}
+					}
+				}
+				return r;
+			})
+		);
+	}
+
 }
 
 /**
@@ -66,6 +82,10 @@ export interface SetCanvasURLResponse extends SetPortalURLResponse { }
 export interface TestCanvasURLParameters extends TestPortalURLParameters { }
 
 export interface TestCanvasURLResponse extends TestPortalURLResponse { }
+
+export interface GetUniqueEventsResponse {
+	events: { [className: string]: UniqueEvent[] };
+}
 
 /**
  * Helpers
@@ -91,4 +111,11 @@ export interface DefaultCanvasClass extends ScheduleClass {
 	block: Block.OTHER;
 	color: '#34444F';
 	textDark: false;
+}
+
+export interface UniqueEvent {
+	name: string;
+	raw: string;
+	start: moment.Moment;
+	end: moment.Moment;
 }

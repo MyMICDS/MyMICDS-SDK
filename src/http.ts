@@ -112,6 +112,14 @@ export class HTTP {
 					})
 				);
 			}),
+			catchError(error => {
+				throw new MyMICDSError(
+					'There was a problem communicating with MyMICDS. Please try again or contact support@mymicds.net!',
+					null,
+					null,
+					url
+				);
+			}),
 			map(({ response, resData }) => {
 				if (!response.ok) {
 					// Generic error message if for some reason there's no supplied error in body
@@ -126,7 +134,7 @@ export class HTTP {
 			}),
 			catchError(error => {
 				throw new MyMICDSError(
-					`Something went wrong connecting to MyMICDS. Please try again or contact support@mymicds.net! (${error.message})`,
+					error.message,
 					null,
 					null,
 					url
