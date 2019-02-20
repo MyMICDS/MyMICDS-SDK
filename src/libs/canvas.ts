@@ -51,9 +51,9 @@ export class CanvasAPI {
 			map(r => {
 				if (r && r.events) {
 					for (const className of Object.keys(r.events)) {
-						for (let i = 0; i < r.events[className].length; i++) {
-							r.events[className][i].start = moment(r.events[className][i].start);
-							r.events[className][i].end = moment(r.events[className][i].end);
+						for (const uniqueEvent of r.events[className]) {
+							uniqueEvent.start = moment(uniqueEvent.start);
+							uniqueEvent.end = moment(uniqueEvent.end);
 						}
 					}
 				}
