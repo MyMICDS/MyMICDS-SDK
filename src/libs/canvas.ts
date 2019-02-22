@@ -114,7 +114,9 @@ export interface DefaultCanvasClass extends ScheduleClass {
 }
 
 export interface UniqueEvent {
+	_id: string;
 	name: string;
+	className: string;
 	raw: string;
 	start: moment.Moment;
 	end: moment.Moment;
