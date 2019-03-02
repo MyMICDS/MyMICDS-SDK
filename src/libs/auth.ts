@@ -72,7 +72,7 @@ export class AuthAPI {
 	}
 
 	changePassword(param: ChangePasswordParameters) {
-		return this.http.post('/auth/change-password', param);
+		return this.http.put('/auth/change-password', param);
 	}
 
 	forgotPassword(param: ForgotPasswordParameters) {
