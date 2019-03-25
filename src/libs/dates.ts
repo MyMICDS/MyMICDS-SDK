@@ -10,16 +10,16 @@ export class DatesAPI {
 
 	constructor(private http: HTTP) { }
 
-	schoolStarts() {
-		return this.http.get<SchoolStartsResponse>('/dates/school-ends');
+	schoolStarts(shouldError = false) {
+		return this.http.get<SchoolStartsResponse>('/dates/school-ends', shouldError);
 	}
 
-	schoolEnds() {
-		return this.http.get<SchoolEndsResponse>('/dates/school-ends');
+	schoolEnds(shouldError = false) {
+		return this.http.get<SchoolEndsResponse>('/dates/school-ends', shouldError);
 	}
 
-	getBreaks() {
-		return this.http.get<GetBreaksResponse>('/dates/breaks').pipe(
+	getBreaks(shouldError = false) {
+		return this.http.get<GetBreaksResponse>('/dates/breaks', shouldError).pipe(
 			map(r => {
 				if (r && r.breaks instanceof Array) {
 					for (const group of Object.values(r.breaks)) {

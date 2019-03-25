@@ -8,28 +8,28 @@ export class PortalAPI {
 
 	constructor(private http: HTTP) { }
 
-	getClasses() {
-		return this.http.get<GetPortalClassesResponse>('/portal/classes');
+	getClasses(shouldError = false) {
+		return this.http.get<GetPortalClassesResponse>('/portal/classes', shouldError);
 	}
 
-	getDayRotation() {
-		return this.http.get<GetPortalDayRotationResponse>('/portal/day-rotation');
+	getDayRotation(shouldError = false) {
+		return this.http.get<GetPortalDayRotationResponse>('/portal/day-rotation', shouldError);
 	}
 
-	setClassesURL(param: SetPortalURLParameters) {
-		return this.http.put<SetPortalURLResponse>('/portal/url/classes', param);
+	setClassesURL(param: SetPortalURLParameters, shouldError = false) {
+		return this.http.put<SetPortalURLResponse>('/portal/url/classes', shouldError, param);
 	}
 
-	testClassesURL(param: TestPortalURLParameters) {
-		return this.http.post<TestPortalURLResponse>('/portal/url/test-classes', param);
+	testClassesURL(param: TestPortalURLParameters, shouldError = false) {
+		return this.http.post<TestPortalURLResponse>('/portal/url/test-classes', shouldError, param);
 	}
 
-	setCalendarURL(param: SetPortalURLParameters) {
-		return this.http.put<SetPortalURLResponse>('/portal/url/calendar', param);
+	setCalendarURL(param: SetPortalURLParameters, shouldError = false) {
+		return this.http.put<SetPortalURLResponse>('/portal/url/calendar', shouldError, param);
 	}
 
-	testCalendarURL(param: TestPortalURLParameters) {
-		return this.http.post<TestPortalURLResponse>('/portal/url/test-calendar', param);
+	testCalendarURL(param: TestPortalURLParameters, shouldError = false) {
+		return this.http.post<TestPortalURLResponse>('/portal/url/test-calendar', shouldError, param);
 	}
 
 }

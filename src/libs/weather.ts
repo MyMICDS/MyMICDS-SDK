@@ -11,8 +11,8 @@ export class WeatherAPI {
 
 	constructor(private http: HTTP) { }
 
-	get() {
-		return this.http.get<GetWeatherResponse>('/weather').pipe(
+	get(shouldError = false) {
+		return this.http.get<GetWeatherResponse>('/weather', shouldError).pipe(
 			tap(r => {
 				const w = r.weather;
 
@@ -42,8 +42,8 @@ export class WeatherAPI {
 		);
 	}
 
-	update() {
-		return this.http.post('/weather/update');
+	update(shouldError = false) {
+		return this.http.post('/weather/update', shouldError);
 	}
 
 }

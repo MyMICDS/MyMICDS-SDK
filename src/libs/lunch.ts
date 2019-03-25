@@ -9,8 +9,8 @@ export class LunchAPI {
 
 	constructor(private http: HTTP) { }
 
-	get(param?: GetLunchParameters) {
-		return this.http.get<GetLunchResponse>('/lunch', param);
+	get(param?: GetLunchParameters, shouldError = false) {
+		return this.http.get<GetLunchResponse>('/lunch', shouldError, param);
 	}
 
 }

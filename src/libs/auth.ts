@@ -26,8 +26,8 @@ export class AuthAPI {
 		});
 	}
 
-	login(param: LoginParameters) {
-		return this.http.post<LoginResponse>('/auth/login', param).pipe(
+	login(param: LoginParameters, shouldError = false) {
+		return this.http.post<LoginResponse>('/auth/login', shouldError, param).pipe(
 			switchMap(res => {
 				const parsed = AuthAPI.parseJWT(res.jwt);
 				// If login successful, store JWT
@@ -40,11 +40,11 @@ export class AuthAPI {
 		);
 	}
 
-	logout() {
+	logout(shouldError = false) {
 		return this.mymicds.getJwt().pipe(
 			switchMap(jwt => {
 				if (jwt) {
-					return this.http.post('/auth/logout');
+					return this.http.post('/auth/logout', shouldError);
 				} else {
 					// Already logged out. No need to logout with backend, just make sure there is not JWT.
 					return of({});
@@ -63,28 +63,28 @@ export class AuthAPI {
 		);
 	}
 
-	register(param: RegisterParameters) {
-		return this.http.post('/auth/register', param);
+	register(param: RegisterParameters, shouldError = false) {
+		return this.http.post('/auth/register', shouldError, param);
 	}
 
-	confirm(param: ConfirmParameters) {
-		return this.http.post('/auth/confirm', param);
+	confirm(param: ConfirmParameters, shouldError = false) {
+		return this.http.post('/auth/confirm', shouldError, param);
 	}
 
-	changePassword(param: ChangePasswordParameters) {
-		return this.http.put('/auth/change-password', param);
+	changePassword(param: ChangePasswordParameters, shouldError = false) {
+		return this.http.put('/auth/change-password', shouldError, param);
 	}
 
-	forgotPassword(param: ForgotPasswordParameters) {
-		return this.http.post('/auth/forgot-password', param);
+	forgotPassword(param: ForgotPasswordParameters, shouldError = false) {
+		return this.http.post('/auth/forgot-password', shouldError, param);
 	}
 
-	resetPassword(param: ResetPasswordParameters) {
-		return this.http.put('/auth/reset-password', param);
+	resetPassword(param: ResetPasswordParameters, shouldError = false) {
+		return this.http.put('/auth/reset-password', shouldError, param);
 	}
 
-	verify() {
-		return this.http.get('/auth/verify');
+	verify(shouldError = false) {
+		return this.http.get('/auth/verify', shouldError);
 	}
 
 	private retrieveAndParseJWT() {

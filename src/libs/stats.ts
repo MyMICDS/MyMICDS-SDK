@@ -8,8 +8,8 @@ export class StatsAPI {
 
 	constructor(private http: HTTP) { }
 
-	get() {
-		return this.http.get<GetStatsResponse>('/stats');
+	get(shouldError = false) {
+		return this.http.get<GetStatsResponse>('/stats', shouldError);
 	}
 
 }

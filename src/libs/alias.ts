@@ -8,16 +8,16 @@ export class AliasAPI {
 
 	constructor(private http: HTTP) { }
 
-	add(param: AddAliasParameters) {
-		return this.http.post<AddAliasResponse>('/alias', param);
+	add(param: AddAliasParameters, shouldError = false) {
+		return this.http.post<AddAliasResponse>('/alias', shouldError, param);
 	}
 
-	list() {
-		return this.http.get<ListAliasesResponse>('/alias');
+	list(shouldError = false) {
+		return this.http.get<ListAliasesResponse>('/alias', shouldError);
 	}
 
-	delete(param: DeleteAliasParameters) {
-		return this.http.delete('/alias', param);
+	delete(param: DeleteAliasParameters, shouldError = false) {
+		return this.http.delete('/alias', shouldError, param);
 	}
 
 }

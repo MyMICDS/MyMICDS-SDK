@@ -8,12 +8,12 @@ export class QuotesAPI {
 
 	constructor(private http: HTTP) { }
 
-	get() {
-		return this.http.get<GetQuoteResponse>('/quote');
+	get(shouldError = false) {
+		return this.http.get<GetQuoteResponse>('/quote', shouldError);
 	}
 
-	add(param: AddQuoteParameters) {
-		return this.http.post('/quote', param);
+	add(param: AddQuoteParameters, shouldError = false) {
+		return this.http.post('/quote', shouldError, param);
 	}
 
 }

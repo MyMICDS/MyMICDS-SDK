@@ -29,10 +29,7 @@ export class BackgroundAPI {
 			this.$ = this.backgroundSubject.asObservable();
 			this.mymicds.auth.$.pipe(
 				switchMap(() => this.get())
-			).subscribe(
-				background => this.propagateBackground(background),
-				err => this.backgroundSubject.error(err)
-			);
+			).subscribe(background => this.propagateBackground(background));
 		} else {
 			this.$ = throwError(
 				new MyMICDSError('SDK is not configured to set up the background update! Set this in the initialization options.')
@@ -40,21 +37,21 @@ export class BackgroundAPI {
 		}
 	}
 
-	get() {
-		return this.http.get<GetBackgroundResponse>('/background');
+	get(shouldError = false) {
+		return this.http.get<GetBackgroundResponse>('/background', shouldError);
 	}
 
-	getAll() {
-		return this.http.get<GetAllBackgroundsResponse>('/background/all');
+	getAll(shouldError = false) {
+		return this.http.get<GetAllBackgroundsResponse>('/background/all', shouldError);
 	}
 
-	upload(param: UploadBackgroundParameters) {
-		return this.http.uploadFile<UploadBackgroundResponse>(HTTPMethod.PUT, '/background', param)
+	upload(param: UploadBackgroundParameters, shouldError = false) {
+		return this.http.uploadFile<UploadBackgroundResponse>(HTTPMethod.PUT, '/background', shouldError, param)
 			.pipe(tap(background => this.propagateBackground(background)));
 	}
 
-	delete() {
-		return this.http.delete<DeleteBackgroundResponse>('/background')
+	delete(shouldError = false) {
+		return this.http.delete<DeleteBackgroundResponse>('/background', shouldError)
 			.pipe(tap(background => this.propagateBackground(background)));
 	}
 

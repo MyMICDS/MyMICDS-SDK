@@ -8,12 +8,12 @@ export class StickyNotesAPI {
 
 	constructor(private http: HTTP) { }
 
-	get(param: GetStickyNoteParameters) {
-		return this.http.get<GetStickyNoteResponse>('/stickynotes', param);
+	get(param: GetStickyNoteParameters, shouldError = false) {
+		return this.http.get<GetStickyNoteResponse>('/stickynotes', shouldError, param);
 	}
 
-	add(param: AddStickyNoteParameters) {
-		return this.http.put('/stickynotes', param);
+	add(param: AddStickyNoteParameters, shouldError = false) {
+		return this.http.put('/stickynotes', shouldError, param);
 	}
 
 }

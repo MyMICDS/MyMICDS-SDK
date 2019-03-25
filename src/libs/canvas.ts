@@ -20,12 +20,12 @@ export class CanvasAPI {
 
 	constructor(private http: HTTP) { }
 
-	getClasses() {
-		return this.http.get<GetCanvasClassesResponse>('/canvas/classes');
+	getClasses(shouldError = false) {
+		return this.http.get<GetCanvasClassesResponse>('/canvas/classes', shouldError);
 	}
 
-	getEvents() {
-		return this.http.get<GetCanvasEventsResponse>('/canvas/events').pipe(
+	getEvents(shouldError = false) {
+		return this.http.get<GetCanvasEventsResponse>('/canvas/events', shouldError).pipe(
 			map(r => {
 				if (r && r.events instanceof Array) {
 					for (const event of r.events) {
@@ -38,16 +38,16 @@ export class CanvasAPI {
 		);
 	}
 
-	setURL(param: SetCanvasURLParameters) {
-		return this.http.put<SetCanvasURLResponse>('/canvas/url', param);
+	setURL(param: SetCanvasURLParameters, shouldError = false) {
+		return this.http.put<SetCanvasURLResponse>('/canvas/url', shouldError, param);
 	}
 
-	testURL(param: TestCanvasURLParameters) {
-		return this.http.post<TestCanvasURLResponse>('/canvas/test', param);
+	testURL(param: TestCanvasURLParameters, shouldError = false) {
+		return this.http.post<TestCanvasURLResponse>('/canvas/test', shouldError, param);
 	}
 
-	getUniqueEvents() {
-		return this.http.get<GetUniqueEventsResponse>('/canvas/unique-events').pipe(
+	getUniqueEvents(shouldError = false) {
+		return this.http.get<GetUniqueEventsResponse>('/canvas/unique-events', shouldError).pipe(
 			map(r => {
 				if (r && r.events) {
 					for (const className of Object.keys(r.events)) {

@@ -8,8 +8,8 @@ export class TeachersAPI {
 
 	constructor(private http: HTTP) { }
 
-	get() {
-		return this.http.get<GetTeachersResponse>('/teachers');
+	get(shouldError = false) {
+		return this.http.get<GetTeachersResponse>('/teachers', shouldError);
 	}
 
 }

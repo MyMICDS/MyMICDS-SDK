@@ -13,8 +13,8 @@ export class ScheduleAPI {
 
 	constructor(private http: HTTP) { }
 
-	get(param?: GetScheduleParameters) {
-		return this.http.get<GetScheduleResponse>('/schedule', param).pipe(
+	get(param?: GetScheduleParameters, shouldError = false) {
+		return this.http.get<GetScheduleResponse>('/schedule', shouldError, param).pipe(
 			map(r => {
 				if (r && r.schedule && r.schedule.classes instanceof Array) {
 					for (const scheduleClass of r.schedule.classes) {

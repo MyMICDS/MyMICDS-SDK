@@ -7,16 +7,16 @@ import { HTTP } from '../http';
 export class DailyBulletinAPI {
 	constructor(private http: HTTP) { }
 
-	getList() {
-		return this.http.get<GetBulletinsResponse>('/daily-bulletin');
+	getList(shouldError = false) {
+		return this.http.get<GetBulletinsResponse>('/daily-bulletin', shouldError);
 	}
 
-	query() {
-		return this.http.post('/daily-bulletin/query');
+	query(shouldError = false) {
+		return this.http.post('/daily-bulletin/query', shouldError);
 	}
 
-	queryAll() {
-		return this.http.post('/daily-bulletin/query-all');
+	queryAll(shouldError = false) {
+		return this.http.post('/daily-bulletin/query-all', shouldError);
 	}
 
 }

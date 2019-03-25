@@ -12,8 +12,8 @@ export class PlannerAPI {
 
 	constructor(private http: HTTP) { }
 
-	getEvents() {
-		return this.http.get<GetPlannerEventsResponse>('/planner').pipe(
+	getEvents(shouldError = false) {
+		return this.http.get<GetPlannerEventsResponse>('/planner', shouldError).pipe(
 			map(r => {
 				if (r && r.events instanceof Array) {
 					for (const event of r.events) {
@@ -26,20 +26,20 @@ export class PlannerAPI {
 		);
 	}
 
-	addEvent(param: AddPlannerEventParameters) {
-		return this.http.post<AddPlannerEventResponse>('/planner', param);
+	addEvent(param: AddPlannerEventParameters, shouldError = false) {
+		return this.http.post<AddPlannerEventResponse>('/planner', shouldError, param);
 	}
 
-	deleteEvent(param: DeletePlannerEventParameters) {
-		return this.http.delete('/planner', param);
+	deleteEvent(param: DeletePlannerEventParameters, shouldError = false) {
+		return this.http.delete('/planner', shouldError, param);
 	}
 
-	checkEvent(param: CheckPlannerEventParameters) {
-		return this.http.patch('/planner/check', param);
+	checkEvent(param: CheckPlannerEventParameters, shouldError = false) {
+		return this.http.patch('/planner/check', shouldError, param);
 	}
 
-	uncheckEvent(param: UncheckPlannerEventParameters) {
-		return this.http.patch('/planner/uncheck', param);
+	uncheckEvent(param: UncheckPlannerEventParameters, shouldError = false) {
+		return this.http.patch('/planner/uncheck', shouldError, param);
 	}
 
 }

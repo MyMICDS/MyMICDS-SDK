@@ -11,8 +11,8 @@ export class SportsAPI {
 
 	constructor(private http: HTTP) { }
 
-	getScores() {
-		return this.http.get<GetScoresResponse>('/sports').pipe(
+	getScores(shouldError = false) {
+		return this.http.get<GetScoresResponse>('/sports', shouldError).pipe(
 			tap(r => {
 				if (r && r.scores) {
 					if (r.scores.scores instanceof Array) {

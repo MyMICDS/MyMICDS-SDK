@@ -9,16 +9,16 @@ export class ClassesAPI {
 
 	constructor(private http: HTTP) { }
 
-	get() {
-		return this.http.get<GetClassesResponse>('/classes');
+	get(shouldError = false) {
+		return this.http.get<GetClassesResponse>('/classes', shouldError);
 	}
 
-	add(param: AddClassParameters) {
-		return this.http.post<AddClassResponse>('/classes', param);
+	add(param: AddClassParameters, shouldError = false) {
+		return this.http.post<AddClassResponse>('/classes', shouldError, param);
 	}
 
-	delete(param: DeleteClassParameters) {
-		return this.http.delete('/classes', param);
+	delete(param: DeleteClassParameters, shouldError = false) {
+		return this.http.delete('/classes', shouldError, param);
 	}
 
 }

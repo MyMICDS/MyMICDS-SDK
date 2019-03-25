@@ -8,8 +8,8 @@ export class SnowdayAPI {
 
 	constructor(private http: HTTP) { }
 
-	get() {
-		return this.http.get<GetSnowdayResponse>('/snowday');
+	get(shouldError = false) {
+		return this.http.get<GetSnowdayResponse>('/snowday', shouldError);
 	}
 
 }

@@ -8,8 +8,8 @@ export class SuggestionAPI {
 
 	constructor(private http: HTTP) { }
 
-	submit(param: SubmitSuggestionParameters) {
-		return this.http.post('/suggestion', param);
+	submit(param: SubmitSuggestionParameters, shouldError = false) {
+		return this.http.post('/suggestion', shouldError, param);
 	}
 
 }

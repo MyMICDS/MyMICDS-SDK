@@ -8,12 +8,12 @@ export class ModulesAPI {
 
 	constructor(private http: HTTP) { }
 
-	get() {
-		return this.http.get<GetModulesResponse>('/modules');
+	get(shouldError = false) {
+		return this.http.get<GetModulesResponse>('/modules', shouldError);
 	}
 
-	update(param: UpdateModulesParameters) {
-		return this.http.put<GetModulesResponse>('/modules', param);
+	update(param: UpdateModulesParameters, shouldError = false) {
+		return this.http.put<GetModulesResponse>('/modules', shouldError, param);
 	}
 
 }

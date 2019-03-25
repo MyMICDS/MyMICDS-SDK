@@ -7,8 +7,8 @@ import { HTTP } from '../http';
 export class NotificationsAPI {
 	constructor(private http: HTTP) { }
 
-	unsubscribe(param: UnsubscribeParameters) {
-		return this.http.post('/notifications/unsubscribe', param);
+	unsubscribe(param: UnsubscribeParameters, shouldError = false) {
+		return this.http.post('/notifications/unsubscribe', shouldError, param);
 	}
 
 }

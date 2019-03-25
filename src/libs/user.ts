@@ -35,25 +35,25 @@ export class UserAPI {
 		}
 	}
 
-	gradYearToGrade(param: GradYearToGradeParameters) {
-		return this.http.get<GradYearToGradeResponse>('/user/grad-year-to-grade', param);
+	gradYearToGrade(param: GradYearToGradeParameters, shouldError = false) {
+		return this.http.get<GradYearToGradeResponse>('/user/grad-year-to-grade', shouldError, param);
 	}
 
-	gradeToGradYear(param: GradeToGradYearParameters) {
-		return this.http.get<GradeToGradYearResponse>('/user/grade-to-grad-year', param);
+	gradeToGradYear(param: GradeToGradYearParameters, shouldError = false) {
+		return this.http.get<GradeToGradYearResponse>('/user/grade-to-grad-year', shouldError, param);
 	}
 
-	getGradeRange() {
-		return this.http.get<GetGradeRangeResponse>('/user/grade-range');
+	getGradeRange(shouldError = false) {
+		return this.http.get<GetGradeRangeResponse>('/user/grade-range', shouldError);
 	}
 
-	getInfo() {
-		return this.http.get<GetUserInfoResponse>('/user/info')
+	getInfo(shouldError = false) {
+		return this.http.get<GetUserInfoResponse>('/user/info', shouldError)
 			.pipe(tap(userInfo => this.propagateUserInfo(userInfo)));
 	}
 
-	changeInfo(param: ChangeUserInfoParameters) {
-		return this.http.patch<ChangeUserInfoResponse>('/user/info', param);
+	changeInfo(param: ChangeUserInfoParameters, shouldError = false) {
+		return this.http.patch<ChangeUserInfoResponse>('/user/info', shouldError, param);
 	}
 
 	private propagateUserInfo(userInfo: GetUserInfoResponse | null | undefined) {

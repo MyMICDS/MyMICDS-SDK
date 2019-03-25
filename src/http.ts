@@ -17,31 +17,31 @@ export class HTTP {
 
 	constructor(private mymicds: MyMICDS) { }
 
-	get<T>(endpoint: string, data?: StringDict) {
-		return this.http<T>(HTTPMethod.GET, endpoint, data);
+	get<T>(endpoint: string, shouldError: boolean, data?: StringDict) {
+		return this.http<T>(HTTPMethod.GET, endpoint, shouldError, data);
 	}
 
-	post<T>(endpoint: string, data?: StringDict) {
-		return this.http<T>(HTTPMethod.POST, endpoint, data);
+	post<T>(endpoint: string, shouldError: boolean, data?: StringDict) {
+		return this.http<T>(HTTPMethod.POST, endpoint, shouldError, data);
 	}
 
-	put<T>(endpoint: string, data?: StringDict) {
-		return this.http<T>(HTTPMethod.PUT, endpoint, data);
+	put<T>(endpoint: string, shouldError: boolean, data?: StringDict) {
+		return this.http<T>(HTTPMethod.PUT, endpoint, shouldError, data);
 	}
 
-	patch<T>(endpoint: string, data?: StringDict) {
-		return this.http<T>(HTTPMethod.PATCH, endpoint, data);
+	patch<T>(endpoint: string, shouldError: boolean, data?: StringDict) {
+		return this.http<T>(HTTPMethod.PATCH, endpoint, shouldError, data);
 	}
 
-	delete<T>(endpoint: string, data?: StringDict) {
-		return this.http<T>(HTTPMethod.DELETE, endpoint, data);
+	delete<T>(endpoint: string, shouldError: boolean, data?: StringDict) {
+		return this.http<T>(HTTPMethod.DELETE, endpoint, shouldError, data);
 	}
 
 	/**
 	 * Generic wrapper for regular API requests
 	 */
 
-	private http<T>(method: HTTPMethod, endpoint: string, data: StringDict = {}): Observable<T> {
+	private http<T>(method: HTTPMethod, endpoint: string, shouldError: boolean, data: StringDict = {}): Observable<T> {
 		// If a GET request, use query parameters instead of JSON body
 		let body: string | null = JSON.stringify(data);
 		let query = '';
@@ -59,14 +59,14 @@ export class HTTP {
 			method,
 			body,
 			headers
-		});
+		}, shouldError);
 	}
 
 	/**
 	 * Platform-agnostic file upload
 	 */
 
-	uploadFile<T>(method: HTTPMethod, endpoint: string, data: StringDict = {}): Observable<T> {
+	uploadFile<T>(method: HTTPMethod, endpoint: string, shouldError: boolean, data: StringDict = {}): Observable<T> {
 		// No GET requests for file upload
 		if (method === HTTPMethod.GET) {
 			return throwError(
@@ -82,7 +82,7 @@ export class HTTP {
 		return this.fetchApi<T>(`${this.mymicds.options.baseURL}${endpoint}`, {
 			method,
 			body: form
-		});
+		}, shouldError);
 	}
 
 	/**
@@ -90,7 +90,7 @@ export class HTTP {
 	 * Unpacks API data or returns MyMICDSError object
 	 */
 
-	private fetchApi<T>(url: string, options: StringDict): Observable<T> {
+	private fetchApi<T>(url: string, options: StringDict, shouldError: boolean): Observable<T> {
 		return this.mymicds.getJwt().pipe(
 			switchMap(jwt => {
 
@@ -112,7 +112,7 @@ export class HTTP {
 					})
 				);
 			}),
-			catchError(error => {
+			catchError(() => {
 				throw new MyMICDSError(
 					'There was a problem communicating with MyMICDS. Please try again or contact support@mymicds.net!',
 					null,
@@ -127,18 +127,19 @@ export class HTTP {
 					if (resData.error) {
 						errorMessage = resData.error;
 					}
+					console.log('get response action', resData);
 					throw new MyMICDSError(errorMessage, response.status, resData.action, url);
 				}
 
 				return resData.data!;
 			}),
 			catchError(error => {
-				throw new MyMICDSError(
-					error.message,
-					null,
-					null,
-					url
-				);
+				this.errorsSubject.next(error);
+				if (shouldError) {
+					throw error;
+				} else {
+					return new Observable<T>();
+				}
 			})
 		);
 	}
