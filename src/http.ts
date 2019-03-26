@@ -127,7 +127,6 @@ export class HTTP {
 					if (resData.error) {
 						errorMessage = resData.error;
 					}
-					console.log('get response action', resData);
 					throw new MyMICDSError(errorMessage, response.status, resData.action, url);
 				}
 
