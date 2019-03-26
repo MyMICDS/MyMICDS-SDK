@@ -65,8 +65,8 @@ export class MyMICDS {
 		const http = new HTTP(this);
 		http.errors.subscribe(error => {
 			// Clear JWT if invalid
-			if (error.action && [Action.LOGIN_EXPIRED, Action.NOT_LOGGED_IN].includes(error.action)) {
-				this.auth.clearJwt();
+			if (error.action && [Action.LOGIN_EXPIRED, Action.NOT_LOGGED_IN, Action.UNAUTHORIZED].includes(error.action)) {
+				const subscription = this.auth.clearJwt().subscribe(() => subscription.unsubscribe());
 			}
 			this.errorsSubject.next(error);
 		});
