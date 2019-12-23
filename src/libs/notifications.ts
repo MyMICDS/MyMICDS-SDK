@@ -18,7 +18,13 @@ export class NotificationsAPI {
  */
 
 export interface UnsubscribeParameters {
-	user: string;
-	hash: string;
-	type: string;
+	user?: string;
+	hash?: string;
+	scopes: Scope | Scope[];
+}
+
+export enum Scope {
+	ALL = 'ALL',
+	ANNOUNCEMENTS = 'ANNOUNCEMENTS',
+	FEATURES = 'FEATURES'
 }
