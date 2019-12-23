@@ -19,5 +19,6 @@ export class SuggestionAPI {
  */
 
 export interface SubmitSuggestionParameters {
+	type: string;
 	submission: string;
 }
