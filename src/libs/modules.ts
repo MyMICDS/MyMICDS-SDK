@@ -37,6 +37,7 @@ export interface UpdateModulesParameters {
 export enum MyMICDSModuleType {
 	BOOKMARKS = 'bookmarks',
 	COUNTDOWN = 'countdown',
+	GPA_CALCULATOR = 'gpaCalculator',
 	PROGRESS = 'progress',
 	SCHEDULE = 'schedule',
 	SIMPLIFIED_LUNCH = 'simplifiedLunch',
