@@ -70,7 +70,7 @@ export interface Weather {
 	daily: WeatherDataGroup<DailyWeatherSnapshot>;
 	flags: {
 		sources: string[];
-		'isd-stations': string[];
+		'nearest-station': number;
 		units: string;
 	};
 	offset: number;
