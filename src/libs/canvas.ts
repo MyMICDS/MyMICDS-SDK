@@ -31,6 +31,7 @@ export class CanvasAPI {
 					for (const event of r.events) {
 						event.start = moment(event.start);
 						event.end = moment(event.end);
+						event.createdAt = moment(event.createdAt);
 					}
 				}
 				return r;
@@ -94,6 +95,7 @@ export interface GetUniqueEventsResponse {
 export interface CanvasEvent extends PlannerEvent {
 	canvas: true;
 	class: MyMICDSClass | DefaultCanvasClass;
+	createdAt: moment.Moment;
 }
 
 export interface DefaultCanvasClass extends ScheduleClass {
