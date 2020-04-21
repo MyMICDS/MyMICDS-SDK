@@ -154,7 +154,7 @@ export interface RegisterParameters {
 	password: string;
 	firstName: string;
 	lastName: string;
-	gradYear: number;
+	gradYear: number | null;
 	teacher?: boolean;
 }
 
