@@ -133,3 +133,26 @@ export interface DailyWeatherSnapshot extends HourlyWeatherSnapshot {
 	apparentTemperatureMax: number;
 	apparentTemperatureMaxTime: moment.Moment;
 }
+// obviously it's not gonna be called NewWeather, this is just scaffolding for now
+export interface NewWeather { // all in fahrenheit, miles/hour,
+	/*
+	1. Current Temp
+	2. Low for day
+	3. High for day
+	4. humidity
+	5. percipitation chance
+	6. wind speed
+	7. wind direction
+	8. Weather Icon
+	*/
+	temperature: number;
+	temperatureHigh: number;
+	temperatureLow: number;
+	humidity: number;
+	percipitationChance: number;
+	windSpeed: number;
+	windDir: number; // degrees
+	weatherIcon: string;
+
+
+}
