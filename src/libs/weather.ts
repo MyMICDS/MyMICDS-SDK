@@ -133,26 +133,115 @@ export interface DailyWeatherSnapshot extends HourlyWeatherSnapshot {
 	apparentTemperatureMax: number;
 	apparentTemperatureMaxTime: moment.Moment;
 }
-// obviously it's not gonna be called NewWeather, this is just scaffolding for now
-export interface NewWeather { // all in fahrenheit, miles/hour,
-	/*
-	1. Current Temp
-	2. Low for day
-	3. High for day
-	4. humidity
-	5. percipitation chance
-	6. wind speed
-	7. wind direction
-	8. Weather Icon
-	*/
+
+export class SimplifiedWeather { // all in fahrenheit, miles/hour, imperial
 	temperature: number;
 	temperatureHigh: number;
 	temperatureLow: number;
 	humidity: number;
 	percipitationChance: number;
 	windSpeed: number;
-	windDir: number; // degrees
+	windDir: number;
 	weatherIcon: string;
 
+	constructor(openWeatherData: OpenWeather){
+		this.temperature = openWeatherData.current.temp;
+		this.temperatureHigh = openWeatherData.daily[0].temp.max ?? 0;
+		this.temperatureLow = openWeatherData.daily[0].temp.min ?? 0;
+		this.humidity = openWeatherData.current.humidity;
+		this.percipitationChance = openWeatherData.hourly[0].pop;
+		this.windSpeed = openWeatherData.hourly[0].wind_speed;
+		this.windDir = openWeatherData.hourly[0].wind_deg;
+		this.weatherIcon = openWeatherData.current.weather[0].id;
+	}
+}
 
+// note there is a "minutely" array, but our Open Weather request excludes it
+export interface OpenWeather {
+	lat: number;
+	lon: number;
+	timezone: string;
+	timezone_offset: number;
+	current: OpenWeatherCurrentSnapshot;
+	hourly: OpenWeatherHourSnapshot[];
+	daily: OpenWeatherDaySnapshot[];
+}
+
+export interface OpenWeatherCurrentSnapshot {
+		dt: moment.Moment;
+		sunrise: moment.Moment;
+		sunset: moment.Moment;
+		temp: number;
+		feels_like: number;
+		pressure: number;
+		humidity: number;
+		dew_point: number;
+		clouds: number;
+		uvi: number;
+		visibility: number;
+		wind_speed: number;
+		wind_gust: number | null;
+		wind_deg: number;
+		rain: number | percipitationVolume;
+		snow: number | percipitationVolume;
+		weather: openWeatherSummary[];
+}
+
+export interface OpenWeatherHourSnapshot {
+	dt: moment.Moment;
+	temp: number;
+	feels_like: number;
+	pressure: number;
+	humidity: number;
+	dew_point: number;
+	clouds: number;
+	visibility: number;
+	wind_speed: number;
+	wind_gust: number | null;
+	wind_deg: number;
+	rain: number | percipitationVolume;
+	snow: number | percipitationVolume;
+	pop: number;
+	weather: openWeatherSummary[];
+}
+
+export interface OpenWeatherDaySnapshot {
+		dt: moment.Moment;
+		sunrise: moment.Moment;
+		sunset: moment.Moment;
+		temp: temperatureDaySnapshot;
+		feels_like: temperatureDaySnapshot;
+		pressure: number;
+		humidity: number;
+		dew_point: number;
+		clouds: number;
+		uvi: number;
+		visibility: number;
+		wind_speed: number;
+		wind_gust: number | null;
+		wind_deg: number;
+		pop: number;
+		rain: number | percipitationVolume | null;
+		snow: number | percipitationVolume | null;
+		weather: openWeatherSummary[];
+}
+
+export interface openWeatherSummary {
+	id: string;
+	main: string;
+	description: string;
+	icon: string;
+}
+
+export interface percipitationVolume {
+	h1: number;
+}
+
+export interface temperatureDaySnapshot {
+	morn: number;
+	day: number;
+	eve: number;
+	night: number;
+	min: number | null;
+	max: number | null;
 }

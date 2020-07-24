@@ -1,60 +1,60 @@
 {
-  "name": "@mymicds/sdk",
-  "version": "1.10.1",
-  "description": "Client for connecting to the MyMICDS API",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "docs": "typedoc --out ./docs --mode file ./src",
-    "lint": "tslint --project tsconfig.json \"src/**/*.ts\"",
-    "clean": "rimraf ./dist",
-    "prepublishOnly": "npm run lint && npm run ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "ts": "npm run clean && tsc",
-    "ts:watch": "tsc -w"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MyMICDS/MyMICDS-SDK.git"
-  },
-  "keywords": [
-    "mymicds",
-    "micds"
-  ],
-  "author": "MyMICDS Development Team",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/MyMICDS/MyMICDS-SDK/issues"
-  },
-  "homepage": "https://github.com/MyMICDS/MyMICDS-SDK#readme",
-  "dependencies": {
-    "es6-promise": "^4.2.5",
-    "fetch-everywhere": "^1.0.5",
-    "isomorphic-form-data": "^1.0.0",
-    "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.27",
-    "qs": "^6.5.1",
-    "rxjs": "^6.3.3"
-  },
-  "peerDependencies": {
-    "rxjs": "^6.2.1"
-  },
-  "devDependencies": {
-    "@mymicds/configs": "^1.0.0",
-    "@types/form-data": "^2.2.1",
-    "@types/isomorphic-fetch": "0.0.34",
-    "@types/jwt-decode": "^2.2.1",
-    "@types/moment": "^2.13.0",
-    "@types/moment-timezone": "^0.5.12",
-    "@types/node": "^8.5.2",
-    "@types/qs": "^6.5.1",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.12.1",
-    "typedoc": "^0.15.5",
-    "typescript": "~3.1.1"
-  }
+	"name": "@mymicds/sdk",
+	"version": "1.10.1",
+	"description": "Client for connecting to the MyMICDS API",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"docs": "typedoc --out ./docs --mode file ./src",
+		"lint": "tslint --project tsconfig.json \"src/**/*.ts\"",
+		"clean": "rimraf ./dist",
+		"prepublishOnly": "npm run lint && npm run ts",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"ts": "npm run clean && tsc",
+		"ts:watch": "tsc -w"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MyMICDS/MyMICDS-SDK.git"
+	},
+	"keywords": [
+		"mymicds",
+		"micds"
+	],
+	"author": "MyMICDS Development Team",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/MyMICDS/MyMICDS-SDK/issues"
+	},
+	"homepage": "https://github.com/MyMICDS/MyMICDS-SDK#readme",
+	"dependencies": {
+		"es6-promise": "^4.2.8",
+		"fetch-everywhere": "^1.0.5",
+		"isomorphic-form-data": "^1.0.0",
+		"jwt-decode": "^2.2.0",
+		"moment": "^2.27.0",
+		"moment-timezone": "^0.5.31",
+		"qs": "^6.9.4",
+		"rxjs": "^6.6.0"
+	},
+	"peerDependencies": {
+		"rxjs": "^6.2.1"
+	},
+	"devDependencies": {
+		"@mymicds/configs": "^1.1.0",
+		"@types/form-data": "^2.5.0",
+		"@types/isomorphic-fetch": "0.0.34",
+		"@types/jwt-decode": "^2.2.1",
+		"@types/moment": "^2.13.0",
+		"@types/moment-timezone": "^0.5.13",
+		"@types/node": "^8.10.62",
+		"@types/qs": "^6.9.4",
+		"rimraf": "^2.7.1",
+		"tslint": "^5.20.1",
+		"typedoc": "^0.15.8",
+		"typescript": "^3.9.7"
+	}
 }
