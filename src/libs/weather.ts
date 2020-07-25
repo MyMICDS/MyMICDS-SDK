@@ -134,7 +134,7 @@ export interface DailyWeatherSnapshot extends HourlyWeatherSnapshot {
 	apparentTemperatureMaxTime: moment.Moment;
 }
 
-export class SimplifiedWeather { // all in fahrenheit, miles/hour, imperial
+export interface SimplifiedWeather { // all in fahrenheit, miles/hour, imperial
 	temperature: number;
 	temperatureHigh: number;
 	temperatureLow: number;
@@ -144,16 +144,16 @@ export class SimplifiedWeather { // all in fahrenheit, miles/hour, imperial
 	windDir: number;
 	weatherIcon: string;
 
-	constructor(openWeatherData: OpenWeather){
-		this.temperature = openWeatherData.current.temp;
-		this.temperatureHigh = openWeatherData.daily[0].temp.max ?? 0;
-		this.temperatureLow = openWeatherData.daily[0].temp.min ?? 0;
-		this.humidity = openWeatherData.current.humidity;
-		this.percipitationChance = openWeatherData.hourly[0].pop;
-		this.windSpeed = openWeatherData.hourly[0].wind_speed;
-		this.windDir = openWeatherData.hourly[0].wind_deg;
-		this.weatherIcon = openWeatherData.current.weather[0].id;
-	}
+	// constructor(openWeatherData: OpenWeather) {
+	// 	this.temperature = openWeatherData.current.temp;
+	// 	this.temperatureHigh = openWeatherData.daily[0].temp.max ?? 0;
+	// 	this.temperatureLow = openWeatherData.daily[0].temp.min ?? 0;
+	// 	this.humidity = openWeatherData.current.humidity;
+	// 	this.percipitationChance = openWeatherData.hourly[0].pop;
+	// 	this.windSpeed = openWeatherData.hourly[0].wind_speed;
+	// 	this.windDir = openWeatherData.hourly[0].wind_deg;
+	// 	this.weatherIcon = openWeatherData.current.weather[0].id;
+	// }
 }
 
 // note there is a "minutely" array, but our Open Weather request excludes it
@@ -168,23 +168,23 @@ export interface OpenWeather {
 }
 
 export interface OpenWeatherCurrentSnapshot {
-		dt: moment.Moment;
-		sunrise: moment.Moment;
-		sunset: moment.Moment;
-		temp: number;
-		feels_like: number;
-		pressure: number;
-		humidity: number;
-		dew_point: number;
-		clouds: number;
-		uvi: number;
-		visibility: number;
-		wind_speed: number;
-		wind_gust: number | null;
-		wind_deg: number;
-		rain: number | percipitationVolume;
-		snow: number | percipitationVolume;
-		weather: openWeatherSummary[];
+	dt: moment.Moment;
+	sunrise: moment.Moment;
+	sunset: moment.Moment;
+	temp: number;
+	feels_like: number;
+	pressure: number;
+	humidity: number;
+	dew_point: number;
+	clouds: number;
+	uvi: number;
+	visibility: number;
+	wind_speed: number;
+	wind_gust: number | null;
+	wind_deg: number;
+	rain: number | PercipitationVolume;
+	snow: number | PercipitationVolume;
+	weather: OpenWeatherSummary[];
 }
 
 export interface OpenWeatherHourSnapshot {
@@ -199,45 +199,45 @@ export interface OpenWeatherHourSnapshot {
 	wind_speed: number;
 	wind_gust: number | null;
 	wind_deg: number;
-	rain: number | percipitationVolume;
-	snow: number | percipitationVolume;
+	rain: number | PercipitationVolume;
+	snow: number | PercipitationVolume;
 	pop: number;
-	weather: openWeatherSummary[];
+	weather: OpenWeatherSummary[];
 }
 
 export interface OpenWeatherDaySnapshot {
-		dt: moment.Moment;
-		sunrise: moment.Moment;
-		sunset: moment.Moment;
-		temp: temperatureDaySnapshot;
-		feels_like: temperatureDaySnapshot;
-		pressure: number;
-		humidity: number;
-		dew_point: number;
-		clouds: number;
-		uvi: number;
-		visibility: number;
-		wind_speed: number;
-		wind_gust: number | null;
-		wind_deg: number;
-		pop: number;
-		rain: number | percipitationVolume | null;
-		snow: number | percipitationVolume | null;
-		weather: openWeatherSummary[];
+	dt: moment.Moment;
+	sunrise: moment.Moment;
+	sunset: moment.Moment;
+	temp: TemperatureDaySnapshot;
+	feels_like: TemperatureDaySnapshot;
+	pressure: number;
+	humidity: number;
+	dew_point: number;
+	clouds: number;
+	uvi: number;
+	visibility: number;
+	wind_speed: number;
+	wind_gust: number | null;
+	wind_deg: number;
+	pop: number;
+	rain: number | PercipitationVolume | null;
+	snow: number | PercipitationVolume | null;
+	weather: OpenWeatherSummary[];
 }
 
-export interface openWeatherSummary {
+export interface OpenWeatherSummary {
 	id: string;
 	main: string;
 	description: string;
 	icon: string;
 }
 
-export interface percipitationVolume {
+export interface PercipitationVolume {
 	h1: number;
 }
 
-export interface temperatureDaySnapshot {
+export interface TemperatureDaySnapshot {
 	morn: number;
 	day: number;
 	eve: number;
