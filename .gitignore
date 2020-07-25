@@ -2,3 +2,9 @@
 /dist
 /docs
 /*.log
+
+.idea/misc.xml
+
+.idea/modules.xml
+
+.idea/MyMICDS-SDK.iml
