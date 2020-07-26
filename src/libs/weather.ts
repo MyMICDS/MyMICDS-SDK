@@ -4,9 +4,6 @@
 
 import { HTTP } from '../http';
 
-import * as moment from 'moment';
-import { tap } from 'rxjs/operators';
-
 export class WeatherAPI {
 
 	constructor(private http: HTTP) { }
