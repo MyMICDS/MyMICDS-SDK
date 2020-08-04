@@ -5,8 +5,7 @@
 import { HTTP } from '../http';
 
 export class AliasAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	add(param: AddAliasParameters, shouldError = false) {
 		return this.http.post<AddAliasResponse>('/alias', shouldError, param);
@@ -19,7 +18,6 @@ export class AliasAPI {
 	delete(param: DeleteAliasParameters, shouldError = false) {
 		return this.http.delete('/alias', shouldError, param);
 	}
-
 }
 
 /**

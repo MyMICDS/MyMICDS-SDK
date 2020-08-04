@@ -5,13 +5,11 @@
 import { HTTP } from '../http';
 
 export class SuggestionAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	submit(param: SubmitSuggestionParameters, shouldError = false) {
 		return this.http.post('/suggestion', shouldError, param);
 	}
-
 }
 
 /**

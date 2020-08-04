@@ -9,8 +9,7 @@ import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
 export class PlannerAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	getEvents(shouldError = false) {
 		return this.http.get<GetPlannerEventsResponse>('/planner', shouldError).pipe(
@@ -41,7 +40,6 @@ export class PlannerAPI {
 	uncheckEvent(param: UncheckPlannerEventParameters, shouldError = false) {
 		return this.http.patch('/planner/uncheck', shouldError, param);
 	}
-
 }
 
 /**
@@ -61,15 +59,15 @@ export interface AddPlannerEventParameters {
 	end?: moment.Moment;
 }
 
-export interface AddPlannerEventResponse extends GetPlannerEventsResponse { }
+export interface AddPlannerEventResponse extends GetPlannerEventsResponse {}
 
 export interface DeletePlannerEventParameters {
 	id: string;
 }
 
-export interface CheckPlannerEventParameters extends DeletePlannerEventParameters { }
+export interface CheckPlannerEventParameters extends DeletePlannerEventParameters {}
 
-export interface UncheckPlannerEventParameters extends CheckPlannerEventParameters { }
+export interface UncheckPlannerEventParameters extends CheckPlannerEventParameters {}
 
 /**
  * Helpers

@@ -9,8 +9,7 @@ import { tap } from 'rxjs/operators';
 import * as moment from 'moment';
 
 export class SportsAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	getScores(shouldError = false) {
 		return this.http.get<GetScoresResponse>('/sports', shouldError).pipe(
@@ -36,7 +35,6 @@ export class SportsAPI {
 			})
 		);
 	}
-
 }
 
 /**

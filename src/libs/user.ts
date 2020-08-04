@@ -10,7 +10,6 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 export class UserAPI {
-
 	private userSubject = new BehaviorSubject<PossiblyUserInfo>(undefined);
 	$: Observable<PossiblyUserInfo> = this.userSubject.asObservable();
 	snapshot: PossiblyUserInfo = undefined;
@@ -18,29 +17,41 @@ export class UserAPI {
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
 		if (mymicds.options.updateUserInfo) {
 			this.mymicds.auth.$.pipe(
-				switchMap((auth): Observable<PossiblyUserInfo> => {
-					if (auth === undefined || auth === null) {
-						return of(auth);
+				switchMap(
+					(auth): Observable<PossiblyUserInfo> => {
+						if (auth === undefined || auth === null) {
+							return of(auth);
+						}
+						return this.getInfo();
 					}
-					return this.getInfo();
-				})
+				)
 			).subscribe(
 				userInfo => this.propagateUserInfo(userInfo),
 				err => this.userSubject.error(err)
 			);
 		} else {
 			this.$ = throwError(
-				new MyMICDSError('SDK is not configured to set up the user info update! Set this in the initialization options.')
+				new MyMICDSError(
+					'SDK is not configured to set up the user info update! Set this in the initialization options.'
+				)
 			);
 		}
 	}
 
 	gradYearToGrade(param: GradYearToGradeParameters, shouldError = false) {
-		return this.http.get<GradYearToGradeResponse>('/user/grad-year-to-grade', shouldError, param);
+		return this.http.get<GradYearToGradeResponse>(
+			'/user/grad-year-to-grade',
+			shouldError,
+			param
+		);
 	}
 
 	gradeToGradYear(param: GradeToGradYearParameters, shouldError = false) {
-		return this.http.get<GradeToGradYearResponse>('/user/grade-to-grad-year', shouldError, param);
+		return this.http.get<GradeToGradYearResponse>(
+			'/user/grade-to-grad-year',
+			shouldError,
+			param
+		);
 	}
 
 	getGradeRange(shouldError = false) {
@@ -48,7 +59,8 @@ export class UserAPI {
 	}
 
 	getInfo(shouldError = false) {
-		return this.http.get<GetUserInfoResponse>('/user/info', shouldError)
+		return this.http
+			.get<GetUserInfoResponse>('/user/info', shouldError)
 			.pipe(tap(userInfo => this.propagateUserInfo(userInfo)));
 	}
 
@@ -60,7 +72,6 @@ export class UserAPI {
 		this.snapshot = userInfo;
 		this.userSubject.next(this.snapshot);
 	}
-
 }
 
 /**
@@ -109,7 +120,7 @@ export interface ChangeUserInfoParameters {
 	teacher?: boolean;
 }
 
-export interface ChangeUserInfoResponse extends GetUserInfoResponse { }
+export interface ChangeUserInfoResponse extends GetUserInfoResponse {}
 
 /**
  * Helpers

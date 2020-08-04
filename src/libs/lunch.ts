@@ -6,13 +6,11 @@ import { HTTP } from '../http';
 import { School } from './user';
 
 export class LunchAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(param?: GetLunchParameters, shouldError = false) {
 		return this.http.get<GetLunchResponse>('/lunch', shouldError, param);
 	}
-
 }
 
 /**
@@ -38,6 +36,6 @@ export interface GetLunchResponse {
 export interface SchoolLunch {
 	title: string;
 	categories: {
-		[category: string]: string[]
+		[category: string]: string[];
 	};
 }

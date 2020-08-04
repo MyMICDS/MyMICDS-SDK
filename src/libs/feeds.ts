@@ -5,8 +5,7 @@
 import { HTTP } from '../http';
 
 export class FeedsAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	updateCanvasCache(shouldError = false) {
 		return this.http.post('/feeds/canvas-cache', shouldError);
@@ -15,5 +14,4 @@ export class FeedsAPI {
 	addPortalQueue(shouldError = false) {
 		return this.http.post('/feeds/portal-queue', shouldError);
 	}
-
 }

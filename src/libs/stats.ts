@@ -5,13 +5,11 @@
 import { HTTP } from '../http';
 
 export class StatsAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(shouldError = false) {
 		return this.http.get<GetStatsResponse>('/stats', shouldError);
 	}
-
 }
 
 /**
@@ -26,14 +24,14 @@ export interface GetStatsResponse {
 			gradYears: {
 				[year: string]: {
 					[date: string]: number;
-				}
-			}
-		}
+				};
+			};
+		};
 		visitedToday: {
 			total: number;
 			gradYears: {
 				[year: string]: number;
-			}
-		}
+			};
+		};
 	};
 }

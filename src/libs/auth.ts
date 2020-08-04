@@ -11,7 +11,6 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import * as decode from 'jwt-decode';
 
 export class AuthAPI {
-
 	private authSubject = new BehaviorSubject<PossiblyJWT>(undefined);
 	$: Observable<PossiblyJWT> = this.authSubject.asObservable();
 	snapshot: PossiblyJWT = undefined;
@@ -33,7 +32,11 @@ export class AuthAPI {
 				// If login successful, store JWT
 				let loginAction: Observable<unknown> = of({});
 				if (parsed) {
-					loginAction = this.storeJWTAndEmitStatus(res.jwt, parsed.payload, param.remember);
+					loginAction = this.storeJWTAndEmitStatus(
+						res.jwt,
+						parsed.payload,
+						param.remember
+					);
 				}
 				return loginAction.pipe(map(() => res));
 			})
@@ -45,10 +48,9 @@ export class AuthAPI {
 			switchMap(jwt => {
 				if (jwt) {
 					return this.http.post('/auth/logout', shouldError);
-				} 
-					// Already logged out. No need to logout with backend, just make sure there is not JWT.
-					return of({});
-				
+				}
+				// Already logged out. No need to logout with backend, just make sure there is not JWT.
+				return of({});
 			}),
 			switchMap(() => this.clearJwt())
 		);
@@ -120,16 +122,13 @@ export class AuthAPI {
 	}
 
 	private storeJWTAndEmitStatus(jwt: string, payload: JWT, remember?: boolean) {
-		return this.mymicds.setJwt(jwt, remember).pipe(
-			tap(() => this.emitJWTStatus(payload))
-		);
+		return this.mymicds.setJwt(jwt, remember).pipe(tap(() => this.emitJWTStatus(payload)));
 	}
 
 	private emitJWTStatus(payload: JWT | null) {
 		this.snapshot = payload;
 		this.authSubject.next(this.snapshot);
 	}
-
 }
 
 /**

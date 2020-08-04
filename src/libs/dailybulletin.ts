@@ -5,7 +5,7 @@
 import { HTTP } from '../http';
 
 export class DailyBulletinAPI {
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	getList(shouldError = false) {
 		return this.http.get<GetBulletinsResponse>('/daily-bulletin', shouldError);
@@ -18,7 +18,6 @@ export class DailyBulletinAPI {
 	queryAll(shouldError = false) {
 		return this.http.post('/daily-bulletin/query-all', shouldError);
 	}
-
 }
 
 /**

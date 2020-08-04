@@ -11,7 +11,6 @@ import { switchMap, tap } from 'rxjs/operators';
 import * as stream from 'stream'; // For Node only
 
 export class BackgroundAPI {
-
 	DEFAULT_BACKGROUND: GetBackgroundResponse = {
 		hasDefault: true,
 		variants: {
@@ -27,12 +26,14 @@ export class BackgroundAPI {
 	constructor(private http: HTTP, private mymicds: MyMICDS) {
 		if (mymicds.options.updateBackground) {
 			this.$ = this.backgroundSubject.asObservable();
-			this.mymicds.auth.$.pipe(
-				switchMap(() => this.get())
-			).subscribe(background => this.propagateBackground(background));
+			this.mymicds.auth.$.pipe(switchMap(() => this.get())).subscribe(background =>
+				this.propagateBackground(background)
+			);
 		} else {
 			this.$ = throwError(
-				new MyMICDSError('SDK is not configured to set up the background update! Set this in the initialization options.')
+				new MyMICDSError(
+					'SDK is not configured to set up the background update! Set this in the initialization options.'
+				)
 			);
 		}
 	}
@@ -46,12 +47,14 @@ export class BackgroundAPI {
 	}
 
 	upload(param: UploadBackgroundParameters, shouldError = false) {
-		return this.http.uploadFile<UploadBackgroundResponse>(HTTPMethod.PUT, '/background', shouldError, param)
+		return this.http
+			.uploadFile<UploadBackgroundResponse>(HTTPMethod.PUT, '/background', shouldError, param)
 			.pipe(tap(background => this.propagateBackground(background)));
 	}
 
 	delete(shouldError = false) {
-		return this.http.delete<DeleteBackgroundResponse>('/background', shouldError)
+		return this.http
+			.delete<DeleteBackgroundResponse>('/background', shouldError)
 			.pipe(tap(background => this.propagateBackground(background)));
 	}
 
@@ -59,7 +62,6 @@ export class BackgroundAPI {
 		this.snapshot = background;
 		this.backgroundSubject.next(this.snapshot);
 	}
-
 }
 
 /**
@@ -81,9 +83,9 @@ export interface GetAllBackgroundsResponse {
 }
 
 export interface UploadBackgroundParameters {
-	background: File /* Browser */ | stream.Readable /* Node */;
+	background: File | /* Browser */ stream.Readable /* Node */;
 }
 
-export interface UploadBackgroundResponse extends GetBackgroundResponse { }
+export interface UploadBackgroundResponse extends GetBackgroundResponse {}
 
-export interface DeleteBackgroundResponse extends GetBackgroundResponse { }
+export interface DeleteBackgroundResponse extends GetBackgroundResponse {}

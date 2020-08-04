@@ -5,8 +5,7 @@
 import { HTTP } from '../http';
 
 export class QuotesAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(shouldError = false) {
 		return this.http.get<GetQuoteResponse>('/quote', shouldError);
@@ -15,7 +14,6 @@ export class QuotesAPI {
 	add(param: AddQuoteParameters, shouldError = false) {
 		return this.http.post('/quote', shouldError, param);
 	}
-
 }
 
 /**
