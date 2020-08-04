@@ -1,8 +1,8 @@
-import { from, Subject } from 'rxjs';
 import { Action } from './api-response';
-import { MyMICDSError } from './error';
-import { HTTP } from './http';
 import { defaultOptions, MyMICDSOptions } from './options';
+import { from, Subject } from 'rxjs';
+import { HTTP } from './http';
+import { MyMICDSError } from './error';
 
 import { AliasAPI } from './libs/alias';
 import { AuthAPI } from './libs/auth';

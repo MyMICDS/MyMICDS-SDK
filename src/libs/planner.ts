@@ -5,8 +5,8 @@
 import { HTTP } from '../http';
 import { ScheduleClass } from './classes';
 
-import * as moment from 'moment';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 export class PlannerAPI {
 

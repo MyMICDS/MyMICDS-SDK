@@ -1,14 +1,14 @@
 import { APIResponse } from './api-response';
-import { MyMICDSError } from './error';
 import { MyMICDS } from './sdk';
+import { MyMICDSError } from './error';
 
 import * as promise from 'es6-promise';
 promise.polyfill();
 import 'fetch-everywhere';
 import 'isomorphic-form-data';
-import * as qs from 'qs';
-import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { from, Observable, Subject, throwError } from 'rxjs';
+import * as qs from 'qs';
 
 export class HTTP {
 
@@ -145,6 +145,7 @@ export class HTTP {
 }
 
 export interface StringDict {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
 }
 

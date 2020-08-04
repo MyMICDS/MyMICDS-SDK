@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Sports API
  */
 
 import { HTTP } from '../http';
 
-import * as moment from 'moment';
 import { tap } from 'rxjs/operators';
+import * as moment from 'moment';
 
 export class SportsAPI {
 

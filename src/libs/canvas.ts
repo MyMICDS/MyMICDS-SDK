@@ -2,9 +2,7 @@
  * Canvas API
  */
 
-import { HTTP } from '../http';
 import { Block, ClassType, MyMICDSClass, ScheduleClass } from './classes';
-import { PlannerEvent } from './planner';
 import {
 	GetPortalClassesResponse,
 	SetPortalURLParameters,
@@ -12,9 +10,11 @@ import {
 	TestPortalURLParameters,
 	TestPortalURLResponse
 } from './portal';
+import { HTTP } from '../http';
+import { PlannerEvent } from './planner';
 
-import * as moment from 'moment';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 export class CanvasAPI {
 

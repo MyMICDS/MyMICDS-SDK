@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "docs": "typedoc --out ./docs --mode file ./src",
-    "lint": "tslint --project tsconfig.json \"src/**/*.ts\"",
+    "lint": "eslint --ext .ts ./src",
     "clean": "rimraf ./dist",
     "prepublishOnly": "npm run lint && npm run ts",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -44,7 +44,7 @@
     "rxjs": "^6.2.1"
   },
   "devDependencies": {
-    "@mymicds/configs": "^1.1.0",
+    "@mymicds/eslint-config": "^1.0.0",
     "@types/form-data": "^2.5.0",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/jwt-decode": "^2.2.1",
@@ -52,8 +52,10 @@
     "@types/moment-timezone": "^0.5.13",
     "@types/node": "^8.10.62",
     "@types/qs": "^6.9.4",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "eslint": "^7.6.0",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
     "rimraf": "^2.7.1",
-    "tslint": "^5.20.1",
     "typedoc": "^0.15.8",
     "typescript": "^3.9.7"
   }

@@ -3,8 +3,8 @@
  */
 import { HTTP } from '../http';
 
-import * as moment from 'moment';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 export class DatesAPI {
 

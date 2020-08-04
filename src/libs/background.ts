@@ -2,9 +2,9 @@
  * Backgrounds API
  */
 
-import { MyMICDSError } from '../error';
 import { HTTP, HTTPMethod } from '../http';
 import { MyMICDS } from '../sdk';
+import { MyMICDSError } from '../error';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
