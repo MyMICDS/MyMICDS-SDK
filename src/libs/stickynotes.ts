@@ -5,8 +5,7 @@
 import { HTTP } from '../http';
 
 export class StickyNotesAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(param: GetStickyNoteParameters, shouldError = false) {
 		return this.http.get<GetStickyNoteResponse>('/stickynotes', shouldError, param);
@@ -15,7 +14,6 @@ export class StickyNotesAPI {
 	add(param: AddStickyNoteParameters, shouldError = false) {
 		return this.http.put('/stickynotes', shouldError, param);
 	}
-
 }
 
 /**

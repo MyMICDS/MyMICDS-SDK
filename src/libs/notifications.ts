@@ -5,12 +5,11 @@
 import { HTTP } from '../http';
 
 export class NotificationsAPI {
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	unsubscribe(param: UnsubscribeParameters, shouldError = false) {
 		return this.http.post('/notifications/unsubscribe', shouldError, param);
 	}
-
 }
 
 /**

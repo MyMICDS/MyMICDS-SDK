@@ -5,13 +5,11 @@
 import { HTTP } from '../http';
 
 export class TeachersAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(shouldError = false) {
 		return this.http.get<GetTeachersResponse>('/teachers', shouldError);
 	}
-
 }
 
 /**

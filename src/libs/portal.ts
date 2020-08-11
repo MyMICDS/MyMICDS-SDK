@@ -5,8 +5,7 @@
 import { HTTP } from '../http';
 
 export class PortalAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	getClasses(shouldError = false) {
 		return this.http.get<GetPortalClassesResponse>('/portal/classes', shouldError);
@@ -21,7 +20,11 @@ export class PortalAPI {
 	}
 
 	testClassesURL(param: TestPortalURLParameters, shouldError = false) {
-		return this.http.post<TestPortalURLResponse>('/portal/url/test-classes', shouldError, param);
+		return this.http.post<TestPortalURLResponse>(
+			'/portal/url/test-classes',
+			shouldError,
+			param
+		);
 	}
 
 	setCalendarURL(param: SetPortalURLParameters, shouldError = false) {
@@ -29,9 +32,12 @@ export class PortalAPI {
 	}
 
 	testCalendarURL(param: TestPortalURLParameters, shouldError = false) {
-		return this.http.post<TestPortalURLResponse>('/portal/url/test-calendar', shouldError, param);
+		return this.http.post<TestPortalURLResponse>(
+			'/portal/url/test-calendar',
+			shouldError,
+			param
+		);
 	}
-
 }
 
 /**
@@ -47,7 +53,7 @@ export interface GetPortalDayRotationResponse {
 	days: {
 		[year: string]: {
 			[month: string]: {
-				[day: string]: number
+				[day: string]: number;
 			};
 		};
 	};
@@ -62,6 +68,6 @@ export interface SetPortalURLResponse {
 	url: string;
 }
 
-export interface TestPortalURLParameters extends SetPortalURLParameters { }
+export interface TestPortalURLParameters extends SetPortalURLParameters {}
 
-export interface TestPortalURLResponse extends SetPortalURLResponse { }
+export interface TestPortalURLResponse extends SetPortalURLResponse {}

@@ -1,8 +1,8 @@
-import { from, Subject } from 'rxjs';
 import { Action } from './api-response';
-import { MyMICDSError } from './error';
-import { HTTP } from './http';
 import { defaultOptions, MyMICDSOptions } from './options';
+import { from, Subject } from 'rxjs';
+import { HTTP } from './http';
+import { MyMICDSError } from './error';
 
 import { AliasAPI } from './libs/alias';
 import { AuthAPI } from './libs/auth';
@@ -29,7 +29,6 @@ import { UserAPI } from './libs/user';
 import { WeatherAPI } from './libs/weather';
 
 export class MyMICDS {
-
 	options: MyMICDSOptions;
 
 	private errorsSubject = new Subject<MyMICDSError>();
@@ -65,8 +64,15 @@ export class MyMICDS {
 		const http = new HTTP(this);
 		http.errors.subscribe(error => {
 			// Clear JWT if invalid
-			if (error.action && [Action.LOGIN_EXPIRED, Action.NOT_LOGGED_IN, Action.UNAUTHORIZED].includes(error.action)) {
-				const subscription = this.auth.clearJwt().subscribe(() => subscription.unsubscribe());
+			if (
+				error.action &&
+				[Action.LOGIN_EXPIRED, Action.NOT_LOGGED_IN, Action.UNAUTHORIZED].includes(
+					error.action
+				)
+			) {
+				const subscription = this.auth
+					.clearJwt()
+					.subscribe(() => subscription.unsubscribe());
 			}
 			this.errorsSubject.next(error);
 		});
@@ -107,5 +113,4 @@ export class MyMICDS {
 	clearJwt() {
 		return from(Promise.resolve(this.options.jwtClear()));
 	}
-
 }

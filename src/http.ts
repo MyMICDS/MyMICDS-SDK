@@ -1,21 +1,20 @@
 import { APIResponse } from './api-response';
-import { MyMICDSError } from './error';
 import { MyMICDS } from './sdk';
+import { MyMICDSError } from './error';
 
 import * as promise from 'es6-promise';
 promise.polyfill();
 import 'fetch-everywhere';
 import 'isomorphic-form-data';
-import * as qs from 'qs';
-import { from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { from, Observable, Subject, throwError } from 'rxjs';
+import * as qs from 'qs';
 
 export class HTTP {
-
 	private errorsSubject = new Subject<MyMICDSError>();
 	errors = this.errorsSubject.asObservable();
 
-	constructor(private mymicds: MyMICDS) { }
+	constructor(private mymicds: MyMICDS) {}
 
 	get<T>(endpoint: string, shouldError: boolean, data?: StringDict) {
 		return this.http<T>(HTTPMethod.GET, endpoint, shouldError, data);
@@ -41,7 +40,12 @@ export class HTTP {
 	 * Generic wrapper for regular API requests
 	 */
 
-	private http<T>(method: HTTPMethod, endpoint: string, shouldError: boolean, data: StringDict = {}): Observable<T> {
+	private http<T>(
+		method: HTTPMethod,
+		endpoint: string,
+		shouldError: boolean,
+		data: StringDict = {}
+	): Observable<T> {
 		// If a GET request, use query parameters instead of JSON body
 		let body: string | null = JSON.stringify(data);
 		let query = '';
@@ -55,22 +59,36 @@ export class HTTP {
 		const headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 
-		return this.fetchApi<T>(`${this.mymicds.options.baseURL}${endpoint}${query}`, {
-			method,
-			body,
-			headers
-		}, shouldError);
+		return this.fetchApi<T>(
+			`${this.mymicds.options.baseURL}${endpoint}${query}`,
+			{
+				method,
+				body,
+				headers
+			},
+			shouldError
+		);
 	}
 
 	/**
 	 * Platform-agnostic file upload
 	 */
 
-	uploadFile<T>(method: HTTPMethod, endpoint: string, shouldError: boolean, data: StringDict = {}): Observable<T> {
+	uploadFile<T>(
+		method: HTTPMethod,
+		endpoint: string,
+		shouldError: boolean,
+		data: StringDict = {}
+	): Observable<T> {
 		// No GET requests for file upload
 		if (method === HTTPMethod.GET) {
 			return throwError(
-				new MyMICDSError('Trying to upload a file using a GET request! Your code is broke!', null, null, endpoint)
+				new MyMICDSError(
+					'Trying to upload a file using a GET request! Your code is broke!',
+					null,
+					null,
+					endpoint
+				)
 			);
 		}
 
@@ -79,10 +97,14 @@ export class HTTP {
 			form.append(k, data[k]);
 		});
 
-		return this.fetchApi<T>(`${this.mymicds.options.baseURL}${endpoint}`, {
-			method,
-			body: form
-		}, shouldError);
+		return this.fetchApi<T>(
+			`${this.mymicds.options.baseURL}${endpoint}`,
+			{
+				method,
+				body: form
+			},
+			shouldError
+		);
 	}
 
 	/**
@@ -93,7 +115,6 @@ export class HTTP {
 	private fetchApi<T>(url: string, options: StringDict, shouldError: boolean): Observable<T> {
 		return this.mymicds.getJwt().pipe(
 			switchMap(jwt => {
-
 				if (!options.headers) {
 					options.headers = new Headers();
 				}
@@ -123,7 +144,8 @@ export class HTTP {
 			map(({ response, resData }) => {
 				if (!response.ok) {
 					// Generic error message if for some reason there's no supplied error in body
-					let errorMessage = 'Something went wrong handling that request. Please try again or contact support@mymicds.net!';
+					let errorMessage =
+						'Something went wrong handling that request. Please try again or contact support@mymicds.net!';
 					if (resData.error) {
 						errorMessage = resData.error;
 					}
@@ -145,6 +167,7 @@ export class HTTP {
 }
 
 export interface StringDict {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
 }
 
