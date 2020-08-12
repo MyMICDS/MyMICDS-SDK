@@ -2,9 +2,7 @@
  * Canvas API
  */
 
-import { HTTP } from '../http';
 import { Block, ClassType, MyMICDSClass, ScheduleClass } from './classes';
-import { PlannerEvent } from './planner';
 import {
 	GetPortalClassesResponse,
 	SetPortalURLParameters,
@@ -12,13 +10,14 @@ import {
 	TestPortalURLParameters,
 	TestPortalURLResponse
 } from './portal';
+import { HTTP } from '../http';
+import { PlannerEvent } from './planner';
 
-import * as moment from 'moment';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 export class CanvasAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	getClasses(shouldError = false) {
 		return this.http.get<GetCanvasClassesResponse>('/canvas/classes', shouldError);
@@ -62,27 +61,26 @@ export class CanvasAPI {
 			})
 		);
 	}
-
 }
 
 /**
  * API Parameters and Responses
  */
 
-export interface GetCanvasClassesResponse extends GetPortalClassesResponse { }
+export interface GetCanvasClassesResponse extends GetPortalClassesResponse {}
 
 export interface GetCanvasEventsResponse {
 	hasURL: boolean;
 	events: CanvasEvent[];
 }
 
-export interface SetCanvasURLParameters extends SetPortalURLParameters { }
+export interface SetCanvasURLParameters extends SetPortalURLParameters {}
 
-export interface SetCanvasURLResponse extends SetPortalURLResponse { }
+export interface SetCanvasURLResponse extends SetPortalURLResponse {}
 
-export interface TestCanvasURLParameters extends TestPortalURLParameters { }
+export interface TestCanvasURLParameters extends TestPortalURLParameters {}
 
-export interface TestCanvasURLResponse extends TestPortalURLResponse { }
+export interface TestCanvasURLResponse extends TestPortalURLResponse {}
 
 export interface GetUniqueEventsResponse {
 	events: { [className: string]: UniqueEvent[] };
@@ -104,10 +102,10 @@ export interface DefaultCanvasClass extends ScheduleClass {
 	user: string;
 	name: string;
 	teacher: {
-		_id: null,
-		prefix: '',
-		firstName: string,
-		lastName: string
+		_id: null;
+		prefix: '';
+		firstName: string;
+		lastName: string;
 	};
 	type: ClassType.OTHER;
 	block: Block.OTHER;

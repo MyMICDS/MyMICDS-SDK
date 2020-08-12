@@ -1,7 +1,6 @@
 import { Action } from './api-response';
 
 export class MyMICDSError extends Error {
-
 	constructor(
 		message: string,
 		readonly statusCode: number | null = null,
@@ -10,5 +9,4 @@ export class MyMICDSError extends Error {
 	) {
 		super(message);
 	}
-
 }

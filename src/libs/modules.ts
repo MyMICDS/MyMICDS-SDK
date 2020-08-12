@@ -5,8 +5,7 @@
 import { HTTP, StringDict } from '../http';
 
 export class ModulesAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(shouldError = false) {
 		return this.http.get<GetModulesResponse>('/modules', shouldError);
@@ -15,7 +14,6 @@ export class ModulesAPI {
 	update(param: UpdateModulesParameters, shouldError = false) {
 		return this.http.put<GetModulesResponse>('/modules', shouldError, param);
 	}
-
 }
 
 /**

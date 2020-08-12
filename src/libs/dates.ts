@@ -3,12 +3,11 @@
  */
 import { HTTP } from '../http';
 
-import * as moment from 'moment';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 export class DatesAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	schoolStarts(shouldError = false) {
 		return this.http.get<SchoolStartsResponse>('/dates/school-ends', shouldError);
@@ -35,7 +34,6 @@ export class DatesAPI {
 			})
 		);
 	}
-
 }
 
 /**

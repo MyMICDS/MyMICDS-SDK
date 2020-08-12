@@ -5,13 +5,11 @@
 import { HTTP } from '../http';
 
 export class SnowdayAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(shouldError = false) {
 		return this.http.get<GetSnowdayResponse>('/snowday', shouldError);
 	}
-
 }
 
 /**

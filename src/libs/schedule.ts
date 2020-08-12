@@ -10,8 +10,7 @@ import { ScheduleClass } from './classes';
 import { map } from 'rxjs/operators';
 
 export class ScheduleAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(param?: GetScheduleParameters, shouldError = false) {
 		return this.http.get<GetScheduleResponse>('/schedule', shouldError, param).pipe(
@@ -26,7 +25,6 @@ export class ScheduleAPI {
 			})
 		);
 	}
-
 }
 
 /**

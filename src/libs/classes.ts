@@ -6,8 +6,7 @@ import { HTTP } from '../http';
 import { Teacher } from './teachers';
 
 export class ClassesAPI {
-
-	constructor(private http: HTTP) { }
+	constructor(private http: HTTP) {}
 
 	get(shouldError = false) {
 		return this.http.get<GetClassesResponse>('/classes', shouldError);
@@ -20,7 +19,6 @@ export class ClassesAPI {
 	delete(param: DeleteClassParameters, shouldError = false) {
 		return this.http.delete('/classes', shouldError, param);
 	}
-
 }
 
 /**
