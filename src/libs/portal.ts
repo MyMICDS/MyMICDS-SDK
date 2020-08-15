@@ -53,7 +53,7 @@ export interface GetPortalDayRotationResponse {
 	days: {
 		[year: string]: {
 			[month: string]: {
-				[day: string]: number;
+				[day: string]: string
 			};
 		};
 	};
