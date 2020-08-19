@@ -20,7 +20,6 @@ export * from './libs/portal';
 export * from './libs/quotes';
 export * from './libs/schedule';
 export * from './libs/snowday';
-export * from './libs/sports';
 export * from './libs/stats';
 export * from './libs/stickynotes';
 export * from './libs/suggestion';

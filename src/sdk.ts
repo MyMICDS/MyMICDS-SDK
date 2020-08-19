@@ -20,7 +20,6 @@ import { PortalAPI } from './libs/portal';
 import { QuotesAPI } from './libs/quotes';
 import { ScheduleAPI } from './libs/schedule';
 import { SnowdayAPI } from './libs/snowday';
-import { SportsAPI } from './libs/sports';
 import { StatsAPI } from './libs/stats';
 import { StickyNotesAPI } from './libs/stickynotes';
 import { SuggestionAPI } from './libs/suggestion';
@@ -50,7 +49,6 @@ export class MyMICDS {
 	quotes: QuotesAPI;
 	schedule: ScheduleAPI;
 	snowday: SnowdayAPI;
-	sports: SportsAPI;
 	stats: StatsAPI;
 	stickyNotes: StickyNotesAPI;
 	suggestion: SuggestionAPI;
@@ -93,7 +91,6 @@ export class MyMICDS {
 		this.quotes = new QuotesAPI(http);
 		this.schedule = new ScheduleAPI(http);
 		this.snowday = new SnowdayAPI(http);
-		this.sports = new SportsAPI(http);
 		this.stats = new StatsAPI(http);
 		this.stickyNotes = new StickyNotesAPI(http);
 		this.suggestion = new SuggestionAPI(http);
