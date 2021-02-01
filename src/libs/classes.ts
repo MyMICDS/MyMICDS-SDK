@@ -73,7 +73,6 @@ export enum ClassType {
 	SPANISH = 'spanish',
 	LATIN = 'latin',
 	MANDARIN = 'mandarin',
-	GERMAN = 'german',
 	FRENCH = 'french',
 	OTHER = 'other'
 }
