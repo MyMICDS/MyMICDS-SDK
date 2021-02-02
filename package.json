@@ -1,6 +1,6 @@
 {
   "name": "@mymicds/sdk",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Client for connecting to the MyMICDS API",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -40,10 +40,10 @@
     "fetch-everywhere": "^1.0.5",
     "isomorphic-form-data": "^1.0.0",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
-    "qs": "^6.9.4",
-    "rxjs": "^6.6.2"
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.32",
+    "qs": "^6.9.6",
+    "rxjs": "^6.6.3"
   },
   "peerDependencies": {
     "rxjs": "^6.2.1"
@@ -55,17 +55,17 @@
     "@types/jwt-decode": "^2.2.1",
     "@types/moment": "^2.13.0",
     "@types/moment-timezone": "^0.5.30",
-    "@types/node": "^8.10.62",
-    "@types/qs": "^6.9.4",
-    "@typescript-eslint/eslint-plugin": "^3.9.1",
-    "eslint": "^7.7.0",
-    "eslint-config-prettier": "^6.11.0",
+    "@types/node": "^8.10.66",
+    "@types/qs": "^6.9.5",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
-    "husky": "^4.2.5",
-    "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1",
+    "husky": "^4.3.8",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^2.0.2",
     "rimraf": "^2.7.1",
     "typedoc": "^0.15.8",
-    "typescript": "^3.9.7"
+    "typescript": "~4.0.5"
   }
 }
