@@ -7,8 +7,12 @@ import { HTTP } from '../http';
 export class DailyBulletinAPI {
 	constructor(private http: HTTP) {}
 
-	getList(shouldError = false) {
-		return this.http.get<GetBulletinsResponse>('/daily-bulletin', shouldError);
+	getPdfList(shouldError = false) {
+		return this.http.get<GetBulletinsResponse>('/daily-bulletin/pdf', shouldError);
+	}
+
+	getGDocBulletin(shouldError = false) {
+		return this.http.get<GetGDocBulletinResponse>('/daily-bulletin', shouldError);
 	}
 
 	query(shouldError = false) {
@@ -16,7 +20,7 @@ export class DailyBulletinAPI {
 	}
 
 	queryAll(shouldError = false) {
-		return this.http.post('/daily-bulletin/query-all', shouldError);
+		return this.http.post('/daily-bulletin/pdf/query-all', shouldError);
 	}
 }
 
@@ -27,4 +31,10 @@ export class DailyBulletinAPI {
 export interface GetBulletinsResponse {
 	baseURL: string;
 	bulletins: string[];
+}
+
+export interface GetGDocBulletinResponse {
+	baseURL: string;
+	bulletin: string;
+	bulletinDate: string;
 }
