@@ -11,8 +11,8 @@ export class DailyBulletinAPI {
 		return this.http.get<GetBulletinsResponse>('/daily-bulletin/pdf', shouldError);
 	}
 
-	getTxtList(shouldError = false) {
-		return this.http.get<GetBulletinsResponse>('/daily-bulletin', shouldError);
+	getGDocBulletin(shouldError = false) {
+		return this.http.get<GetGDocBulletinResponse>('/daily-bulletin', shouldError);
 	}
 
 	query(shouldError = false) {
@@ -31,4 +31,10 @@ export class DailyBulletinAPI {
 export interface GetBulletinsResponse {
 	baseURL: string;
 	bulletins: string[];
+}
+
+export interface GetGDocBulletinResponse {
+	baseURL: string;
+	bulletin: string;
+	bulletinDate: string;
 }
