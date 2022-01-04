@@ -7,7 +7,11 @@ import { HTTP } from '../http';
 export class DailyBulletinAPI {
 	constructor(private http: HTTP) {}
 
-	getList(shouldError = false) {
+	getPdfList(shouldError = false) {
+		return this.http.get<GetBulletinsResponse>('/daily-bulletin/pdf', shouldError);
+	}
+
+	getTxtList(shouldError = false) {
 		return this.http.get<GetBulletinsResponse>('/daily-bulletin', shouldError);
 	}
 
@@ -16,7 +20,7 @@ export class DailyBulletinAPI {
 	}
 
 	queryAll(shouldError = false) {
-		return this.http.post('/daily-bulletin/query-all', shouldError);
+		return this.http.post('/daily-bulletin/pdf/query-all', shouldError);
 	}
 }
 
