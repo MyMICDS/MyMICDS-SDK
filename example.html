@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>SDK Example</title>
+	</head>
+	<body>
+		<script src="https://unpkg.com/@reactivex/rxjs@6.2.1/dist/global/rxjs.umd.js"></script>
+		<script src="dist/umd.js"></script>
+		<script>
+			const mymicds = new MyMICDS.MyMICDS();
+
+			mymicds.auth
+				.login({ user: 'llyle', password: 'Hunter2' })
+				.pipe(
+					// Use `switchMap` to chain Observables!
+					rxjs.operators.switchMap(() => mymicds.schedule.get())
+				)
+				.subscribe(
+					data => {
+						console.log('data', data);
+					},
+					err => {
+						console.log('err', err);
+					}
+				);
+		</script>
+	</body>
+</html>

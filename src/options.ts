@@ -11,7 +11,7 @@ export interface MyMICDSOptions {
 }
 
 export const defaultOptions: MyMICDSOptions = {
-	baseURL: 'https://api.mymicds.net/v2',
+	baseURL: 'https://api.mymicds.net/v3',
 	jwtGetter() {
 		return sessionStorage.getItem('jwt') || localStorage.getItem('jwt');
 	},
