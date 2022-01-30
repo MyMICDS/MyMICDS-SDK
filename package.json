@@ -43,8 +43,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
-    "qs": "^6.9.6",
-    "rxjs": "^6.2.1"
+    "qs": "^6.9.6"
   },
   "peerDependencies": {
     "rxjs": "^6.2.1"
