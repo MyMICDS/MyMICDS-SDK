@@ -10,17 +10,10 @@
 			const mymicds = new MyMICDS.MyMICDS();
 
 			mymicds.auth
-				.login({ user: 'llyle', password: 'Hunter2' }, true)
+				.login({ user: 'llyle', password: 'Hunter2' })
 				.pipe(
-					// Use `mergeMap` to chain Observables!
-					rxjs.operators.tap(res => console.log('yuh', res)),
-					rxjs.operators.switchMap(b => {
-						console.log('switch', b);
-						const o = mymicds.schedule.get({}, true);
-						console.log(o);
-						return o;
-					}),
-					rxjs.operators.tap(res => console.log('yuh', res))
+					// Use `switchMap` to chain Observables!
+					rxjs.operators.switchMap(() => mymicds.schedule.get())
 				)
 				.subscribe(
 					data => {

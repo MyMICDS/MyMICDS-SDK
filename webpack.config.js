@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
+const webpackRxjsExternals = require('webpack-rxjs-externals');
 
 module.exports = {
 	entry: './src/index.ts',
@@ -25,5 +26,6 @@ module.exports = {
 		},
 		filename: 'umd.js',
 		path: path.resolve(__dirname, 'dist')
-	}
+	},
+	externals: [webpackRxjsExternals()]
 };
