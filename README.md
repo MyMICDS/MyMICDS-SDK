@@ -1,12 +1,15 @@
 # MyMICDS-SDK
+
 The official TypeScript client for connecting to the MyMICDS API
 
 ## Installation
+
 ```
 $ npm install @mymicds/sdk
 ```
 
 ## Usage
+
 ```typescript
 import { MyMICDS, MyMICDSOptions } from '@mymicds/sdk';
 import { mergeMap } from 'rxjs/operators';
@@ -40,13 +43,13 @@ const options: MyMICDSOptions = {
 	},
 	// Whether or not to activate observables for their respective modules (makes another API request on auth change)
 	updateBackground: true, // Exposes MyMICDS.background.$ observable
-	updateUserInfo: true    // Exposes MyMICDS.user.$ observable
+	updateUserInfo: true // Exposes MyMICDS.user.$ observable
 };
 
 // These are the default configuration options if some/all of properties are omitted.
 // Note that `localStorage` and `sessionStorage` may only be available in certain environments.
 const defaultOptions: MyMICDSOptions = {
-	baseURL: 'https://api.mymicds.net/v2',
+	baseURL: 'https://api.mymicds.net/v3',
 	jwtGetter() {
 		return sessionStorage.getItem('jwt') || localStorage.getItem('jwt');
 	},
@@ -68,15 +71,18 @@ const mymicds = new MyMICDS(options);
 
 // All API methods return RxJS Observables.
 // Note that storing the JWT is automatically taken care of by the API client via the JWT getter and setter options.
-mymicds.auth.login({ user: 'llyle', password: 'Hunter2' }).pipe(
-	// Use `mergeMap` to chain Observables!
-	mergeMap(() => mymicds.schedule.get())
-).subscribe(
-	data => {
-		console.log('data', data);
-	},
-	err => {
-		console.log('err', err);
-	}
-)
+mymicds.auth
+	.login({ user: 'llyle', password: 'Hunter2' })
+	.pipe(
+		// Use `switchMap` to chain Observables!
+		switchMap(() => mymicds.schedule.get())
+	)
+	.subscribe(
+		data => {
+			console.log('data', data);
+		},
+		err => {
+			console.log('err', err);
+		}
+	);
 ```

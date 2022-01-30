@@ -11,9 +11,10 @@
     "docs": "typedoc --out ./docs --mode file ./src",
     "lint": "eslint --ext .ts ./src",
     "clean": "rimraf ./dist",
-    "prepublishOnly": "npm run lint && npm run ts",
+    "prepublishOnly": "npm run lint && npm run ts && npm run ts:umd",
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts": "npm run clean && tsc",
+    "ts:umd": "webpack",
     "ts:watch": "tsc -w"
   },
   "husky": {
@@ -43,7 +44,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
     "qs": "^6.9.6",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.2.1"
   },
   "peerDependencies": {
     "rxjs": "^6.2.1"
@@ -65,7 +66,10 @@
     "prettier": "^2.2.1",
     "pretty-quick": "^2.0.2",
     "rimraf": "^2.7.1",
+    "ts-loader": "^9.2.6",
     "typedoc": "^0.22.10",
-    "typescript": "~4.0.5"
+    "typescript": "~4.0.5",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2"
   }
 }

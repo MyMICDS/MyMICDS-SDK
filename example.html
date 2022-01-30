@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>SDK Example</title>
+	</head>
+	<body>
+		<script src="https://unpkg.com/@reactivex/rxjs@6.2.1/dist/global/rxjs.umd.js"></script>
+		<script src="dist/umd.js"></script>
+		<script>
+			const mymicds = new MyMICDS.MyMICDS();
+
+			mymicds.auth
+				.login({ user: 'llyle', password: 'Hunter2' }, true)
+				.pipe(
+					// Use `mergeMap` to chain Observables!
+					rxjs.operators.tap(res => console.log('yuh', res)),
+					rxjs.operators.switchMap(b => {
+						console.log('switch', b);
+						const o = mymicds.schedule.get({}, true);
+						console.log(o);
+						return o;
+					}),
+					rxjs.operators.tap(res => console.log('yuh', res))
+				)
+				.subscribe(
+					data => {
+						console.log('data', data);
+					},
+					err => {
+						console.log('err', err);
+					}
+				);
+		</script>
+	</body>
+</html>
