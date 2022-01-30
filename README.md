@@ -4,9 +4,22 @@ The official TypeScript client for connecting to the MyMICDS API
 
 ## Installation
 
+### NPM
+
 ```
 $ npm install @mymicds/sdk
 ```
+
+### CDN
+
+For usage directly in the browser, add the following script tags to your HTML:
+
+```html
+<script src="https://unpkg.com/@reactivex/rxjs@6.2.1/dist/global/rxjs.umd.js"></script>
+<script src="https://unpkg.com/@mymicds/sdk@1.14.0/dist/umd.js"></script>
+```
+
+Make sure to use the latest version of `@mymicds/sdk@<version>` from unpkg. See [example.html](example.html) for example usage.
 
 ## Usage
 
@@ -22,7 +35,7 @@ const jwtStore = {
 // You can pass a `MyMICDSOptions` object for configuring API client behavior
 const options: MyMICDSOptions = {
 	// URL for accessing MyMICDS API back-end
-	baseURL: 'https://api.mymicds.net/v2',
+	baseURL: 'https://api.mymicds.net/v3',
 	// How API client should retrieve any stored JWT
 	// Return JWT string if available, otherwise return falsey value
 	jwtGetter() {
